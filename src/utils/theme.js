@@ -16,7 +16,7 @@ const Theme = extendTheme({
         }
     },
     // fonts: {
-    //     mauikea: 'mauikea', // marche pas
+    //     mauikea: Test(), // marche pas
     //     body: 'IBM Plex Sans' // idem
     // }
 });
