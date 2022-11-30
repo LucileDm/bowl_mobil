@@ -6,7 +6,6 @@ import * as yup from 'yup';
 import { Input, Stack, FormControl, WarningOutlineIcon } from "native-base";
 import { register } from "../services/users";
 
-// const validationSchema plutot ??
 const registerSchema = yup.object({
     firstName: yup.string().required('Ce champ est obligatoire'),
     lastName: yup.string().required('Ce champ est obligatoire'),
@@ -26,8 +25,6 @@ const registerSchema = yup.object({
 
 export const RegisterScreen = props => (
     <Formik
-        // pas sur de a ligne ci dessous
-        validationSchema={registerSchema}
         initialValues={{ 
             firstName: '',
             lastName: '',
@@ -44,6 +41,7 @@ export const RegisterScreen = props => (
                 console.log(err)
             })
         }}
+        validationSchema={registerSchema}
     >
       {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 
@@ -51,7 +49,7 @@ export const RegisterScreen = props => (
             <Stack space={2} w="75%" maxW="300px" mx="auto">
 
 
-            <FormControl isInvalid={errors}>
+            <FormControl isInvalid={errors.firstName ? true : false}>
                 <FormControl.Label >Prénom</FormControl.Label>
                     <Input  variant="underlined" 
                             type="text" 
@@ -60,12 +58,12 @@ export const RegisterScreen = props => (
                             onBlur={handleBlur('firstName')}
                             value={values.firstname} />
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    Something is wrong.
+                   {errors.firstName}
                 </FormControl.ErrorMessage>
             </FormControl>
 
 
-            <FormControl isInvalid={errors}>
+            <FormControl isInvalid={errors.lastName ? true : false}>
                 <FormControl.Label>Nom</FormControl.Label>
                     <Input  variant="underlined" 
                             type="text" 
@@ -75,13 +73,13 @@ export const RegisterScreen = props => (
                             value={values.lastname} />
                     
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    Something is wrong.
+                    {errors.lastName}
                 </FormControl.ErrorMessage>
             </FormControl>
 
 
 
-            <FormControl isInvalid={errors}>
+            <FormControl isInvalid={errors.email ? true : false}>
                 <FormControl.Label>Adresse email</FormControl.Label>
                     <Input  variant="underlined" 
                             type="email" 
@@ -90,12 +88,12 @@ export const RegisterScreen = props => (
                             onBlur={handleBlur('email')}
                             value={values.email} />
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    Something is wrong.
+                    {errors.email}
                 </FormControl.ErrorMessage>
             </FormControl>
 
 
-            <FormControl isInvalid={errors}>
+            <FormControl isInvalid={errors.password ? true : false}>
                 <FormControl.Label>Mot de passe</FormControl.Label>
                     <Input  variant="underlined" 
                             type="password" 
@@ -104,11 +102,11 @@ export const RegisterScreen = props => (
                             onBlur={handleBlur('password')}
                             value={values.password} />   
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    Something is wrong.
+                    {errors.password}
                 </FormControl.ErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={errors}>
+            <FormControl isInvalid={errors.passwordConfirm ? true : false}>
                 <FormControl.Label>Confirmation de mot de passe</FormControl.Label>
                     <Input  variant="underlined" 
                             type="password" 
@@ -117,10 +115,9 @@ export const RegisterScreen = props => (
                             onBlur={handleBlur('passwordConfirm')}
                             value={values.passwordConfirm} />  
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    Something is wrong.
+                    {errors.passwordConfirm}
                 </FormControl.ErrorMessage>
             </FormControl>
-
 
                 <Button onPress={handleSubmit} title="Enregistrer" />
             </Stack>
