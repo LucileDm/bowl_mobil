@@ -1,6 +1,7 @@
 import Home from './src/screens/Home.js';
 import RegisterScreen from './src/screens/RegisterScreen.js';
 import { NativeBaseProvider } from 'native-base';
+import { FranchiseRequestAddScreen } from './src/screens/FranchiseRequestAddScreen';
 
 function App() {
   return (
@@ -8,7 +9,8 @@ function App() {
       // lors de l'arrivée sur l'appli
     <NativeBaseProvider>
        {/* <Home /> */}
-      <RegisterScreen />
+      {/* <RegisterScreen /> */}
+      <FranchiseRequestAddScreen />
     </NativeBaseProvider>
   );
 }
