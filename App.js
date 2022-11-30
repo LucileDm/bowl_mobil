@@ -1,13 +1,14 @@
-import { Drawer, NativeBaseProvider } from 'native-base';
-import TabNavigator from './src/navigation/TabNavigator.js';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeSackNavigation from './src/navigations/HomeStackNavigation';
 
 function App() {
   return (
-    // la page de connexion devrait être la 1ere page à être affichée
-      // lors de l'arrivée sur l'appli
-    <NativeBaseProvider>
-      <TabNavigator />
-    </NativeBaseProvider>
+    <NavigationContainer>
+      {/* <TextLogo /> */}
+      {/* si user est connecté */}
+      <HomeSackNavigation />
+
+    </NavigationContainer>
   );
 }
 
