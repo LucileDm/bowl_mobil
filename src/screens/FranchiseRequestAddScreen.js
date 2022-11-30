@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { Input, Stack, FormControl, WarningOutlineIcon, Checkbox, ScrollView } from "native-base";
+import { Input, Stack, FormControl, WarningOutlineIcon, Checkbox, ScrollView, Button } from "native-base";
 
 import { addFranchiseRequest } from '../services/franchiseRequest';
 
@@ -44,10 +44,12 @@ export const FranchiseRequestAddScreen = props => (
             }}
             validationSchema={addFranchiseSchema}
         >
-        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+        {({ handleChange, handleBlur, handleSubmit, values, errors, setFieldValue }) => {
+            console.log(values);
+        return (
+        
             <View style={{ flex: 1, justifyContent: "center" }}>
                 <Stack space={2} w="75%" maxW="300px" mx="auto">
-
 
                 <FormControl isInvalid={errors.phone ? true : false}>
                     <FormControl.Label >Téléphone*</FormControl.Label>
@@ -61,7 +63,6 @@ export const FranchiseRequestAddScreen = props => (
                     {errors.phone}
                     </FormControl.ErrorMessage>
                 </FormControl>
-
 
                 <FormControl isInvalid={errors.city ? true : false}>
                     <FormControl.Label>Ville d'implantation*</FormControl.Label>
@@ -77,7 +78,6 @@ export const FranchiseRequestAddScreen = props => (
                     </FormControl.ErrorMessage>
                 </FormControl>
 
-
                 <FormControl isInvalid={errors.estimatedAmount ? true : false}>
                     <FormControl.Label>Montant estimé de l'investissement *</FormControl.Label>
                         <Input  variant="underlined" 
@@ -90,7 +90,6 @@ export const FranchiseRequestAddScreen = props => (
                         {errors.estimatedAmount}
                     </FormControl.ErrorMessage>
                 </FormControl>
-
 
                 <FormControl isInvalid={errors.hopedFinancing ? true : false}>
                     <FormControl.Label>Financement envisagé *</FormControl.Label>
@@ -134,54 +133,19 @@ export const FranchiseRequestAddScreen = props => (
                 <FormControl isInvalid={errors.conditionOfUse ? true : false}>
                     <FormControl.Label>J'ai lu et j'accepte les conditions générales d'utilisation *</FormControl.Label>
                         <Checkbox   accessibilityLabel="J'ai lu et j'accepte les conditions générales d'utilisation"
-                                    onChangeText={handleChange('conditionOfUse')}
-                                    onBlur={handleBlur('conditionOfUse')}
-                                    value={values.conditionOfUse} />
+                                    onChange= { () => {
+                                        setFieldValue("conditionOfUse", !values.conditionOfUse)
+                                    }}
+                        />
                     <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                         {errors.conditionOfUse}
                     </FormControl.ErrorMessage>
                 </FormControl>
 
-                {/* <FormControl isInvalid={errors.conditionOfUse ? true : false}>
-                    <FormControl.Label>J'ai lu et j'accepte les conditions générales d'utilisation *</FormControl.Label>
-                        <Input  variant="underlined" 
-                                type="checkbox" 
-                                onChangeText={handleChange('conditionOfUse')}
-                                onBlur={handleBlur('conditionOfUse')}
-                                value={values.conditionOfUse} />  
-                    <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                        {errors.conditionOfUse}
-                    </FormControl.ErrorMessage>
-                </FormControl> */}
-
-                <FormControl isInvalid={errors.status ? true : false}>
-                        <Input  variant="underlined" 
-                                type="hidden" 
-                                onChangeText={handleChange('status')}
-                                onBlur={handleBlur('status')}
-                                value={values.status} />  
-                    <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                        {errors.status}
-                    </FormControl.ErrorMessage>
-                </FormControl>
-
-                <FormControl isInvalid={errors.user_id ? true : false}>
-                        <Input  variant="underlined" 
-                                type="hidden" 
-                                onChangeText={handleChange('user_id')}
-                                onBlur={handleBlur('user_id')}
-                                value={values.user_id} />  
-                    <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                        {errors.user_id}
-                    </FormControl.ErrorMessage>
-                </FormControl>
-
-
-                    <Button onPress={handleSubmit} title="Enregistrer" />
+                    <Button onPress={handleSubmit}>Enregistrer</Button>
                 </Stack>
-
             </View>
-        )}
+        )}}
         </Formik>
     </ScrollView>
   );
