@@ -12,7 +12,7 @@ export const LoginScreen = props => (
         }}
       
         onSubmit={ values => {
-            console.log(values);
+            console.log(values)
             login(values).then(()=>{
                 console.log('Connexion OK')
             }).catch(err => {
