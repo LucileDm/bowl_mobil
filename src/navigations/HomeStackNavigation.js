@@ -10,7 +10,7 @@ import TextLogo from '../components/TextLogo.js';
 const Stack = createNativeStackNavigator();
 const headerTitle =  { headerTitle: () => <TextLogo /> } ;
 
-function HomeSackNavigation() {
+function HomeStackNavigation() {
     return(
         <Stack.Navigator>
 
@@ -32,4 +32,4 @@ function HomeSackNavigation() {
     );
 }
 
-export default HomeSackNavigation;
+export default HomeStackNavigation;
