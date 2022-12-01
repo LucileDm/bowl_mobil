@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getSaltedBowls } from '../services/bowls.js';
-
-import { NativeBaseProvider, Text, Box, FlatList, Pressable } from 'native-base';
-import { Button } from 'react-native';
+import { NativeBaseProvider, Text, Box, FlatList, Pressable, Button } from 'native-base';
 import { theme } from '../utils/theme.js';
 
 function Home({ navigation }) {
@@ -46,19 +44,13 @@ function Home({ navigation }) {
         <Text textAlign="center" >Accueil</Text>
 
         <Button
-          title="Bowl"
-          onPress={() => navigation.navigate('Bowl')}
-          />
+          onPress={() => navigation.navigate('Bowl')}>Bowl</Button>
 
         <Button
-          title="Reservation"
-          onPress={() => navigation.navigate('Reservation')}
-          />
+          onPress={() => navigation.navigate('Ajouter une réservation')}>Réserver mes places!</Button>
 
         <Button
-          title="Review"
-          onPress={() => navigation.navigate('Review')}
-        />
+          onPress={() => navigation.navigate('Review')}>Avis</Button>
       </Box>
     </NativeBaseProvider>
   );
