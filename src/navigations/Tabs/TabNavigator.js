@@ -1,31 +1,28 @@
 import * as React from "react";
 import { Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FontAwesome } from "@expo/vector-icons";
 
-function HomeScreen() {
+import HomeStackNavigation from "../Stacks/HomeStackNavigation";
+import BookingStackNavigation from "../Stacks/BookingStackNavigation";
+import ProfileStackNavigation from "../Stacks/ProfileStackNavigation";
+
+function HomeStack() {
   return (
-    <View>
-      <Text>This is a home</Text>
-    </View>
+    <HomeStackNavigation />
   );
 }
 
-function BookScreen() {
+function BookingStack() {
   return (
-    <View>
-      <Text>This is Booking Screen</Text>
-    </View>
+    <BookingStackNavigation />
   );
 }
 
-function ProfileScreen() {
+function ProfileStack() {
   return (
-    <View>
-      <Text>This is Profile Screen</Text>
-    </View>
+    <ProfileStackNavigation />
   );
 }
 
@@ -38,13 +35,13 @@ function MoreScreen() {
 }
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function TabNavigator() {
   return (
-    <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
@@ -65,11 +62,10 @@ export default function TabNavigator() {
           tabBarInactiveTintColor: "gray",
         })}
       >
-        <Tab.Screen name="Accueil" component={HomeScreen} />
-        <Tab.Screen name="Réservations" component={BookScreen} />
-        <Tab.Screen name="Profil" component={ProfileScreen} />
+        <Tab.Screen name="Accueil" component={HomeStack} />
+        <Tab.Screen name="Réservations" component={BookingStack} />
+        <Tab.Screen name="Profil" component={ProfileStack} />
         <Tab.Screen name="Plus" component={MoreScreen} />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }

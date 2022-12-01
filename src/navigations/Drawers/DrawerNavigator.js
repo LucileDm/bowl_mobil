@@ -58,7 +58,6 @@ const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
     return (
-        <NavigationContainer>
             <Drawer.Navigator initialRouteName="AccountSettings">
                 <Drawer.Screen name="Paramètres du compte" component={AccountSettings} />
                 <Drawer.Screen name="Réservations" component={BookingSystem} />
@@ -66,6 +65,5 @@ export default function DrawerNavigator() {
                 <Drawer.Screen name="Avis" component={ReviewSystem} />
                 <Drawer.Screen name="Sélection du restaurant" component={RestaurantSelect} />
             </Drawer.Navigator>
-        </NavigationContainer>
     );
 }

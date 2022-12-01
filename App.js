@@ -1,14 +1,19 @@
-import { NavigationContainer } from '@react-navigation/native';
-import HomeSackNavigation from './src/navigations/HomeStackNavigation';
+import { NavigationContainer } from "@react-navigation/native";
+import { NativeBaseProvider, Box } from "native-base";
+import Theme from "./src/utils/theme";
+import TabNavigator from "./src/navigations/Tabs/TabNavigator";
 
 function App() {
   return (
-    <NavigationContainer>
-      {/* <TextLogo /> */}
-      {/* si user est connecté */}
-      <HomeSackNavigation />
-
-    </NavigationContainer>
+    <NativeBaseProvider theme={Theme}>
+      <Box flex={1}>
+      <NavigationContainer>
+        {/* <TextLogo /> */}
+        {/* si user est connecté */}
+        <TabNavigator />
+      </NavigationContainer>
+      </Box>
+    </NativeBaseProvider>
   );
 }
 
