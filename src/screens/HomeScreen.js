@@ -13,13 +13,13 @@ function Home({ navigation }) {
     getSaltedBowls().then((res) => {
       setBowls(res.data);
     }).catch((err) => {
-      console.log(err);
+      console.log(err.toJSON());
     });
   })
 
-  const renderItem = ({ bowl }) => (
+  const renderItem = ({ item }) => (
     <Pressable>
-      <Box>{bowl.name}</Box>
+      <Box>{item.name}</Box>
     </Pressable>
   );
 
