@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, View } from 'react-native';
 import { Formik } from 'formik';
 import { Input, Stack } from "native-base";
 import { login } from "../services/users";
+import {AuthContext} from './../contexts/AuthContext';
 
-export const LoginScreen = props => (
+
+export const LoginScreen = props => {
+    
+    const {setUser} = useContext(AuthContext);
+    return(
+    
     <Formik
         initialValues={{ 
             email: '',
@@ -13,8 +19,8 @@ export const LoginScreen = props => (
       
         onSubmit={ values => {
             console.log(values)
-            login(values).then(()=>{
-                console.log('Connexion OK')
+            login(values).then((data)=>{
+                setUser(data)
             }).catch(err => {
                 console.log(err)
             })
@@ -44,6 +50,6 @@ export const LoginScreen = props => (
         </View>
       )}
     </Formik>
-  );
+  )};
 
 export default LoginScreen;
