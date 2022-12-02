@@ -3,7 +3,7 @@ import { Button, View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-import { Input, Stack, FormControl, WarningOutlineIcon } from "native-base";
+import { Input, Stack, FormControl, WarningOutlineIcon, ScrollView } from "native-base";
 import { register } from "../services/users";
 
 const registerSchema = yup.object({
@@ -24,6 +24,7 @@ const registerSchema = yup.object({
 });
 
 export const RegisterScreen = props => (
+    <ScrollView>
     <Formik
         initialValues={{ 
             firstName: '',
@@ -125,6 +126,7 @@ export const RegisterScreen = props => (
         </View>
       )}
     </Formik>
+    </ScrollView>
   );
 
 export default RegisterScreen;

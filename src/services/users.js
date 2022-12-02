@@ -1,5 +1,9 @@
-import {AxiosInstance} from '../providers/axiosInstance';
+import {axiosInstance} from '../providers/axiosProvider';
 
-export const register = (values) => {
-    return AxiosInstance.post('/users/add', values);
+export const register = async (values) => {
+    return await axiosInstance.post('/users/add', values);
+}
+
+export const login = async (values) => {
+    return await axiosInstance.post('/users/login', values);
 }
