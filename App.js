@@ -1,13 +1,17 @@
-import { Text } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native';
-// import HomeStackNavigation from './src/navigations/HomeStackNavigation';
+import { NavigationContainer } from "@react-navigation/native";
+import { NativeBaseProvider, Box } from "native-base";
+import Theme from "./src/utils/theme";
+import TabNavigator from "./src/navigations/Tabs/TabNavigator";
 
 function App() {
   return (
-    // <NavigationContainer>
-      // {/* <HomeStackNavigation /> */}
-      <Text>Test</Text>
-    // {/* </NavigationContainer> */}
+    <NativeBaseProvider theme={Theme}>
+      <Box flex={1}>
+        <NavigationContainer>
+          <TabNavigator />
+        </NavigationContainer>
+      </Box>
+    </NativeBaseProvider>
   );
 }
 

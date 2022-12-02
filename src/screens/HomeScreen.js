@@ -1,4 +1,4 @@
-n/*
+/*
   debug native
   Route API pour get les ingrédients
   Upload d'image
@@ -121,7 +121,7 @@ function Home({ navigation }) {
 
         <Button
           title="Bowl"
-          onPress={() => navigation.navigate('Bowl')}
+          onPress={navToBowl}
           />
 
         <Button
