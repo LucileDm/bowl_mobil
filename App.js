@@ -16,9 +16,11 @@ function App() {
           <Box flex={1}>
             <NavigationContainer>
               {/* <TextLogo /> */}
-              {/* si user est connecté */}
               <LoginScreen />
-              <TabNavigator />
+              {/* si user est connecté */}
+             { user?.data.token ? 
+                <TabNavigator />
+              : null }
             </NavigationContainer>
           </Box>
         </AxiosProvider>
