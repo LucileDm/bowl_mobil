@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export const AxiosInstance = axios.create({
-    baseURL: 'https://bowllywood.herokuapp.com/'
+export const axiosInstance = axios.create({
+    baseURL: 'https://bowllywood.onrender.com/'
 });

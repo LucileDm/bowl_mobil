@@ -1,6 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import HomeScreen from '../screens/HomeScreen.js';
 import BowlScreen from '../screens/BowlScreen.js';
 import ReservationScreen from '../screens/ReservationScreen.js';
@@ -8,7 +6,7 @@ import ReviewScreen from '../screens/ReviewScreen.js';
 import TextLogo from '../components/TextLogo.js';
 
 const Stack = createNativeStackNavigator();
-const headerTitle =  { headerTitle: () => <TextLogo /> } ;
+const headerTitle = { headerTitle: () => <TextLogo /> } ;
 
 function HomeStackNavigation() {
     return(
