@@ -20,6 +20,7 @@ export const LoginScreen = props => {
         onSubmit={ values => {
             console.log(values)
             login(values).then((data)=>{
+                console.log(data)
                 setUser(data)
             }).catch(err => {
                 console.log(err)
