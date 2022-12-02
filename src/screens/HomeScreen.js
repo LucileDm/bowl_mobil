@@ -13,7 +13,7 @@ function Home({ navigation }) {
     }).catch((err) => {
       console.log(err.toJSON());
     });
-  })
+  },[])
 
   const renderItem = ({ item }) => (
     <Pressable>
