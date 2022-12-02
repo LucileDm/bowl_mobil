@@ -22,25 +22,6 @@ const Theme = extendTheme({
 });
 
 export default Theme;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /*
     fontConfig: {
         'IBM Plex Sans': 
