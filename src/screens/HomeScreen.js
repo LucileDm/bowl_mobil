@@ -1,59 +1,117 @@
 /*
-  debug native
+  exemple des routes sur les pages de tests
   Route API pour get les ingrédients
   Upload d'image
   Page de maintenance
   renommer Bowl (ou pas)
   gestion d'erreur
+  dossier de projet
 */
 
 import { useState, useEffect } from 'react';
 import { getSaltedBowls } from '../services/bowls.js';
-// import { getIngredients } from '../services/ingredients.js';
-import { useFonts, isLoaded } from 'expo-font';
+import { useFonts, loadAsync, isLoaded } from 'expo-font';
 
 import { NativeBaseProvider, HStack, VStack, Box, FlatList, Pressable, Text } from 'native-base';
-import { Button, Image } from 'react-native';
+import { Button } from 'react-native';
+import { Image } from 'native-base';
 import { theme } from '../utils/theme.js';
 
 function Home({ navigation }) {
-
-  // get custom fonts
-  if (!isLoaded('mauikea') || !isLoaded('body'))
-  {
-    useFonts({
-      'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
-      'body': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
-    })
-  }
-
   const [bowls, setBowls] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  
-  useEffect(()=>{  
+  const [img, setImg] = useState();
+  const [ingredients, setIngredients] = useState();
+    
+  useEffect( () => {
     getSaltedBowls().then((res) => {
-      setBowls(res.data);
+      
+      // only 4 bowls
+      const gotBowls = res.data.slice(0, 4);
       
       // get every ingredients of the bowl
-      // bowls.forEach((bowl) => {
-        // const ingredientsID = bowl.ingredients;
-        // getIngredients(ingredientsID).then((res) => {
+      gotBowls.forEach((bowl) => {
+        bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
+
+        /*
+        const ingredientsID = bowl.ingredients;
+        getIngredients(ingredientsID).then((res) => {
           
-        //   setIngredients(res.data);
-        //   bowl.ingredients = ingredients;
+          setIngredients(gotBowls);
+          bowl.ingredients = ingredients;
           
-        // }).catch((err) => {
+        }).catch((err) => {
           
-        //   console.log('CATCH : GET ING' + err.toJSON());
-        //   bowl.ingredients = [];
-        // })
-      // })
+          console.log('CATCH : GET ING' + err.toJSON());
+          bowl.ingredients = [];
+        })
+        */
+
+      }) 
+
+      setBowls(gotBowls);
 
     }).catch((err) => {
-      console.log('CATCH : GET SALTED BOWLS');
-      console.log(err.toJSON());
+      console.log('CATCH : GET SALTED BOWLS ', err)
     });
+  }, [])
+
+  // get custom fonts
+  const [fonts] = useFonts({
+    'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
+    'body': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
   })
+  
+  /**
+   * For FlatList
+   * Generate the component for the current row of the bowl's lists.
+   * @param {object} item Current bowl of the FlatList
+   * @returns Component : the current row of the list
+   */
+  const renderItem = ({ item }) => {
+    return ( 
+      <Pressable
+        onPress={ () => navToBowl(item._id) }
+        mb="12">
+
+        <HStack>
+
+          <Image
+            source={{ uri: `https://bowllywood.onrender.com/images/menu/${item.image}` }}
+            resizeMode="cover"
+            size="xl"
+            alt={`Image du bowl ${item.name}`}/>
+
+          <VStack 
+            justifyContent="center"
+            space={2}
+            flex={1}
+            pl="6"
+            pr="2">
+
+            <HStack justifyContent="space-between" >
+              <Text style={{fontFamily: "mauikea"}} fontSize="xl" >{item.name}</Text>
+              <Text style={{fontFamily: "body" }} fontSize="xl" bold >{item.price} €</Text>
+            </HStack>
+            
+            <IngList ingArr={item.ingredients}/>
+            <Text fontSize="xs"  >{item.description}...</Text>
+         
+          </VStack>
+
+        </HStack>
+
+      </Pressable>
+    )
+  }
+
+  /**
+   * For FlatList
+   * Return the Text to diplay if the bowl list is empty
+   * @returns Component : the text
+   */
+  const emptyList = () => {
+    return <Text>Aucun bowl n'a été trouvé</Text>;
+  }
 
   /**
    * Return the ingredients of the current bowl as a formatted text. 
@@ -66,64 +124,28 @@ function Home({ navigation }) {
     if (ingArr.length > 0)
     {
       ingArr.forEach((ing, index) => {
-        ingText += (index !== ingArr.length) ? `${ing} •` : ing;
+        ingText += (index !== ingArr.length) ? `${ing} • ` : ing;
       });
     }
     return <Text>{ingText}</Text>;
   }
-  
-  const renderItem = ({ item }) => {
-    return (
-      <Pressable
-        onPress={navToBowl(item._id)}
-        mb="3">
 
-        <HStack>
-          
-          <Image source={item.image}/>
-          <VStack>
-            <HStack>
-              <Text fontFamily="mauikea" fontSize="md" >{item.name}</Text>
-              <Text fontFamily="body" fontSize="md" >{item.price}</Text>
-            </HStack>
-            
-            {/* <IngList ingArr={item.ingredients}/> */}
-            <Text fontSize="sm"maxW="100" >{item.description}</Text>
-          </VStack>
-
-        </HStack>  
-      </Pressable>
-    )
+  const navToBowl = (currentId) => {
+    console.log(currentId)
+    navigation.navigate('Bowl', {bowlId: currentId})
   }
-
-  const EmptyList = (
-    <Text>Aucun bowl n'a été trouvé</Text>
-  )
   
-// ItemSeparatorComponent
-// onRefresh
-// bg="primary.dark_grey"
   return (
     <NativeBaseProvider theme={theme}>
 
-
-      <Box bg='colors.primary.dark_grey' safeArea >
-        <FlatList 
-          data={bowls}
-          renderItem={renderItem}
-          ListEmptyComponent={EmptyList}
-          ListHeaderComponent={<Box>Header</Box>}
-          />
-      </Box>
+      <FlatList 
+        data={bowls}
+        renderItem={renderItem}
+        listEmptyComponent={emptyList}
+        // ListHeaderComponent={GreenTitle}
+        />
 
       <Box flex={1}>
-        <Text textAlign="center" >Accueil</Text>
-
-        <Button
-          title="Bowl"
-          onPress={navToBowl}
-          />
-
         <Button
           title="Reservation"
           onPress={() => navigation.navigate('Reservation')}

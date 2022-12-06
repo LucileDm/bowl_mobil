@@ -1,4 +1,4 @@
-import { extendTheme, theme } from 'native-base';
+import { extendTheme } from 'native-base';
 
 const Theme = extendTheme({
     colors: {

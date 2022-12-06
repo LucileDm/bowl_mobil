@@ -22,7 +22,6 @@ function HomeStackNavigation() {
             <Stack.Screen
                 name='Bowl'
                 component={BowlScreen}
-                options={headerTitle}
                 />
 
             <Stack.Screen name='Reservation' component={BookingScreen} />
