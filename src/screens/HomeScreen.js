@@ -10,12 +10,22 @@
 
 import { useState, useEffect } from 'react';
 import { getSaltedBowls } from '../services/bowls.js';
-import { useFonts, loadAsync, isLoaded } from 'expo-font';
+import { useFonts } from 'expo-font';
 
-import { NativeBaseProvider, HStack, VStack, Box, FlatList, Pressable, Text } from 'native-base';
-import { Button } from 'react-native';
-import { Image } from 'native-base';
-import { theme } from '../utils/theme.js';
+import { NativeBaseProvider, 
+        HStack, 
+        VStack, 
+        Box, 
+        FlatList, 
+        Pressable, 
+        Text,
+        Image }
+      from 'native-base';
+
+import { ScrollView, Button } from 'react-native';
+
+import theme from '../utils/theme.js';
+import GreenTitle from '../components/GreenTitle.js';
 
 function Home({ navigation }) {
   const [bowls, setBowls] = useState([]);
@@ -58,11 +68,10 @@ function Home({ navigation }) {
   // get custom fonts
   const [fonts] = useFonts({
     'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
-    'body': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
+    'ibm': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
   })
-  
-  /**
-   * For FlatList
+
+  /** For FlatList
    * Generate the component for the current row of the bowl's lists.
    * @param {object} item Current bowl of the FlatList
    * @returns Component : the current row of the list
@@ -90,7 +99,7 @@ function Home({ navigation }) {
 
             <HStack justifyContent="space-between" >
               <Text style={{fontFamily: "mauikea"}} fontSize="xl" >{item.name}</Text>
-              <Text style={{fontFamily: "body" }} fontSize="xl" bold >{item.price} €</Text>
+              <Text style={{fontFamily: "ibm" }} fontSize="xl" bold >{item.price} €</Text>
             </HStack>
             
             <IngList ingArr={item.ingredients}/>
@@ -104,8 +113,7 @@ function Home({ navigation }) {
     )
   }
 
-  /**
-   * For FlatList
+  /** For FlatList
    * Return the Text to diplay if the bowl list is empty
    * @returns Component : the text
    */
@@ -113,7 +121,7 @@ function Home({ navigation }) {
     return <Text>Aucun bowl n'a été trouvé</Text>;
   }
 
-  /**
+  /** For FlatList
    * Return the ingredients of the current bowl as a formatted text. 
    * @param   {array}  ingArr Array of the bowl's ingredients
    * @returns {string} ingText If the Ingredient array is empty, return error msg.
@@ -131,31 +139,39 @@ function Home({ navigation }) {
   }
 
   const navToBowl = (currentId) => {
-    console.log(currentId)
     navigation.navigate('Bowl', {bowlId: currentId})
   }
   
+  const subTitleText = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)
+
   return (
     <NativeBaseProvider theme={theme}>
 
-      <FlatList 
-        data={bowls}
-        renderItem={renderItem}
-        listEmptyComponent={emptyList}
-        // ListHeaderComponent={GreenTitle}
-        />
+      <ScrollView>
 
-      <Box flex={1}>
-        <Button
-          title="Reservation"
-          onPress={() => navigation.navigate('Reservation')}
+        <VStack space="12">
+          <GreenTitle title="Nos pokés salés" subTitle={subTitleText}/>
+
+          <FlatList 
+            data={bowls}
+            renderItem={renderItem}
+            listEmptyComponent={emptyList}
+            // ListHeaderComponent={GreenTitle}
+            />
+        </VStack>
+
+        <Box>
+          <Button
+            title="Reservation"
+            onPress={() => navigation.navigate('Reservation')}
+            />
+
+          <Button
+            title="Review"
+            onPress={() => navigation.navigate('Review')}
           />
-
-        <Button
-          title="Review"
-          onPress={() => navigation.navigate('Review')}
-        />
-      </Box>
+        </Box>
+      </ScrollView>
     </NativeBaseProvider>
   );
 }

@@ -24,7 +24,7 @@ const Theme = extendTheme({
 export default Theme;
     /*
     fontConfig: {
-        'IBM Plex Sans': 
+        'ibm': 
         {
             200: {
             normal: "Roboto-Light",

@@ -1,24 +1,47 @@
-import { NativeBaseProvider, Text, HStack } from 'native-base';
+import { NativeBaseProvider,
+      Text,
+      VStack,
+      Box, 
+      useTheme}
+    from 'native-base';
+
 import { theme } from '../utils/theme.js';
-import { useFonts, isLoaded } from 'expo-font';
+import { useFonts } from 'expo-font';
 
 const GreenTitle = (props) => {
     
-  // // get custom fonts
-  // if (!isLoaded('mauikea') || !isLoaded('body'))
-  // {
-  //     useFonts({
-  //         'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
-  //         'body': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
-  //     })
-  // }
+  // get custom fonts
+  const [fonts] = useFonts({
+      'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
+      'ibm': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
+  })
+
+  const { colors } = useTheme();
 
   return (
     <NativeBaseProvider theme={theme} >
       
-      <VStack px="5"  >
-        <Text fontFamily="body" fontSize="20"></Text> 
-      </VStack>
+      <Box position="relative" >
+        <Box 
+          backgroundColor={colors.primary.pale_green}
+          position="absolute"
+          width="45%"
+          height="90%"
+          ></Box>
+      
+        <VStack pl="8" pt={6}>
+          <Text fontFamily="ibm" 
+              fontSize="2xl" 
+              color="colors.primary.dark_grey" 
+              bold>{props.title}</Text>
+
+          <Text fontFamily="ibm"
+              lineHeight="2xs"
+              fontSize="md"
+              color="colors.primary.dark_grey" >{props.subTitle}</Text>
+        </VStack>
+      </Box>
+
     </NativeBaseProvider>
   );
 }
