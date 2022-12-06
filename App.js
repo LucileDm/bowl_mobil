@@ -7,17 +7,13 @@ import HomeStackNavigation from "./src/navigations/Stacks/HomeStackNavigation";
 function App() {
 
   // const {colors} = useTheme();
-  // bgColor={colors.primary.pale_green}
-
+  
   return (
     <NativeBaseProvider theme={Theme}>
-      <Box flex={1} 
-      >
-        <NavigationContainer>
-          <HomeStackNavigation />
-          {/* <RegisterScreen /> */}
-        </NavigationContainer>
-      </Box>
+      <NavigationContainer>
+        <HomeStackNavigation />
+        {/* <RegisterScreen /> */}
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 }

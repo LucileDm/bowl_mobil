@@ -5,18 +5,31 @@ import BowlScreen from '../../screens/BowlScreen.js';
 import BookingScreen from '../../screens/Booking/BookingScreen.js';
 import ReviewScreen from '../../screens/Reviews/ReviewScreen.js';
 import TextLogo from '../../components/TextLogo.js';
+import { useTheme } from 'native-base';
 
 const Stack = createNativeStackNavigator();
-const headerTitle = { headerTitle: () => <TextLogo /> } ;
+const headerTitle = { headerTitle: () => <TextLogo />};
 
 function HomeStackNavigation() {
+
+    const {colors} = useTheme()
+    const bgColor = colors.primary.off_white;
+    
     return(
-        <Stack.Navigator>
+        <Stack.Navigator 
+            screenOptions={{
+                textColor: 'tomato',
+                headerStyle: { 
+                    backgroundColor: bgColor
+                },
+            }}
+        >
 
             <Stack.Screen 
                 name='Home'
                 component={HomeScreen}
                 options={headerTitle}
+                
                 />
             
             <Stack.Screen
