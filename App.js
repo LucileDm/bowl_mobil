@@ -29,7 +29,7 @@ function App() {
             {/* <NavigationContainer> */}
               {/* si user est connecté */}
               {/* { user?.data.token ?  */}
-                {/* <RestaurantListScreen /> */}
+                <RestaurantListScreen />
                {/* : null } */}
               {/* <TabNavigator />  */}
             {/* </NavigationContainer> */}
