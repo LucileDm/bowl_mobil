@@ -1,22 +1,8 @@
 import { React, useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  FlatList,
-  Heading,
-  HStack,
-  NativeBaseProvider,
-  Radio,
-  Row,
-  Text,
-  VStack,
-} from "native-base";
+import { FlatList, Heading, HStack, VStack } from "native-base";
 
 import { getAllRestaurants } from "./../../services/restaurants";
-import { theme } from "./../../utils/theme.js";
-import { divide } from "react-native-reanimated";
+
 import ItemListRestaurant from "../../components/ItemListRestaurant";
 
 const RestaurantListScreen = () => {
