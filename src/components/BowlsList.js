@@ -27,10 +27,10 @@ const BowlsList = ({bowls, title, subTitle}) => {
             <GreenTitle title={title} subTitle={subTitle}/>
 
             <FlatList 
+                nestedScrollEnabled={false}
                 data={bowls}
                 renderItem={ ({item}) => <BowlListItem bowl={item} /> }
                 listEmptyComponent={emptyList}
-                mb={5}
                 // ListHeaderComponent={GreenTitle}
             />
         </VStack>

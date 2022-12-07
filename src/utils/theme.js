@@ -17,7 +17,7 @@ const Theme = extendTheme({
     },
     // fonts: {
     //     mauikea: Test(), // marche pas
-    //     body: 'IBM Plex Sans' // idem
+    //     ibm: 'IBM Plex Sans' // idem
     // }
 });
 

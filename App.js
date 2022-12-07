@@ -5,9 +5,6 @@ import HomeStackNavigation from "./src/navigations/Stacks/HomeStackNavigation";
 // import RegisterScreen from "./src/screens/RegisterScreen.js";
 
 function App() {
-
-  // const {colors} = useTheme();
-  
   return (
     <NativeBaseProvider theme={Theme}>
       <NavigationContainer>

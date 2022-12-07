@@ -29,7 +29,6 @@ function HomeStackNavigation() {
                 name='Home'
                 component={HomeScreen}
                 options={headerTitle}
-                
                 />
             
             <Stack.Screen

@@ -39,7 +39,7 @@ const BowlListItem = ({bowl}) => {
         navigation.navigate('Bowl', {bowlId: currentId})
     }
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
     
     return ( 
         <Pressable

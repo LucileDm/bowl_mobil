@@ -12,10 +12,11 @@ import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../services/bowls.js';
 import { useFonts } from 'expo-font';
 
-import { Text } from 'native-base';
+import { Text, useTheme, VStack } from 'native-base';
 import { ScrollView } from 'react-native';
 
 import BowlsList from '../components/BowlsList.js';
+import ReservBanner from '../components/ReservBanner.js';
 
 function Home({ navigation }) {
   const [saltedBowls, setSaltedBowls] = useState([]);
@@ -86,7 +87,13 @@ function Home({ navigation }) {
   const subTitleSalted = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)
 
   return (
-    <ScrollView>
+    <ScrollView 
+      nestedScrollEnabled={false} 
+      >
+      <VStack
+      space={16}
+      backgroundColor="#fff"
+      >
 
       {/* Selection restaurant 
 
@@ -109,14 +116,7 @@ function Home({ navigation }) {
           Text lien
       */}
 
-      {/* envie de réserver 
-      
-        VStack alignItem end
-          Text envie de déguster
-          Text réserver
-          Btn align self right
-      
-      */}
+      <ReservBanner />
 
       {/* avis
       
@@ -147,11 +147,11 @@ function Home({ navigation }) {
       
       */}
 
+      </VStack>
     </ScrollView>
   );
 }
 
-// onPress={() => navigation.navigate('Reservation')}
 // onPress={() => navigation.navigate('Review')}
 
 export default Home;
