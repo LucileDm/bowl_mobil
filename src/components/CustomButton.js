@@ -5,7 +5,6 @@ import { StyleSheet } from 'react-native';
 const CustomButton = ({type="button", bsType="primary", onPress, children}) => {
 
   const {colors} = useTheme();
-  console.log(children)
 
   const styles = StyleSheet.create({
     primary: {

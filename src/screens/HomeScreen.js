@@ -12,11 +12,13 @@ import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../services/bowls.js';
 import { useFonts } from 'expo-font';
 
-import { Text, useTheme, VStack } from 'native-base';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, VStack } from 'native-base';
 
 import BowlsList from '../components/BowlsList.js';
 import ReservBanner from '../components/ReservBanner.js';
+import ReviewSlide from '../components/ReviewSlide.js';
+import DailyMenu from '../components/DailyMenu.js';
+import SelectedRestau from '../components/SelectedRestau.js';
 
 function Home({ navigation }) {
   const [saltedBowls, setSaltedBowls] = useState([]);
@@ -29,15 +31,15 @@ function Home({ navigation }) {
     getSaltedBowls().then((res) => {
       
       // only 4 bowls
-      const gotBowls = res.data.slice(0, 4);
+      const gottenBowls = res.data.slice(0, 4);
       
       // get ingredients of the bowl
-      gotBowls.forEach((bowl) => {
+      gottenBowls.forEach((bowl) => {
         bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
         // getIngredients(bowl)
       }) 
 
-      setSaltedBowls(gotBowls);
+      setSaltedBowls(gottenBowls);
 
     }).catch((err) => {
       console.log('CATCH : GET SALTED BOWLS ', err)
@@ -47,15 +49,15 @@ function Home({ navigation }) {
     getSweetBowls().then((res) => {
       
       // only 4 bowls
-      const gotBowls = res.data.slice(0, 4);
+      const gottenBowls = res.data.slice(0, 4);
       
       // get ingredients of the bowls
-      gotBowls.forEach((bowl) => {
+      gottenBowls.forEach((bowl) => {
         bowl.ingredients = ["Liste", "de tous", "les ingrédients", "ici", "mauris", "blandit", "aliquet"]; 
         // getIngredients(bowl)
       }) 
 
-      setSweetBowls(gotBowls);
+      setSweetBowls(gottenBowls);
     }).catch((err) => {
       console.log('CATCH : GET SWEET BOWLS ', err)
     });
@@ -67,7 +69,7 @@ function Home({ navigation }) {
       const ingredientsID = bowl.ingredients;
       getIngredients(ingredientsID).then((res) => {
         
-        setIngredients(gotBowls);
+        setIngredients(gottenBowls);
         bowl.ingredients = ingredients;
         
       }).catch((err) => {
@@ -87,71 +89,30 @@ function Home({ navigation }) {
   const subTitleSalted = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)
 
   return (
-    <ScrollView 
-      nestedScrollEnabled={false} 
-      >
+    <ScrollView>
       <VStack
-      space={16}
-      backgroundColor="#fff"
-      >
+        space={16}
+        backgroundColor="#fff"
+        pt={16}
+        pb={24}
+        >
 
-      {/* Selection restaurant 
+        <SelectedRestau />
+        <ReservBanner />
+        <ReviewSlide />
 
-        Connexion BDD Restaurants
+        {/* lien vers Toute la liste depuis titre ou btn */}
+        {/* voir pk rien quand pas de data */}
+        {/* chargement apparent */}
+        <BowlsList bowls={saltedBowls} title="Nos pokés salés" subTitle={subTitleSalted}/>
+        <BowlsList bowls={sweetBowls} title="Nos pokés dessert" subTitle="Phrase d’accroche pour dessert"/>
+
+        {/* infos menu du jour en dur */}
+        <DailyMenu />
       
-        HStack . alignCenter relatif
-          box green absolute
-          Icon
-          VStack
-            Text titre
-            Text sous titre
-
-        HStack ctrn space evenly
-          Text adresse
-          VStack horaire
-            Text horaire
-            Text heure
-
-        BoxFlex align self right 
-          Text lien
-      */}
-
-      <ReservBanner />
-
-      {/* avis
-      
-        Connexion BDD Review
-      
-        Box border top & bottom
-          Text titre
-          Slide réact
-            Component Stars
-            Text nom
-            Text description
-      */}
-
-      <BowlsList bowls={saltedBowls} title="Nos pokés salés" subTitle={subTitleSalted}/>
-      <BowlsList bowls={sweetBowls} title="Nos pokés dessert" subTitle="Phrase d’accroche pour dessert"/>
-      
-      {/* menu du jour 
-      
-        HStack justifuContent Center, space 5
-          Image
-          VStack
-            Text titre
-            Text description Text prix
-
-        X2 VStack alignItem center, justifyContent Center
-          Text titre 
-          Text ingredients 
-      
-      */}
-
       </VStack>
     </ScrollView>
   );
 }
-
-// onPress={() => navigation.navigate('Review')}
 
 export default Home;

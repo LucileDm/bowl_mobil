@@ -30,12 +30,12 @@ const GreenTitle = (props) => {
           ></Box>
       
         <VStack pl="8" pt={6}>
-          <Text fontFamily="ibm" 
-              fontSize="2xl" 
+          <Text style={{fontFamily: "ibm"}} 
+              fontSize={props.titleSize ?? "2xl"}
               color="colors.primary.dark_grey" 
               bold>{props.title}</Text>
 
-          <Text fontFamily="ibm"
+          <Text style={{fontFamily: "ibm"}}
               lineHeight="2xs"
               fontSize="md"
               color="colors.primary.dark_grey" >{props.subTitle}</Text>

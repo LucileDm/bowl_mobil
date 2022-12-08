@@ -3,7 +3,7 @@ import { extendTheme } from 'native-base';
 const Theme = extendTheme({
     colors: {
         primary: {
-            dark_grey  : '#3D3D3D', // !default; // Texte
+            dark_grey  : '#3D3D3D', // texte
             off_white  : '#F2F2F2', // Fond blanc du site
             pale_green : '#DAFBE2', // Navbar/Footer
             green      : '#A3F5B8', // Interactions utilisateur
@@ -15,10 +15,10 @@ const Theme = extendTheme({
             star       : '#EABF63', // rating stars color
         }
     },
-    // fonts: {
-    //     mauikea: Test(), // marche pas
-    //     ibm: 'IBM Plex Sans' // idem
-    // }
+    /*fonts: {
+        mauikea: Test(), // marche pas
+        ibm: 'IBM Plex Sans' // idem
+    }*/
 });
 
 export default Theme;

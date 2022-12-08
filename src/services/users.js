@@ -1,9 +1,13 @@
-import {AxiosInstance} from '../providers/axiosInstance';
+import {axiosInstance} from '../providers/axiosInstance';
 
 export const register = (values) => {
-    return AxiosInstance.post('/users/add', values);
+    return axiosInstance.post('/users/add', values);
 }
 
 export const login = (values) => {
-    return AxiosInstance.post('/users/login', values);
+    return axiosInstance.post('/users/login', values);
+}
+
+export const getUserDetails = (id) => {
+    return axiosInstance.get('/users/' + id);
 }

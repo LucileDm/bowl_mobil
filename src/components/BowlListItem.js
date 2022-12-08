@@ -40,7 +40,7 @@ const BowlListItem = ({bowl}) => {
     }
 
     const navigation = useNavigation();
-    
+    // style={{fontFamily: "ibm" }}
     return ( 
         <Pressable
             onPress={ () => navToBowl(bowl._id) }
@@ -63,7 +63,7 @@ const BowlListItem = ({bowl}) => {
 
                 <HStack justifyContent="space-between" >
                     <Text style={{fontFamily: "mauikea"}} fontSize="xl" >{bowl.name}</Text>
-                    <Text style={{fontFamily: "ibm" }} fontSize="xl" bold >{bowl.price} €</Text>
+                    <Text fontSize="xl" bold >{bowl.price} €</Text>
                 </HStack>
                 
                 <IngList ingArr={bowl.ingredients} />
