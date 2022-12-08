@@ -13,6 +13,7 @@ import HomeScreen from "./src/screens/HomeScreen.js";
 import RegisterScreen from "./src/screens/RegisterScreen.js";
 import LoginScreen from "./src/screens/LoginScreen";
 import RestaurantListScreen from "./src/screens/Restaurant/RestaurantListScreen.js";
+import RestaurantScreen from "./src/screens/Restaurant/RestaurantScreen";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ function App() {
               {/* { user?.data.token ?  */}
               <RestaurantStackNavigation />
               {/* <RestaurantListScreen /> */}
+              {/* <RestaurantScreen /> */}
               {/* : null } */}
               {/* <TabNavigator />  */}
             </NavigationContainer>
