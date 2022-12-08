@@ -162,8 +162,7 @@ function RestaurantScreen() {
         <Text>
           Bowllywood {detailRestaurant.city} {detailRestaurant.district}
         </Text>
-        {/* Ne pas oublier de changer la type en address */}
-        <Text>{detailRestaurant.adress}</Text>
+        <Text>{detailRestaurant.address}</Text>
         <Text>
           {detailRestaurant.zipcode} {detailRestaurant.city}
         </Text>
