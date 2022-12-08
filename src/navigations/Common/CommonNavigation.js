@@ -4,18 +4,16 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 //J'importe toutes mes méthodes de création de navigateurs
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //J'importe tous mes écrans ici
-import HomeScreen from "../screens/Home/HomeScreen";
-import AccountScreen from "../screens/Account/AccountScreen";
-import BookingScreen from "../screens/Booking/BookingScreen";
-import { getUserProfile } from "../services/users";
+import HomeScreen from "../../screens/Home/HomeScreen";
+import AccountScreen from "../../screens/Account/AccountScreen";
+import BookingScreen from "../../screens/Booking/BookingScreen";
 
 //Je déclare mes navigateurs
 const TabNavigator = createBottomTabNavigator();
-const DrawerNavigator = createDrawerNavigator();
 
 export default function CommonNavigator() {
   return (

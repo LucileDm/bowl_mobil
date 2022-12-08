@@ -1,12 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider, Box } from "native-base";
 import Theme from "./src/utils/theme";
-import TabNavigator from "./src/navigations/Tabs/TabNavigator";
 import LoginScreen from "./src/screens/Login/LoginScreen";
 import AxiosProvider from "./src/providers/axiosProvider";
 import { AuthContext } from "./src/contexts/AuthContext";
 import { useState } from "react";
-import CommonNavigator from "./src/navigations/CommonNavigator";
+import CommonNavigation from "./src/navigations/Common/CommonNavigation";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,7 +16,7 @@ function App() {
           <AxiosProvider>
             <Box flex={1}>
               {/* <TextLogo /> */}
-              {!user?.token ? <LoginScreen /> : <CommonNavigator />}
+              {!user?.token ? <LoginScreen /> : <CommonNavigation />}
             </Box>
           </AxiosProvider>
         </AuthContext.Provider>
