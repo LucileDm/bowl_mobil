@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
-const ItemListRestaurant = (props) => {
+const ItemListRestaurant = (props, { navigation }) => {
   const data = props.restos.item;
   const [day, setDay] = useState(false);
   const [openHour, setOpenHour] = useState(null);
@@ -223,6 +223,7 @@ const ItemListRestaurant = (props) => {
             as: Ionicons,
             name: "arrow-forward",
           }}
+          onPress={() => navigation.navigate("RestaurantDetail")}
         />
       </Box>
     </Box>
