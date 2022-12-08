@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getSaltedBowls } from '../services/bowls.js';
+import { getSaltedBowls } from '../../services/bowls.js';
 import { NativeBaseProvider, Text, Box, FlatList, Pressable, Button } from 'native-base';
-import { theme } from '../utils/theme.js';
+import { theme } from '../../utils/theme.js';
 
-function Home({ navigation }) {
+function HomeScreen({ navigation }) {
 
   const [bowls, setBowls] = useState([]);
   
@@ -56,4 +56,4 @@ function Home({ navigation }) {
   );
 }
 
-export default Home;
+export default HomeScreen;

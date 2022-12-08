@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../../screens/HomeScreen.js';
-import BowlScreen from '../../screens/BowlScreen.js';
+import HomeScreen from '../../screens/Home/HomeScreen.js';
+import BowlScreen from '../../screens/Bowl/BowlScreen.js';
 import BookingScreen from '../../screens/Booking/BookingScreen.js';
 import ReviewScreen from '../../screens/Reviews/ReviewScreen.js';
 import TextLogo from '../../components/TextLogo.js';

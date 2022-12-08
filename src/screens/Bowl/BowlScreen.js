@@ -1,7 +1,7 @@
 import { NativeBaseProvider, Text, Box } from 'native-base';
-import { theme } from '../utils/theme.js';
+import { theme } from '../../utils/theme.js';
 
-function Bowl() {
+function BowlScreen() {
   return (
       <Box flex={1} >
         <Text>Bowl</Text>
@@ -9,4 +9,4 @@ function Bowl() {
   );
 }
 
-export default Bowl;
+export default BowlScreen;

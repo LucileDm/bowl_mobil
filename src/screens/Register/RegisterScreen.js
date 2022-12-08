@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import { Input, Stack, FormControl, WarningOutlineIcon, ScrollView } from "native-base";
-import { register } from "../services/users";
+import { register } from "../../services/users";
 
 const registerSchema = yup.object({
     firstName: yup.string().required('Ce champ est obligatoire'),

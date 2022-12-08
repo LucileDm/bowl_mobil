@@ -2,30 +2,27 @@ import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider, Box } from "native-base";
 import Theme from "./src/utils/theme";
 import TabNavigator from "./src/navigations/Tabs/TabNavigator";
-import LoginScreen from "./src/screens/LoginScreen";
+import LoginScreen from "./src/screens/Login/LoginScreen";
 import AxiosProvider from "./src/providers/axiosProvider";
 import { AuthContext } from "./src/contexts/AuthContext";
 import { useState } from "react";
+import CommonNavigator from "./src/navigations/CommonNavigator";
 
 function App() {
   const [user, setUser] = useState(null);
   return (
-    <NativeBaseProvider theme={Theme}>
-      <AuthContext.Provider value={{ user, setUser: setUser }}>
-        <AxiosProvider>
-          <Box flex={1}>
-            <NavigationContainer>
+    <NavigationContainer>
+      <NativeBaseProvider theme={Theme}>
+        <AuthContext.Provider value={{ user, setUser: setUser }}>
+          <AxiosProvider>
+            <Box flex={1}>
               {/* <TextLogo /> */}
-              <LoginScreen />
-              {/* si user est connecté */}
-             { user?.data.token ? 
-                <TabNavigator />
-              : null }
-            </NavigationContainer>
-          </Box>
-        </AxiosProvider>
-      </AuthContext.Provider>
-    </NativeBaseProvider>
+              {!user?.token ? <LoginScreen /> : <CommonNavigator />}
+            </Box>
+          </AxiosProvider>
+        </AuthContext.Provider>
+      </NativeBaseProvider>
+    </NavigationContainer>
   );
 }
 

@@ -1,9 +1,11 @@
+import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import { useContext, useEffect } from 'react';
 import { AuthContext } from './../contexts/AuthContext';
 
 export const axiosInstance = axios.create({
-    baseURL: 'https://bowllywood.herokuapp.com/'
+    // baseURL: 'https://bowllywood.onrender.com/'
+    baseURL: 'http://192.168.1.136:3000'
 });
 
 const AxiosProvider = ({ children }) => {
@@ -16,6 +18,7 @@ const AxiosProvider = ({ children }) => {
         //   console.log(config)
           if (user?.token) {
             config.headers['Authorization'] = `Bearer ${user.token}`;
+            // console.log(config.headers);
           }
           // Do something before request is sent
           return config;

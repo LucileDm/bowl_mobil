@@ -6,8 +6,10 @@ import * as yup from 'yup';
 
 import {Button, Input, Stack, FormControl, WarningOutlineIcon } from "native-base";
 
-import { login } from "../services/users";
-import {AuthContext} from './../contexts/AuthContext';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { login } from "../../services/users";
+import {AuthContext} from '../../contexts/AuthContext';
 
 
 const loginSchema = yup.object({
@@ -22,6 +24,8 @@ const loginSchema = yup.object({
 });
 
 export const LoginScreen = props => {
+
+    const loginStackNavigator = createNativeStackNavigator();
     
     const {setUser} = useContext(AuthContext);
     return(
@@ -33,8 +37,8 @@ export const LoginScreen = props => {
         }}
       
         onSubmit={ values => {
-            login(values).then((data)=>{
-                setUser(data)
+            login(values).then((res)=>{
+                setUser(res.data)
             }).catch(err => {
                 console.log(err)
             })
