@@ -199,7 +199,11 @@ const ItemListRestaurant = (props) => {
   return (
     <Box flexDirection="row" justifyContent="space-between">
       <Box w="20%">
-        <Checkbox value="test" accessibilityLabel="This is a dummy checkbox" />
+        <Checkbox
+          borderRadius="xl"
+          value={data._id}
+          accessibilityLabel="Une checkbox ressemblant à un radio"
+        />
       </Box>
       <Box w="30%">
         <Text>Code postal</Text>
