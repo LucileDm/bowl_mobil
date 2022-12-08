@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { Icon, Radio, Checkbox, Box, Text, IconButton } from "native-base";
+import {
+  Icon,
+  Radio,
+  Checkbox,
+  Box,
+  Text,
+  IconButton,
+  Button,
+} from "native-base";
 import dayjs from "dayjs";
 
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
-const ItemListRestaurant = (props, { navigation }) => {
+const ItemListRestaurant = (props) => {
   const data = props.restos.item;
   const [day, setDay] = useState(false);
   const [openHour, setOpenHour] = useState(null);
   const [closeHour, setCloseHour] = useState(null);
   const [openOrClose, setOpenOrClose] = useState(null);
-
-  //------
+  const navigation = useNavigation();
 
   const isRestaurantOpen = (todayOpeningTime, todayClosingTime) => {
     // Heure d'ouverture
@@ -55,16 +62,12 @@ const ItemListRestaurant = (props, { navigation }) => {
       )
     ) {
       restaurantState = "Ouvert";
-      console.log("ouvert");
     } else {
       restaurantState = "Fermé";
-      console.log("fermé");
     }
 
     return restaurantState;
   };
-
-  // -----
 
   useEffect(() => {
     const today = dayjs().get("day");
@@ -78,116 +81,72 @@ const ItemListRestaurant = (props, { navigation }) => {
 
     switch (today) {
       case 1:
-        isRestaurantOpen(data.mondayOpeningTime, data.mondayClosingTime);
+        const mondayTimeSlot = isRestaurantOpen(
+          data.mondayOpeningTime,
+          data.mondayClosingTime
+        );
 
-        setOpenOrClose("restaurantState");
+        setOpenOrClose(mondayTimeSlot);
         setOpenHour(data.mondayOpeningTime);
         setCloseHour(data.mondayClosingTime);
         break;
       case 2:
-        isRestaurantOpen(data.tuesdayOpeningTime, data.tuesdayClosingTime);
+        const tuesdayTimeSlot = isRestaurantOpen(
+          data.tuesdayOpeningTime,
+          data.tuesdayClosingTime
+        );
 
-        setOpenOrClose("restaurantState");
+        setOpenOrClose(tuesdayTimeSlot);
         setOpenHour(data.tuesdayOpeningTime);
         setCloseHour(data.tuesdayClosingTime);
         break;
       case 3:
-        // // Heure d'ouverture
-        // const tempoWednesdayOpenTime = data.wednesdayOpeningTime.replace(
-        //   "h",
-        //   ":00"
-        // );
+        const wednesdayTimeSlot = isRestaurantOpen(
+          data.wednesdayOpeningTime,
+          data.wednesdayClosingTime
+        );
 
-        // const splitWednesdayOpenTime = tempoWednesdayOpenTime.split("");
-        // let wednesdayOpeningTime = "";
-
-        // if (splitWednesdayOpenTime[splitWednesdayOpenTime.length - 1] === ":") {
-        //   wednesdayOpeningTime =
-        //     dayjs().format("YYYY-MM-DD") +
-        //     "T" +
-        //     tempoWednesdayOpenTime +
-        //     "00:00";
-        // } else {
-        //   wednesdayOpeningTime =
-        //     dayjs().format("YYYY-MM-DD") + "T" + tempoWednesdayOpenTime + ":00";
-        // }
-        // // Heure de fermeture
-        // const tempoWednesdayCloseTime = data.wednesdayClosingTime.replace(
-        //   "h",
-        //   ":00"
-        // );
-
-        // const splitWednesdayCloseTime = tempoWednesdayCloseTime.split("");
-        // let wednesdayClosingTime = "";
-
-        // if (
-        //   splitWednesdayCloseTime[splitWednesdayCloseTime.length - 1] === ":"
-        // ) {
-        //   wednesdayClosingTime =
-        //     dayjs().format("YYYY-MM-DD") +
-        //     "T" +
-        //     tempoWednesdayCloseTime +
-        //     "00:00";
-        // } else {
-        //   wednesdayClosingTime =
-        //     dayjs().format("YYYY-MM-DD") +
-        //     "T" +
-        //     tempoWednesdayCloseTime +
-        //     ":00";
-        // }
-
-        // const todayDateTimeStamp = dayjs().format("YYYY-MM-DDTHH:mm:ss");
-
-        // let state = "";
-
-        // if (
-        //   dayjs(todayDateTimeStamp).isBetween(
-        //     wednesdayOpeningTime,
-        //     wednesdayClosingTime
-        //   )
-        // ) {
-        //   state = "ouvert";
-        //   console.log("ouvert");
-        // } else {
-        //   state = "fermé";
-        //   console.log("fermé");
-        // }
-        // console.log(
-        //   "Le timestamp d'aujourdhui à l'heure actuelle est :",
-        //   todayDateTimeStamp
-        // );
-
-        isRestaurantOpen(data.wednesdayOpeningTime, data.wednesdayClosingTime);
-
-        setOpenOrClose("restaurantState");
+        setOpenOrClose(wednesdayTimeSlot);
         setOpenHour(data.wednesdayOpeningTime);
         setCloseHour(data.wednesdayClosingTime);
         break;
       case 4:
-        isRestaurantOpen(data.thursdayOpeningTime, data.thursdayClosingTime);
+        const thursdayTimeSlot = isRestaurantOpen(
+          data.thursdayOpeningTime,
+          data.thursdayClosingTime
+        );
 
-        setOpenOrClose("restaurantState");
+        setOpenOrClose(thursdayTimeSlot);
         setOpenHour(data.thursdayOpeningTime);
         setCloseHour(data.thursdayClosingTime);
         break;
       case 5:
-        isRestaurantOpen(data.fridayOpeningTime, data.fridayClosingTime);
+        const fridayTimeSlot = isRestaurantOpen(
+          data.fridayOpeningTime,
+          data.fridayClosingTime
+        );
 
-        setOpenOrClose("restaurantState");
+        setOpenOrClose(fridayTimeSlot);
         setOpenHour(data.fridayOpeningTime);
         setCloseHour(data.fridayClosingTime);
         break;
       case 6:
-        isRestaurantOpen(data.saturdayOpeningTime, data.saturdayClosingTime);
+        const saturdayTimeSlot = isRestaurantOpen(
+          data.saturdayOpeningTime,
+          data.saturdayClosingTime
+        );
 
-        setOpenOrClose("restaurantState");
+        setOpenOrClose(saturdayTimeSlot);
         setOpenHour(data.saturdayOpeningTime);
         setCloseHour(data.saturdayClosingTime);
         break;
       case 7:
-        isRestaurantOpen(data.sundayOpeningTime, data.sundayClosingTime);
+        const sundayTimeSlot = isRestaurantOpen(
+          data.sundayOpeningTime,
+          data.sundayClosingTime
+        );
 
-        setOpenOrClose("restaurantState");
+        setOpenOrClose(sundayTimeSlot);
         setOpenHour(data.sundayOpeningTime);
         setCloseHour(data.sundayClosingTime);
         break;
@@ -223,7 +182,11 @@ const ItemListRestaurant = (props, { navigation }) => {
             as: Ionicons,
             name: "arrow-forward",
           }}
-          onPress={() => navigation.navigate("RestaurantDetail")}
+          onPress={() =>
+            navigation.navigate("RestaurantDetail", {
+              restaurantID: data._id,
+            })
+          }
         />
       </Box>
     </Box>
