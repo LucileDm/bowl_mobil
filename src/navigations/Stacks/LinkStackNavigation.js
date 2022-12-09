@@ -18,14 +18,14 @@ function LinkStackNavigation() {
       />
 
       <Stack.Screen
-        name="RestaurantListStack"
-        component={RestaurantStack}
+        name="ReviewStack"
+        component={ReviewStack}
         options={headerTitle}
       />
 
       <Stack.Screen
-        name="ReviewStack"
-        component={ReviewStack}
+        name="RestaurantListStack"
+        component={RestaurantStack}
         options={headerTitle}
       />
     </Stack.Navigator>
