@@ -27,11 +27,11 @@ export const RegisterScreen = props => (
     <ScrollView>
     <Formik
         initialValues={{ 
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            passwordConfirm: '' 
+            firstName: 'Prénomdetest',
+            lastName: 'Nomdetest',
+            email: 'email@email.fr',
+            password: 'blabla',
+            passwordConfirm: 'blabla' 
         }}
       
         onSubmit={ values => {
@@ -57,7 +57,7 @@ export const RegisterScreen = props => (
                             placeholder="Jean"
                             onChangeText={handleChange('firstName')}
                             onBlur={handleBlur('firstName')}
-                            value={values.firstname} />
+                            value={values.firstName} />
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                    {errors.firstName}
                 </FormControl.ErrorMessage>
@@ -71,7 +71,7 @@ export const RegisterScreen = props => (
                             placeholder="BONHERTA"
                             onChangeText={handleChange('lastName')}
                             onBlur={handleBlur('lastName')}
-                            value={values.lastname} />
+                            value={values.lastName} />
                     
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                     {errors.lastName}

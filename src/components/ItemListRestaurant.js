@@ -1,24 +1,27 @@
-import { useRoute } from "@react-navigation/native";
-import { Text, Box, Heading, HStack } from "native-base";
-import { useEffect, useState } from "react";
-
-import { getRestaurantDetail } from "./../../services/restaurants";
-
+import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  Icon,
+  Radio,
+  Checkbox,
+  Box,
+  Text,
+  IconButton,
+  Button,
+} from "native-base";
 import dayjs from "dayjs";
 
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
-function RestaurantScreen() {
-  const route = useRoute();
-  const restaurantID = route.params.restaurantID;
-
-  const [detailRestaurant, setDetailRestaurant] = useState([]);
-
+const ItemListRestaurant = (props) => {
+  const data = props.restos.item;
+  const [day, setDay] = useState(false);
   const [openHour, setOpenHour] = useState(null);
   const [closeHour, setCloseHour] = useState(null);
-
   const [openOrClose, setOpenOrClose] = useState(null);
+  const navigation = useNavigation();
 
   const isRestaurantOpen = (todayOpeningTime, todayClosingTime) => {
     // Heure d'ouverture
@@ -69,13 +72,12 @@ function RestaurantScreen() {
   useEffect(() => {
     const today = dayjs().get("day");
 
-    getRestaurantDetail(restaurantID)
-      .then((res) => {
-        setDetailRestaurant(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const nowHour = dayjs().get("hour");
+    const nowMinute = dayjs().get("minute");
+    const nowSecond = dayjs().get("second");
+
+    // Heure actuelle (heure + minute)
+    const hour = nowHour + "-" + nowMinute;
 
     switch (today) {
       case 1:
@@ -110,13 +112,13 @@ function RestaurantScreen() {
         break;
       case 4:
         const thursdayTimeSlot = isRestaurantOpen(
-          detailRestaurant.thursdayOpeningTime,
-          detailRestaurant.thursdayClosingTime
+          data.thursdayOpeningTime,
+          data.thursdayClosingTime
         );
 
         setOpenOrClose(thursdayTimeSlot);
-        setOpenHour(detailRestaurant.thursdayOpeningTime);
-        setCloseHour(detailRestaurant.thursdayClosingTime);
+        setOpenHour(data.thursdayOpeningTime);
+        setCloseHour(data.thursdayClosingTime);
         break;
       case 5:
         const fridayTimeSlot = isRestaurantOpen(
@@ -148,100 +150,47 @@ function RestaurantScreen() {
         setOpenHour(data.sundayOpeningTime);
         setCloseHour(data.sundayClosingTime);
         break;
+
       default:
         break;
     }
   }, []);
-
   return (
-    <Box flex={1}>
-      <Heading alignSelf="center" mt={4} size="md">
-        Bowllywood {detailRestaurant.city} {detailRestaurant.district}
-      </Heading>
-      <Box my={4} ml={4}>
-        <Text>
-          Bowllywood {detailRestaurant.city} {detailRestaurant.district}
-        </Text>
-        <Text>{detailRestaurant.address}</Text>
-        <Text>
-          {detailRestaurant.zipcode} {detailRestaurant.city}
-        </Text>
+    <Box flexDirection="row" justifyContent="space-between">
+      <Box w="20%">
+        <Checkbox
+          borderRadius="xl"
+          value={data._id}
+          accessibilityLabel="Une checkbox ressemblant à un radio"
+        />
       </Box>
-      <Box my={4} ml={4}>
-        <Heading size="sm">{detailRestaurant.phone}</Heading>
-        <Text>{detailRestaurant.email} email</Text>
+      <Box w="30%">
+        <Text>Code postal</Text>
+        <Text>{data?.city}</Text>
       </Box>
-      <Box my={4} ml={4}>
-        <Heading size="sm">Horaires</Heading>
+      <Box w="30%">
+        <Text>{openOrClose}</Text>
+        <Text>Horaire du jour</Text>
         <Text>
-          Actuellement -{" "}
-          {openOrClose == "Ouvert" ? (
-            <Text color="emerald.400">{openOrClose}</Text>
-          ) : (
-            <Text color="red.400">Fermé</Text>
-          )}
+          {openHour} - {closeHour}
         </Text>
       </Box>
-      <Box ml={4}>
-        <HStack>
-          <Text>Lundi</Text>
-          <Text>
-            {" "}
-            de {detailRestaurant.mondayOpeningTime} à{" "}
-            {detailRestaurant.mondayClosingTime}
-          </Text>
-        </HStack>
-        <HStack>
-          <Text>Mardi</Text>
-          <Text>
-            {" "}
-            de {detailRestaurant.tuesdayOpeningTime} à{" "}
-            {detailRestaurant.tuesdayClosingTime}
-          </Text>
-        </HStack>
-        <HStack>
-          <Text>Mercredi</Text>
-          <Text>
-            {" "}
-            de {detailRestaurant.wednesdayOpeningTime} à{" "}
-            {detailRestaurant.wednesdayClosingTime}
-          </Text>
-        </HStack>
-        <HStack>
-          <Text>Jeudi</Text>
-          <Text>
-            {" "}
-            de {detailRestaurant.thursdayOpeningTime} à{" "}
-            {detailRestaurant.thursdayClosingTime}
-          </Text>
-        </HStack>
-        <HStack>
-          <Text>Vendredi</Text>
-          <Text>
-            {" "}
-            de {detailRestaurant.fridayOpeningTime} à{" "}
-            {detailRestaurant.fridayClosingTime}
-          </Text>
-        </HStack>
-        <HStack>
-          <Text>Samedi</Text>
-          <Text>
-            {" "}
-            de {detailRestaurant.saturdayOpeningTime} à{" "}
-            {detailRestaurant.saturdayClosingTime}
-          </Text>
-        </HStack>
-        <HStack>
-          <Text>Dimanche</Text>
-          <Text>
-            {" "}
-            de {detailRestaurant.sundayOpeningTime} à{" "}
-            {detailRestaurant.sundayClosingTime}
-          </Text>
-        </HStack>
+      <Box w={24} alignItems="center" justifyContent="center">
+        <IconButton
+          size={24}
+          _icon={{
+            as: Ionicons,
+            name: "arrow-forward",
+          }}
+          onPress={() =>
+            navigation.navigate("RestaurantDetail", {
+              restaurantID: data._id,
+            })
+          }
+        />
       </Box>
     </Box>
   );
-}
+};
 
-export default RestaurantScreen;
+export default ItemListRestaurant;

@@ -1,4 +1,4 @@
-import {axiosInstance} from '../providers/axiosInstance';
+import {axiosInstance} from '../providers/axiosProvider';
 
 export const register = (values) => {
     return axiosInstance.post('/users/add', values);
