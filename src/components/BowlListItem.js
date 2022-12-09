@@ -12,6 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const BowlListItem = ({bowl}) => {
 
+    const navigation = useNavigation();
+    
     // get custom fonts
     const [fonts] = useFonts({
         'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
@@ -39,7 +41,6 @@ const BowlListItem = ({bowl}) => {
         navigation.navigate('Bowl', {bowlId: currentId})
     }
 
-    const navigation = useNavigation();
     // style={{fontFamily: "ibm" }}
     return ( 
         <Pressable

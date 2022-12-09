@@ -8,9 +8,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //J'importe tous mes écrans ici
-import HomeScreen from "../../screens/Home/HomeScreen";
-import AccountScreen from "../../screens/Account/AccountScreen";
-import BookingScreen from "../../screens/Booking/BookingScreen";
+import HomeStackNavigation from "../Stacks/HomeStackNavigation";
+import ProfileStackNavigation from "../Stacks/ProfileStackNavigation";
+import BookingStackNavigation from "../Stacks/BookingStackNavigation";
 
 //Je déclare mes navigateurs
 const TabNavigator = createBottomTabNavigator();
@@ -40,13 +40,10 @@ export default function CommonNavigator() {
           tabBarInactiveTintColor: "gray",
         })}
       >
-        <TabNavigator.Screen name="Accueil" component={HomeScreen} />
-        <TabNavigator.Screen
-          name="Réservations"
-          component={BookingScreen}
-        />
-        <TabNavigator.Screen name="Profil" component={AccountScreen} />
-        <TabNavigator.Screen name="Plus" component={HomeScreen} />
+        <TabNavigator.Screen name="Accueil" component={HomeStackNavigation} />
+        <TabNavigator.Screen name="Réservations" component={BookingStackNavigation} />
+        <TabNavigator.Screen name="Profil" component={ProfileStackNavigation} />
+        <TabNavigator.Screen name="Plus" component={HomeStackNavigation} />
       </TabNavigator.Navigator>
     
   );
