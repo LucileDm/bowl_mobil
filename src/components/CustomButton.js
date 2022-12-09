@@ -26,7 +26,7 @@ const CustomButton = ({type="button", bsType="primary", onPress, children}) => {
     <Button
       type={type}
       style={ (bsType === 'primary') ? styles.primary : styles.secondary } 
-      onPress={onPress()}
+      onPress={() => onPress()}
       px={5}
       py={3.5}
       rounded={7}
