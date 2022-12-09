@@ -11,7 +11,8 @@ dayjs.extend(isBetween);
 
 function RestaurantScreen() {
   const route = useRoute();
-  const restaurantID = route.params.restaurantID;
+
+  const data = route.params.restaurant;
 
   const [detailRestaurant, setDetailRestaurant] = useState([]);
 
@@ -69,7 +70,7 @@ function RestaurantScreen() {
   useEffect(() => {
     const today = dayjs().get("day");
 
-    getRestaurantDetail(restaurantID)
+    getRestaurantDetail(data._id)
       .then((res) => {
         setDetailRestaurant(res.data);
       })
