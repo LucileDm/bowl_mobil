@@ -15,9 +15,7 @@ function App() {
       <AuthContext.Provider value={{ user, setUser: setUser }}>
         <AxiosProvider>
             <NavigationContainer>
-            {console.log(!user?.token)}
-              {!user?.token ? <LoginStackNavigation /> : <CommonNavigation />}
-              {console.log('ta mere', !user?.token)}
+              {!user?.data.token ? <LoginStackNavigation /> : <CommonNavigation />}
             </NavigationContainer>
         </AxiosProvider>
       </AuthContext.Provider>

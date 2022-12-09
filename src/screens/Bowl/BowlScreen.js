@@ -5,8 +5,9 @@ import { useFonts, isLoaded } from 'expo-font';
 
 import { NativeBaseProvider, Text, Box } from 'native-base';
 import { theme } from '../../utils/theme.js';
+import BowlsList from '../../components/BowlsList.js';
 
-function Bowl({ route }) {
+function BowlScreen({ route }) {
   const {bowlId} = route.params;  
 
   const [bowl, setBowl] = useState([]);

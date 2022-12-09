@@ -33,10 +33,8 @@ export const LoginScreen = ({navigation}) => {
         }}
       
         onSubmit={ values => {
-            console.log(values);
             login(values).then((data)=>{
                 setUser(data)
-                console.log(data.data)
             }).catch(err => {
                 console.log(err)
             })
