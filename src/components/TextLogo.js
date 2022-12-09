@@ -1,24 +1,19 @@
-import { NativeBaseProvider, Text, HStack } from 'native-base';
-import { theme } from '../utils/theme.js';
-import { useFonts, isLoaded } from 'expo-font';
+import { Text, HStack, useTheme } from 'native-base';
+import { useFonts } from 'expo-font';
 
 const TextLogo = () => {
 
   // get custom fonts
-  if (!isLoaded('mauikea') || !isLoaded('body'))
-  {
-    useFonts({
-      'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
-      'body': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
-    })
-  }
+  const [fonts] = useFonts({
+    'mauikea': require('../../assets/fonts/mauikea/mauikea.otf')
+  })
 
+  const {colors} = useTheme()
+  
   return (
-    <NativeBaseProvider theme={theme} >
       <HStack px="5" >
-        <Text fontFamily="mauikea" fontSize="20">Bowllywood</Text> 
+        <Text style={{fontFamily: "mauikea"}} color={colors.primary.dark_grey} fontSize="20">Bowllywood</Text> 
       </HStack>
-    </NativeBaseProvider>
   );
 }
 
