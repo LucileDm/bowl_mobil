@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getOneMeal } from '../services/bowls.js';
-// import { getIngredients } from '../services/ingredients.js';
+import { getOneMeal } from '../../services/bowls.js';
+// import { getIngredients } from '../../services/ingredients.js';
 import { useFonts, isLoaded } from 'expo-font';
 
 import { NativeBaseProvider, Text, Box } from 'native-base';
