@@ -1,26 +1,41 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider, Box } from "native-base";
 import Theme from "./src/utils/theme";
-import TabNavigator from "./src/navigations/Tabs/TabNavigator";
-import LoginScreen from "./src/screens/LoginScreen";
 import AxiosProvider from "./src/providers/axiosProvider";
 import { AuthContext } from "./src/contexts/AuthContext";
 import { useState } from "react";
 
+import TabNavigator from "./src/navigations/Tabs/TabNavigator";
+import LoginStackNavigation from "./src/navigations/Stacks/LoginStackNavigation.js";
+import RestaurantStackNavigation from "./src/navigations/Stacks/RestaurantStackNavigation";
+
+import HomeScreen from "./src/screens/HomeScreen.js";
+import RegisterScreen from "./src/screens/RegisterScreen.js";
+import LoginScreen from "./src/screens/LoginScreen";
+import RestaurantListScreen from "./src/screens/Restaurant/RestaurantListScreen.js";
+import RestaurantScreen from "./src/screens/Restaurant/RestaurantScreen";
+
 function App() {
   const [user, setUser] = useState(null);
+
   return (
     <NativeBaseProvider theme={Theme}>
       <AuthContext.Provider value={{ user, setUser: setUser }}>
         <AxiosProvider>
           <Box flex={1}>
+            {/* <NavigationContainer> */}
+            {/* <TextLogo /> */}
+            {/* <LoginScreen /> */}
+            {/* <LoginStackNavigation /> */}
+            {/* </NavigationContainer> */}
             <NavigationContainer>
-              {/* <TextLogo /> */}
-              <LoginScreen />
               {/* si user est connecté */}
-             { user?.data.token ? 
-                <TabNavigator />
-              : null }
+              {/* { user?.data.token ?  */}
+              <RestaurantStackNavigation />
+              {/* <RestaurantListScreen /> */}
+              {/* <RestaurantScreen /> */}
+              {/* : null } */}
+              {/* <TabNavigator />  */}
             </NavigationContainer>
           </Box>
         </AxiosProvider>
