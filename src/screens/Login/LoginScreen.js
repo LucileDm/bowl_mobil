@@ -4,13 +4,13 @@ import { View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-import {Button, Input, Stack, FormControl, WarningOutlineIcon } from "native-base";
+import {Button, Input, Stack, FormControl, WarningOutlineIcon, NativeBaseProvider, Box, Text } from "native-base";
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { login } from "../../services/users";
-import {AuthContext} from '../../contexts/AuthContext';
-
+import { login } from "../services/users";
+import {AuthContext} from './../contexts/AuthContext';
+import { theme } from "./../utils/theme.js";
 
 const loginSchema = yup.object({
     email: yup
@@ -23,13 +23,10 @@ const loginSchema = yup.object({
         .min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
 });
 
-export const LoginScreen = props => {
-
-    const loginStackNavigator = createNativeStackNavigator();
+export const LoginScreen = ({navigation}) => {
     
     const {setUser} = useContext(AuthContext);
     return(
-    
     <Formik
         initialValues={{ 
             email: 'jean@paule.fr',
@@ -37,8 +34,9 @@ export const LoginScreen = props => {
         }}
       
         onSubmit={ values => {
-            login(values).then((res)=>{
-                setUser(res.data)
+            console.log(values);
+            login(values).then((data)=>{
+                setUser(data)
             }).catch(err => {
                 console.log(err)
             })
@@ -78,6 +76,8 @@ export const LoginScreen = props => {
             </FormControl>
 
                 <Button onPress={handleSubmit}>Connexion</Button>
+                <Button onPress={() => navigation.navigate('Register')}>S'inscrire</Button>
+
             </Stack>
 
         </View>
