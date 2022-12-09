@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from '../../screens/Home/HomeScreen.js';
-import BowlScreen from '../../screens/Bowl/BowlScreen.js';
+import Bowl from '../../screens/Bowl/BowlScreen.js';
 import BookingScreen from '../../screens/Booking/BookingScreen.js';
 import ReviewScreen from '../../screens/Reviews/ReviewScreen.js';
 import RestaurantListScreen from '../../screens/Restaurant/RestaurantList.js';
@@ -30,7 +30,7 @@ function HomeStackNavigation() {
             <Stack.Screen name='Restaurant' component={RestaurantScreen} />
             <Stack.Screen name='Reservation' component={BookingScreen} />
             <Stack.Screen name='Review' component={ReviewScreen} />
-            <Stack.Screen name='Bowl' component={BowlScreen}/>
+            <Stack.Screen name='Bowl' component={Bowl}/>
         </Stack.Navigator>
     );
 }
