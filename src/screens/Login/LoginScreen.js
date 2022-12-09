@@ -6,6 +6,8 @@ import * as yup from 'yup';
 
 import {Button, Input, Stack, FormControl, WarningOutlineIcon, NativeBaseProvider, Box, Text } from "native-base";
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { login } from "../services/users";
 import {AuthContext} from './../contexts/AuthContext';
 import { theme } from "./../utils/theme.js";

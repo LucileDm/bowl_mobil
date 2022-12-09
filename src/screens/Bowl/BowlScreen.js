@@ -4,7 +4,7 @@ import { getOneMeal } from '../services/bowls.js';
 import { useFonts, isLoaded } from 'expo-font';
 
 import { NativeBaseProvider, Text, Box } from 'native-base';
-import { theme } from '../utils/theme.js';
+import { theme } from '../../utils/theme.js';
 
 function Bowl({ route }) {
   const {bowlId} = route.params;  
@@ -47,4 +47,4 @@ function Bowl({ route }) {
   );
 }
 
-export default Bowl;
+export default BowlScreen;

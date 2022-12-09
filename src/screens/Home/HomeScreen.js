@@ -9,6 +9,17 @@
 */
 
 import { useState, useEffect } from 'react';
+<<<<<<< HEAD:src/screens/Home/HomeScreen.js
+import { getSaltedBowls } from '../../services/bowls.js';
+import { NativeBaseProvider, Text, Box, FlatList, Pressable, Button } from 'native-base';
+import { theme } from '../../utils/theme.js';
+
+function HomeScreen({ navigation }) {
+
+  const [bowls, setBowls] = useState([]);
+  
+  useEffect(()=>{  
+=======
 import { getSaltedBowls, getSweetBowls } from '../services/bowls.js';
 import { useFonts } from 'expo-font';
 
@@ -28,6 +39,7 @@ function Home({ navigation }) {
   useEffect( () => {
     
     // get salted bowls
+>>>>>>> dev:src/screens/HomeScreen.js
     getSaltedBowls().then((res) => {
       
       // only 4 bowls
@@ -114,4 +126,4 @@ function Home({ navigation }) {
   );
 }
 
-export default Home;
+export default HomeScreen;

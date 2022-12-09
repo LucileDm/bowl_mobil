@@ -8,6 +8,7 @@
     "ios": "expo start --ios",
     "tunnel": "expo start --tunnel",
     "eadd": "expo install",
+    "eremove": "expo uninstall",
     "ecache": "expo start --tunnel --clear"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^0.17.2",
     "@react-navigation/bottom-tabs": "^6.4.3",
+    "@react-navigation/drawer": "^6.5.3",
     "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.4",
     "axios": "^1.2.0",
