@@ -1,4 +1,4 @@
-import { axiosInstance } from "../providers/axiosInstance";
+import { axiosInstance } from "../providers/axiosProvider";
 
 export const createReview = (values) => {
     return axiosInstance.post('/reviews/create', values);

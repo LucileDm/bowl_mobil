@@ -9,27 +9,16 @@
 */
 
 import { useState, useEffect } from 'react';
-<<<<<<< HEAD:src/screens/Home/HomeScreen.js
-import { getSaltedBowls } from '../../services/bowls.js';
-import { NativeBaseProvider, Text, Box, FlatList, Pressable, Button } from 'native-base';
-import { theme } from '../../utils/theme.js';
-
-function HomeScreen({ navigation }) {
-
-  const [bowls, setBowls] = useState([]);
-  
-  useEffect(()=>{  
-=======
-import { getSaltedBowls, getSweetBowls } from '../services/bowls.js';
+import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
 import { useFonts } from 'expo-font';
 
 import { ScrollView, Text, VStack } from 'native-base';
 
-import BowlsList from '../components/BowlsList.js';
-import ReservBanner from '../components/ReservBanner.js';
-import ReviewSlide from '../components/ReviewSlide.js';
-import DailyMenu from '../components/DailyMenu.js';
-import SelectedRestau from '../components/SelectedRestau.js';
+import BowlsList from '../../components/BowlsList.js';
+import ReservBanner from '../../components/ReservBanner.js';
+import ReviewSlide from '../../components/ReviewSlide.js';
+import DailyMenu from '../../components/DailyMenu.js';
+import SelectedRestau from '../../components/SelectedRestau.js';
 
 function Home({ navigation }) {
   const [saltedBowls, setSaltedBowls] = useState([]);
@@ -39,7 +28,6 @@ function Home({ navigation }) {
   useEffect( () => {
     
     // get salted bowls
->>>>>>> dev:src/screens/HomeScreen.js
     getSaltedBowls().then((res) => {
       
       // only 4 bowls
@@ -94,8 +82,8 @@ function Home({ navigation }) {
 
   // get custom fonts
   const [fonts] = useFonts({
-    'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
-    'ibm': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
+    'mauikea': require('../../../assets/fonts/mauikea/mauikea.otf'),
+    'ibm': require('../../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
   })
 
   const subTitleSalted = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)
@@ -126,4 +114,4 @@ function Home({ navigation }) {
   );
 }
 
-export default HomeScreen;
+export default Home;

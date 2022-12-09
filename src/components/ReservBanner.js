@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { ImageBackground } from 'react-native'
+import { ImageBackground, Dimensions } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
-import {vh} from 'react-native-viewport-units';
 import { VStack, Box, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 
 const styles = StyleSheet.create({
   container: {
-    height: 60*vh,
+    height: 0.6 * Dimensions.get('screen').height,
     justifyContent: 'flex-end',
   }
 })

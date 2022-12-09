@@ -8,9 +8,8 @@ import {Button, Input, Stack, FormControl, WarningOutlineIcon, NativeBaseProvide
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { login } from "../services/users";
-import {AuthContext} from './../contexts/AuthContext';
-import { theme } from "./../utils/theme.js";
+import { login } from "../../services/users";
+import {AuthContext} from '../../contexts/AuthContext';
 
 const loginSchema = yup.object({
     email: yup
@@ -37,6 +36,7 @@ export const LoginScreen = ({navigation}) => {
             console.log(values);
             login(values).then((data)=>{
                 setUser(data)
+                console.log(data.data)
             }).catch(err => {
                 console.log(err)
             })
