@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { getOneMeal } from '../services/bowls.js';
-// import { getIngredients } from '../services/ingredients.js';
+import { getOneMeal } from '../../services/bowls.js';
+// import { getIngredients } from '../../services/ingredients.js';
 import { useFonts, isLoaded } from 'expo-font';
 
 import { NativeBaseProvider, Text, Box } from 'native-base';
 import { theme } from '../../utils/theme.js';
 import BowlsList from '../../components/BowlsList.js';
 
-function BowlScreen({ route }) {
+function Bowl({ route }) {
   const {bowlId} = route.params;  
 
   const [bowl, setBowl] = useState([]);
@@ -48,4 +48,4 @@ function BowlScreen({ route }) {
   );
 }
 
-export default BowlScreen;
+export default Bowl;

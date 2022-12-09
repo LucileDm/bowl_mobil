@@ -4,7 +4,7 @@ import HomeScreen from '../../screens/Home/HomeScreen.js';
 import BowlScreen from '../../screens/Bowl/BowlScreen.js';
 import BookingScreen from '../../screens/Booking/BookingScreen.js';
 import ReviewScreen from '../../screens/Reviews/ReviewScreen.js';
-import RestaurantListScreen from '../../screens/Restaurant/RestaurantList.js';
+import RestaurantListScreen from '../../screens/Restaurant/RestaurantListScreen.js';
 import RestaurantScreen from '../../screens/Restaurant/RestaurantScreen';
 import TextLogo from '../../components/TextLogo.js';
 

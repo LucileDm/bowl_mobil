@@ -7,9 +7,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //J'importe tous mes écrans ici
-import HomeScreen from "../../screens/Home/HomeScreen";
-import AccountScreen from "../../screens/Account/AccountScreen";
-import BookingScreen from "../../screens/Booking/BookingScreen";
+import HomeStackNavigation from "../Stacks/HomeStackNavigation";
+import ProfileStackNavigation from "../Stacks/ProfileStackNavigation";
+import BookingStackNavigation from "../Stacks/BookingStackNavigation";
 import LinkStackNavigation from "../Stacks/LinkStackNavigation";
 
 //Je déclare mes navigateurs
@@ -40,9 +40,12 @@ export default function CommonNavigator() {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <TabNavigator.Screen name="Accueil" component={HomeScreen} />
-      <TabNavigator.Screen name="Réservations" component={BookingScreen} />
-      <TabNavigator.Screen name="Profil" component={AccountScreen} />
+      <TabNavigator.Screen name="Accueil" component={HomeStackNavigation} />
+      <TabNavigator.Screen
+        name="Réservations"
+        component={BookingStackNavigation}
+      />
+      <TabNavigator.Screen name="Profil" component={ProfileStackNavigation} />
       <TabNavigator.Screen name="Plus" component={LinkStackNavigation} />
     </TabNavigator.Navigator>
   );

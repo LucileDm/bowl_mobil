@@ -20,7 +20,7 @@ import ReviewSlide from '../../components/ReviewSlide.js';
 import DailyMenu from '../../components/DailyMenu.js';
 import SelectedRestau from '../../components/SelectedRestau.js';
 
-function Home({ navigation }) {
+function Home() {
   const [saltedBowls, setSaltedBowls] = useState([]);
   const [sweetBowls, setSweetBowls] = useState([]);
   const [ingredients, setIngredients] = useState();
@@ -30,9 +30,7 @@ function Home({ navigation }) {
     // get salted bowls
     getSaltedBowls().then((res) => {
       
-      // only 4 bowls
       const gottenBowls = res.data.slice(0, 4);
-      
       // get ingredients of the bowl
       gottenBowls.forEach((bowl) => {
         bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
@@ -48,9 +46,7 @@ function Home({ navigation }) {
     // get sweet bowls
     getSweetBowls().then((res) => {
       
-      // only 4 bowls
       const gottenBowls = res.data.slice(0, 4);
-      
       // get ingredients of the bowls
       gottenBowls.forEach((bowl) => {
         bowl.ingredients = ["Liste", "de tous", "les ingrédients", "ici", "mauris", "blandit", "aliquet"]; 
