@@ -94,8 +94,7 @@ function Home({ navigation }) {
         space={16}
         backgroundColor="#fff"
         pt={16}
-        pb={24}
-        >
+        pb={24}>
 
         <SelectedRestau />
         <ReservBanner />
