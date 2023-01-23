@@ -12,7 +12,7 @@ import SelectedRestau from '../../components/SelectedRestau.js';
 function Home() {
   const [saltedBowls, setSaltedBowls] = useState([]),
         [sweetBowls, setSweetBowls] = useState([]),
-        [ingredients, setIngredients] = useState(),
+        // [ingredients, setIngredients] = useState(),
         ingredients = [],
         ingredientsID = '';
     
