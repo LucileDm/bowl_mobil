@@ -1,17 +1,6 @@
-/*
-  exemple des routes sur les pages de tests
-  Route API pour get les ingrédients
-  Upload d'image
-  Page de maintenance
-  renommer Bowl (ou pas)
-  gestion d'erreur
-  dossier de projet
-*/
-
 import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
 import { useFonts } from 'expo-font';
-
 import { ScrollView, Text, VStack } from 'native-base';
 
 import BowlsList from '../../components/BowlsList.js';
@@ -21,9 +10,11 @@ import DailyMenu from '../../components/DailyMenu.js';
 import SelectedRestau from '../../components/SelectedRestau.js';
 
 function Home() {
-  const [saltedBowls, setSaltedBowls] = useState([]);
-  const [sweetBowls, setSweetBowls] = useState([]);
-  const [ingredients, setIngredients] = useState();
+  const [saltedBowls, setSaltedBowls] = useState([]),
+        [sweetBowls, setSweetBowls] = useState([]),
+        // [ingredients, setIngredients] = useState(),
+        ingredients = [],
+        ingredientsID = '';
     
   useEffect( () => {
     
@@ -34,7 +25,8 @@ function Home() {
       // get ingredients of the bowl
       gottenBowls.forEach((bowl) => {
         bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
-        // getIngredients(bowl)
+        /*getIngredients(bowl);
+        bowl.ingredients = ingredients;*/
       }) 
 
       setSaltedBowls(gottenBowls);
@@ -50,7 +42,8 @@ function Home() {
       // get ingredients of the bowls
       gottenBowls.forEach((bowl) => {
         bowl.ingredients = ["Liste", "de tous", "les ingrédients", "ici", "mauris", "blandit", "aliquet"]; 
-        // getIngredients(bowl)
+        /*getIngredients(bowl);
+        bowl.ingredients = ingredients;*/
       }) 
 
       setSweetBowls(gottenBowls);
@@ -61,19 +54,13 @@ function Home() {
   }, [])
 
   const getIngredients = (bowl) => {
-    /*
-      const ingredientsID = bowl.ingredients;
-      getIngredients(ingredientsID).then((res) => {
-        
-        setIngredients(gottenBowls);
-        bowl.ingredients = ingredients;
-        
+    
+      ingredientsID = bowl.ingredients;
+      getOneIngredient(ingredientsID).then((res) => {
+        ingredients.push(res.data);
       }).catch((err) => {
-        
         console.log('CATCH : GET ING' + err.toJSON());
-        bowl.ingredients = [];
       })
-    */
   }
 
   // get custom fonts
