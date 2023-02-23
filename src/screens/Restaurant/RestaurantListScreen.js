@@ -20,7 +20,9 @@ const RestaurantListScreen = () => {
 
   return (
     <>
-      <Heading>Liste de vos restaurants</Heading>
+      <HStack justifyContent="center" my={2}>
+        <Heading>Liste de vos restaurants</Heading>
+      </HStack>
       <HStack justifyContent="space-evenly">
         <VStack>
           <Heading>20</Heading>

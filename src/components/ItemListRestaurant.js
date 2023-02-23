@@ -182,11 +182,11 @@ const ItemListRestaurant = (props) => {
             as: Ionicons,
             name: "arrow-forward",
           }}
-          onPress={() =>
+          onPress={() => {
             navigation.navigate("RestaurantDetail", {
-              restaurantID: data._id,
-            })
-          }
+              restaurant: data,
+            });
+          }}
         />
       </Box>
     </Box>
