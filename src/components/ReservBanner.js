@@ -23,7 +23,7 @@ const ReservBanner = () => {
         
       <Box 
         style={styles.container}
-        position="relative"        >
+        position="relative">
 
         <LinearGradient
           colors={['transparent', 'rgba(242,242,242,1)']}
@@ -50,7 +50,7 @@ const ReservBanner = () => {
           <Box alignSelf="flex-end" mt={5}>
             <CustomButton 
               bsType="secondary"
-              onPress={()=> () => navigation.navigate('Reservation')}
+              onPress={() => navigation.navigate('Reservation')}
             >Réserver mes places !</CustomButton>
           </Box>
 
