@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { ImageBackground, Dimensions } from 'react-native'
+import { StyleSheet, ImageBackground, Dimensions } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { VStack, Box, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/native';

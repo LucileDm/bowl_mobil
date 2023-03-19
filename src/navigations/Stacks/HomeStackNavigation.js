@@ -28,7 +28,7 @@ function HomeStackNavigation() {
 
             <Stack.Screen name='RestaurantList' component={RestaurantListScreen}/>
             <Stack.Screen name='Restaurant' component={RestaurantScreen} />
-            <Stack.Screen name='Reservation' component={BookingScreen} />
+            {/*<Stack.Screen name='Reservation' component={BookingScreen} />*/}
             <Stack.Screen name='Review' component={ReviewScreen} />
             <Stack.Screen name='Bowl' component={BowlScreen}/>
         </Stack.Navigator>
