@@ -10,7 +10,6 @@ function MaintenanceStackNavigation() {
     return(
         <Stack.Navigator 
             screenOptions={{
-                textColor: 'tomato',
                 headerStyle: { 
                     backgroundColor: '#fff'
                 }
