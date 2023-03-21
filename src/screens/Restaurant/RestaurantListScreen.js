@@ -1,14 +1,29 @@
 import { React, useEffect, useState } from "react";
 import { FlatList, Heading, HStack, VStack } from "native-base";
 
-import { getAllRestaurants } from "./../../services/restaurants";
+import { getDistance } from 'geolib';
+import * as Location from 'expo-location';
+
+import { getAllRestaurants } from "../../services/restaurants";
 
 import ItemListRestaurant from "../../components/ItemListRestaurant";
 
 const RestaurantListScreen = () => {
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [locationError, setLocationError] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission de localisation refusée');
+        return;
+      }
+      let gotLocation = await Location.getCurrentPositionAsync({});
+      setCurrentLocation(gotLocation);
+      console.log(currentLocation);
+    })
     getAllRestaurants()
       .then((res) => {
         setRestaurants(res.data);
@@ -25,6 +40,7 @@ const RestaurantListScreen = () => {
       </HStack>
       <HStack justifyContent="space-evenly">
         <VStack>
+          <Heading>lat: {currentLocation.latitude} lon: {currentLocation.longitude}</Heading>
           <Heading>20</Heading>
           <Heading>restaurants</Heading>
         </VStack>

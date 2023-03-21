@@ -5,7 +5,7 @@ const TextLogo = () => {
 
   // get custom fonts
   const [fonts] = useFonts({
-    'mauikea': require('../../assets/fonts/mauikea/mauikea.otf')
+    // 'mauikea': require('../../assets/fonts/mauikea/mauikea.ttf')
   })
 
   const {colors} = useTheme()
