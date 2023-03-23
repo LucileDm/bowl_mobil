@@ -1,67 +1,87 @@
-import {useState} from 'react';
+import Toast from 'react-native-toast-message';
+import SimpleModal from '../components/SimpleModal.js'
 
-// import { Toast, Popup} from 'react';
-// import { redirection } from 'react-router-dom';
+export function errorHandler(errType, errorCatched, navigate, subjectName) {
+	// debugger;
+try {
+	let errTitle, errMessage;
+	let errCode = errorCatched?.response?.status ?? errorCatched.code,
+		catchedMsg = errorCatched?.response?.data?.message ?? undefined;
 
-/**
- * @param {string} errType 		REDIRECT | POPUP | TOAST
- * @param {number} errCode 		http code (ex 404, 401, 500, ...) from request response
- * @param {string} subjectName 	for dynamic message
- * @param {string} catchedMsg 	error message from req. response
- */
-const ErrorHandler = ({errType, errCode, subjectName='élément', catchedMsg=''}) => {
-
-	const [title, setTitle] = useState(''),
-		  [errMessage, setErrMessage] = useState('');
+	if (typeof navigate === 'string' && !subjectName) 
+	{
+		subjectName = navigate;
+		navigate = null;
+	} 
 
 	// define error message to display
-	const serverCodeRx = new RegExp('/^(5[0-9]{2})$/s'); // matches 500, 501, etc...
+	const get_default_message = (errCode, subjectName) => {
+		let returnMsg = '' ;
 
-	// check passed elements 
-	subjectName = (typeof subjectName !== 'string') ? 'élément' : subjectName ;
-	catchedMsg = (typeof catchedMsg !== 'string') ? '' : catchedMsg ;
-	subjectName = subjectName.toLowerCase();
-
-	switch (errCode)
-	{
-		case 404:
-			setErrMessage(`Aucun.e ${subjectName} n'a été trouvé.e lors de la recherche.`);
-			break;
-		case 401:
-			setErrMessage(`Vous devez être connecté pour accéder à cette page. Vous n'avez pas les droits ou avez été déconnecté.`);
-			break;
-		case 403:
-			setErrMessage(`Vous n'avez pas les droits pour accéder à ces informations.`);
-			break;
-		default:
-			// [EVOLUTION] : send the error to the service for analysis.
-			if (serverCodeRx.test(errCode)) {
-			setErrMessage(`Une erreur technique est survenue. Veuillez recommencer plus tard. ${catchedMsg}`);
-			} else {
-			setErrMessage(`Une erreur est survenue durant le traitenemnt. Veuillez recommencer plus tard.`);
-			}
-			break;
+		// define message
+		switch (errCode)
+		{
+			case 400:
+				returnMsg = `Impossible de traiter la requête. Veuillez vérifier les informations fournies.`
+				break;
+				case 404:
+				subjectName = (typeof subjectName !== 'string') ? 'élément' : subjectName ;
+				returnMsg = `Aucun.e ${subjectName} n'a été trouvé.e lors de la recherche.`
+				break;
+			case 401:
+				returnMsg = `Vous devez être connecté pour accéder à cette page. Vous n'avez pas les droits ou avez été déconnecté.`
+				break;
+			case 403:
+				returnMsg = `Vous n'avez pas les droits pour accéder à ces informations.`
+				break;
+			case 'ERR_NETWORK':
+				let networkErr = 'Une erreur réseau est survenue durant la requête, notre équipe technique est sur la touche !'
+				returnMsg = (subjectName) ? `${subjectName} : ${networkErr}` : networkErr;
+				break;
+			default:
+				// [EVOLUTION] : send the error to the service for analysis.
+				returnMsg = `Une erreur technique est survenue. Veuillez recommencer plus tard.`
+				break;
+		}
+		return returnMsg;
 	}
+	
+	if (catchedMsg && errCode != 'ERR_NETWORK') {
+		errMessage = catchedMsg
+	} else {
+		errMessage = get_default_message(errCode, subjectName)
+	}
+	errTitle =`Erreur ${errCode}`
 
-	// return object or redirect
+	// return object or redirect to page
 	switch (errType)
 	{
 		case 'REDIRECT':
-			setTitle(`Erreur ${errCode}`);
-
-// ?? redirect to page depending of the errCode or pass title/msg.
-			location('.../...', {errMessage, title})
-			break;
-		case 'POPUP':
-			return (<Popup option={errMessage} />)
-			break;
+			return navigate('/erreur',
+			{
+				replace: true, 
+				state: {
+					code: errCode, 
+					message: errMessage
+				} 
+			})
+		case 'MODAL':
+			return SimpleModal(errTitle, errMessage)
 		case 'TOAST':
-			return (<Toast option={errMessage} />)
-			break;
-		default:
-			return (<Toast option={errMessage} />)
+			Toast.show({
+				type: "error",
+				position: 'bottom',
+				text1: errTitle,
+				text2: errMessage,
+				autoHide: true,
+				visibilityTime: 10000,
+				bottomOffset: 90,
+				keyboardOffset: 10,
+			  })
 			break;
 	}
+} catch (ex) {
+	console.log(ex)
+	debugger
 }
-
-export default ErrorHandler;
+}

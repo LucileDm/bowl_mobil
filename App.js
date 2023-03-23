@@ -6,6 +6,8 @@ import { AuthContext } from "./src/contexts/AuthContext";
 import { useState } from "react";
 import CommonNavigation from "./src/navigations/Common/CommonNavigation";
 import LoginStackNavigation from "./src/navigations/Stacks/LoginStackNavigation.js";
+import Toast from 'react-native-toast-message';
+import toastConfig from './src/utils/toastConfig.js';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,8 +17,10 @@ function App() {
       <AuthContext.Provider value={{ user, setUser: setUser }}>
         <AxiosProvider>
             <NavigationContainer>
-              {!user?.data.token ? <LoginStackNavigation /> : <CommonNavigation />}
+              <CommonNavigation />
+              {/* {!user?.data.token ? <LoginStackNavigation /> : <CommonNavigation />} */}
             </NavigationContainer>
+          	<Toast config={toastConfig} />
         </AxiosProvider>
       </AuthContext.Provider>
     </NativeBaseProvider>

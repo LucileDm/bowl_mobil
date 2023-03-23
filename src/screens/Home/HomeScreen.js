@@ -3,13 +3,16 @@
   Route API pour get les ingrédients
   Upload d'image
   renommer Bowl (ou pas)
-  gestion d'erreur
   dossier de projet
 */
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
 import { useFonts } from 'expo-font';
+import { useNavigation } from '@react-navigation/native';
 
 import { ScrollView, Text, VStack } from 'native-base';
 
@@ -18,28 +21,33 @@ import ReservBanner from '../../components/ReservBanner.js';
 import ReviewSlide from '../../components/ReviewSlide.js';
 import DailyMenu from '../../components/DailyMenu.js';
 import SelectedRestau from '../../components/SelectedRestau.js';
+import {errorHandler} from '../../utils/ErrorHandler.js';
 
 function Home() {
-  const [saltedBowls, setSaltedBowls] = useState([]);
-  const [sweetBowls, setSweetBowls] = useState([]);
-  const [ingredients, setIngredients] = useState();
-    
+  
+  const [saltedBowls, setSaltedBowls] = useState([]),
+        [sweetBowls, setSweetBowls] = useState([]),
+        [ingredients, setIngredients] = useState();
+
+	const navigate = useNavigation()
+
   useEffect( () => {
-    
     // get salted bowls
     getSaltedBowls().then((res) => {
       
       const gottenBowls = res.data.slice(0, 4);
-      // get ingredients of the bowl
-      gottenBowls.forEach((bowl) => {
+        // get ingredients of the bowl
+        gottenBowls.forEach((bowl) => {
         bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
         // getIngredients(bowl)
-      }) 
+      });
 
       setSaltedBowls(gottenBowls);
 
     }).catch((err) => {
-      console.log('CATCH : GET SALTED BOWLS ', err)
+      // debugger
+      // console.log('CATCH : GET SALTED BOWLS ', err)
+      errorHandler('MODAL', err, 'Bowls salés')
     });
 
     // get sweet bowls
@@ -54,7 +62,8 @@ function Home() {
 
       setSweetBowls(gottenBowls);
     }).catch((err) => {
-      console.log('CATCH : GET SWEET BOWLS ', err)
+      // console.log('CATCH : GET SWEET BOWLS ', err)
+      // errorHandler('TOAST', err, 'Bowls sucrés')
     });
 
   }, [])

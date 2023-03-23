@@ -1,21 +1,16 @@
-import { useState } from 'react';
-import { useFonts } from 'expo-font';
-import { theme } from '../../utils/theme.js';
+import { useLocation } from 'react';
 import { StyleSheet, Image, Dimensions } from 'react-native'
 import { Text, 
 		 Box, 
-		 VStack, 
-		 Center, 
+		 VStack,
 		 Link, 
 		 useTheme } from 'native-base';
 import { Ionicons } from "@expo/vector-icons";
 
 function ErrorScreen({errCode='', errText}) {
-	const imgSource = {uri: "https://bowllywood-8llo.onrender.com/images/sweetBg.png"};
-	if (!errText)
-	{
-		errText = 'Une erreur inconnue est survenue. Veuillez recommencer ou retourner à la page d\'accueil.';
-	}
+	const imgSource = {uri: "https://bowllywood-8llo.onrender.com/images/sweetBg.png"},
+		  location = useLocation(),
+		  {code, message} = location?.state;
 
 	const {colors} = useTheme()
 	const styles = StyleSheet.create({
@@ -34,6 +29,9 @@ function ErrorScreen({errCode='', errText}) {
 			right: 0,
 		}
 	})
+
+	if (!errText) errText = message ?? 'Une erreur inconnue est survenue. Veuillez recommencer ou retourner à la page d\'accueil.';
+	if (code) errCode = code;
 
 	// fontFamily="mauikea"
 	return (
