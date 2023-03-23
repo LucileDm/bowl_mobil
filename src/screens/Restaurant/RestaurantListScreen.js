@@ -12,25 +12,41 @@ const RestaurantListScreen = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [locationError, setLocationError] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
+  const [sortedRestaurants, setSortedRestaurants] = useState([]);
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission de localisation refusée');
+        setErrorMsg('Accès à la localisation refusée');
         return;
       }
-      let gotLocation = await Location.getCurrentPositionAsync({});
-      setCurrentLocation(gotLocation);
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation(location);
       console.log(currentLocation);
-    })
+    })();
     getAllRestaurants()
       .then((res) => {
         setRestaurants(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+      if (currentLocation && restaurants.length > 0) {
+        const sorted = [...restaurants].sort((a, b) => {
+          const distanceA = getDistance(
+            { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
+            { latitude: a.latitude, longitude: a.longitude }
+          );
+          const distanceB = getDistance(
+            { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
+            { latitude: b.latitude, longitude: b.longitude }
+          );
+          return distanceA - distanceB;
+        });
+        setSortedRestaurants(sorted);
+      }
   }, []);
 
   return (
@@ -40,7 +56,7 @@ const RestaurantListScreen = () => {
       </HStack>
       <HStack justifyContent="space-evenly">
         <VStack>
-          <Heading>lat: {currentLocation.latitude} lon: {currentLocation.longitude}</Heading>
+          <Heading></Heading>
           <Heading>20</Heading>
           <Heading>restaurants</Heading>
         </VStack>
@@ -51,7 +67,7 @@ const RestaurantListScreen = () => {
       </HStack>
 
       <FlatList
-        data={restaurants}
+        data={sortedRestaurants}
         key={(item, index) => index}
         renderItem={(item) => {
           return <ItemListRestaurant restos={item} />;
