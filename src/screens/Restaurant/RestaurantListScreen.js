@@ -21,6 +21,7 @@ const RestaurantListScreen = () => {
         setErrorMsg('Accès à la localisation refusée');
         return;
       }
+      Location.watchPositionAsync();
       let location = await Location.getCurrentPositionAsync({});
       setCurrentLocation(location);
       console.log(currentLocation);
