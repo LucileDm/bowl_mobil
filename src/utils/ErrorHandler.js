@@ -1,9 +1,7 @@
 import Toast from 'react-native-toast-message';
-import SimpleModal from '../components/SimpleModal.js'
+import {Alert} from 'react-native'
 
 export function errorHandler(errType, errorCatched, navigate, subjectName) {
-	// debugger;
-try {
 	let errTitle, errMessage;
 	let errCode = errorCatched?.response?.status ?? errorCatched.code,
 		catchedMsg = errorCatched?.response?.data?.message ?? undefined;
@@ -65,8 +63,16 @@ try {
 					message: errMessage
 				} 
 			})
-		case 'MODAL':
-			return SimpleModal(errTitle, errMessage)
+		case 'POPUP':
+			Alert.alert(
+				errTitle,
+				errMessage,
+				[{
+					text: 'Ok pour moi !',
+					onPress: () => close(),
+				}]
+			)
+			break;
 		case 'TOAST':
 			Toast.show({
 				type: "error",
@@ -74,14 +80,9 @@ try {
 				text1: errTitle,
 				text2: errMessage,
 				autoHide: true,
-				visibilityTime: 10000,
 				bottomOffset: 90,
 				keyboardOffset: 10,
 			  })
 			break;
 	}
-} catch (ex) {
-	console.log(ex)
-	debugger
-}
 }

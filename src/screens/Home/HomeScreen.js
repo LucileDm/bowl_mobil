@@ -5,23 +5,18 @@
   renommer Bowl (ou pas)
   dossier de projet
 */
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();//Ignore all log notifications
-
 import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-
 import { ScrollView, Text, VStack } from 'native-base';
+import {errorHandler} from '../../utils/ErrorHandler.js';
 
 import BowlsList from '../../components/BowlsList.js';
 import ReservBanner from '../../components/ReservBanner.js';
 import ReviewSlide from '../../components/ReviewSlide.js';
 import DailyMenu from '../../components/DailyMenu.js';
 import SelectedRestau from '../../components/SelectedRestau.js';
-import {errorHandler} from '../../utils/ErrorHandler.js';
 
 function Home() {
   
@@ -45,9 +40,7 @@ function Home() {
       setSaltedBowls(gottenBowls);
 
     }).catch((err) => {
-      // debugger
-      // console.log('CATCH : GET SALTED BOWLS ', err)
-      errorHandler('MODAL', err, 'Bowls salés')
+      errorHandler('TOAST', err, 'Bowls salés')
     });
 
     // get sweet bowls
@@ -62,10 +55,8 @@ function Home() {
 
       setSweetBowls(gottenBowls);
     }).catch((err) => {
-      // console.log('CATCH : GET SWEET BOWLS ', err)
-      // errorHandler('TOAST', err, 'Bowls sucrés')
+      errorHandler('TOAST', err, 'Bowls sucrés')
     });
-
   }, [])
 
   const getIngredients = (bowl) => {

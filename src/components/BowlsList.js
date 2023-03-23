@@ -11,18 +11,29 @@ import BowlListItem from './BowlListItem.js';
 const BowlsList = ({bowls, title, subTitle}) => {
 
     const EmptyList = () => {
-        return <Text>Aucun bowl n'a été trouvé</Text>;
+        return <Text paddingX={30}>Tous les bowls se sont enfuient de nos cuisines... Veuillez nous excusez le temps que nous partons à leur recherche.</Text>
+    }
+
+    const RenderList = ({list}) => {
+        if (list.length <= 0)
+        {
+            return <EmptyList />
+        }
+        else 
+        {
+            return (
+            <FlatList 
+                data={list}
+                renderItem={ ({item}) => <BowlListItem bowl={item} /> }
+                listEmptyComponent={EmptyList}
+            />)
+        }
     }
   
     return (
-        <VStack space="12">
+        <VStack space={8}>
             <GreenTitle title={title} subTitle={subTitle}/>
-
-            <FlatList 
-                data={bowls}
-                renderItem={ ({item}) => <BowlListItem bowl={item} /> }
-                listEmptyComponent={EmptyList}
-            />
+            <RenderList list={bowls}/>
         </VStack>
     )
 }
