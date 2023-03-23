@@ -2,7 +2,6 @@
   exemple des routes sur les pages de tests
   Route API pour get les ingrédients
   Upload d'image
-  Page de maintenance
   renommer Bowl (ou pas)
   gestion d'erreur
   dossier de projet

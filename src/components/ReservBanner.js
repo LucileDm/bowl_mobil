@@ -49,7 +49,7 @@ const ReservBanner = () => {
           <Box alignSelf="flex-end" mt={5}>
             <CustomButton 
               bsType="secondary"
-              onPress={() => navigation.navigate('Reservation')}
+              onPress={()=>navigation.navigate('Reservation')}
             >Réserver mes places !</CustomButton>
           </Box>
 
