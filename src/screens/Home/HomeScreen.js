@@ -7,10 +7,9 @@
 */
 import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
-import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, Text, VStack } from 'native-base';
-import {errorHandler} from '../../utils/ErrorHandler.js';
+import {errorHandler} from '../../utils/errorHandler.js';
 
 import BowlsList from '../../components/BowlsList.js';
 import ReservBanner from '../../components/ReservBanner.js';
@@ -24,7 +23,7 @@ function Home() {
         [sweetBowls, setSweetBowls] = useState([]),
         [ingredients, setIngredients] = useState();
 
-	const navigate = useNavigation()
+	const navigate = useNavigation();
 
   useEffect( () => {
     // get salted bowls
@@ -40,7 +39,7 @@ function Home() {
       setSaltedBowls(gottenBowls);
 
     }).catch((err) => {
-      errorHandler('TOAST', err, 'Bowls salés')
+      errorHandler('TOAST', err, navigate, 'Bowls salés')
     });
 
     // get sweet bowls
@@ -75,14 +74,7 @@ function Home() {
     */
   }
 
-  // get custom fonts
-  const [fonts] = useFonts({
-    'mauikea': require('../../../assets/fonts/mauikea/mauikea.otf'),
-    'ibm': require('../../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
-  })
-
   const subTitleSalted = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)
-
   return (
     <ScrollView>
       <VStack
@@ -96,7 +88,6 @@ function Home() {
         <ReviewSlide />
 
         {/* lien vers Toute la liste depuis titre ou btn */}
-        {/* voir pk rien quand pas de data */}
         {/* chargement apparent */}
         <BowlsList bowls={saltedBowls} title="Nos pokés salés" subTitle={subTitleSalted}/>
         <BowlsList bowls={sweetBowls} title="Nos pokés dessert" subTitle="Phrase d’accroche pour dessert"/>

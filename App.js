@@ -1,7 +1,3 @@
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();//Ignore all log notifications
-
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
 import Theme from "./src/utils/theme";
@@ -21,8 +17,7 @@ function App() {
       <AuthContext.Provider value={{ user, setUser: setUser }}>
         <AxiosProvider>
             <NavigationContainer>
-              <CommonNavigation />
-              {/* {!user?.data.token ? <LoginStackNavigation /> : <CommonNavigation />} */}
+              {!user?.data.token ? <LoginStackNavigation /> : <CommonNavigation />}
             </NavigationContainer>
           	<Toast config={toastConfig} />
         </AxiosProvider>

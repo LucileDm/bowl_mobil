@@ -1,5 +1,4 @@
-import { useLocation } from 'react';
-import { StyleSheet, Image, Dimensions } from 'react-native'
+import { StyleSheet, Image } from 'react-native'
 import { Text, 
 		 Box, 
 		 VStack,
@@ -7,10 +6,9 @@ import { Text,
 		 useTheme } from 'native-base';
 import { Ionicons } from "@expo/vector-icons";
 
-function ErrorScreen({errCode='', errText}) {
+function ErrorScreen({route, errCode='', errText}) {
 	const imgSource = {uri: "https://bowllywood-8llo.onrender.com/images/sweetBg.png"},
-		  location = useLocation(),
-		  {code, message} = location?.state;
+		  {code, message} = route?.params;
 
 	const {colors} = useTheme()
 	const styles = StyleSheet.create({

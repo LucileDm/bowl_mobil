@@ -1,15 +1,15 @@
 import Toast from 'react-native-toast-message';
 import {Alert} from 'react-native'
 
-export function errorHandler(errType, errorCatched, navigate, subjectName) {
+export function errorHandler(errType, errorCatched, navigation, subjectName) {
 	let errTitle, errMessage;
 	let errCode = errorCatched?.response?.status ?? errorCatched.code,
 		catchedMsg = errorCatched?.response?.data?.message ?? undefined;
 
-	if (typeof navigate === 'string' && !subjectName) 
+	if (typeof navigation === 'string' && !subjectName) 
 	{
-		subjectName = navigate;
-		navigate = null;
+		subjectName = navigation;
+		navigation = null;
 	} 
 
 	// define error message to display
@@ -55,14 +55,14 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 	switch (errType)
 	{
 		case 'REDIRECT':
-			return navigate('/erreur',
-			{
-				replace: true, 
-				state: {
-					code: errCode, 
-					message: errMessage
-				} 
-			})
+			navigation.replace(
+				'Erreur',
+				{
+					screen: 'Error',
+					params: { code: errCode, message: errMessage }
+				}
+			)
+			break;
 		case 'POPUP':
 			Alert.alert(
 				errTitle,

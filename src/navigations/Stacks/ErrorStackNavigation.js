@@ -17,12 +17,12 @@ function ErrorStackNavigation() {
             <Stack.Screen 
                 name='Error'
                 component={ErrorScreen}
-                options={headerTitle}/>
+                options={headerTitle} />
 
             <Stack.Screen 
                 name='Home'
                 component={HomeScreen}
-                options={headerTitle}/>
+                options={headerTitle} />
         </Stack.Navigator>
     );
 }
