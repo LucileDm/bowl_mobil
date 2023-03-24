@@ -24,7 +24,6 @@ const RestaurantListScreen = () => {
       Location.watchPositionAsync();
       let location = await Location.getCurrentPositionAsync({});
       setCurrentLocation(location);
-      console.log(currentLocation);
     })();
     getAllRestaurants()
       .then((res) => {
@@ -34,21 +33,59 @@ const RestaurantListScreen = () => {
       .catch((err) => {
         console.log(err);
       });
-      if (currentLocation && restaurants.length > 0) {
-        const sorted = [...restaurants].sort((a, b) => {
-          const distanceA = getDistance(
-            { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
-            { latitude: a.latitude, longitude: a.longitude }
-          );
-          const distanceB = getDistance(
-            { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
-            { latitude: b.latitude, longitude: b.longitude }
-          );
-          return distanceA - distanceB;
-        });
-        setSortedRestaurants(sorted);
-      }
   }, []);
+  
+  useEffect(() => {
+    if (currentLocation && restaurants.length > 0) {
+      const sorted = [...restaurants].sort((a, b) => {
+        const distanceA = getDistance(
+          { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
+          { latitude: a.latitude, longitude: a.longitude }
+        );
+        const distanceB = getDistance(
+          { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
+          { latitude: b.latitude, longitude: b.longitude }
+        );
+        return distanceA - distanceB;
+      });
+      setSortedRestaurants(sorted);
+    }
+  }, [currentLocation, restaurants]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Accès à la localisation refusée');
+  //       return;
+  //     }
+  //     Location.watchPositionAsync();
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setCurrentLocation(location);
+  //   })();
+  //   getAllRestaurants()
+  //     .then((res) => {
+  //       setRestaurants(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //     if (currentLocation && restaurants.length > 0) {
+  //       const sorted = [...restaurants].sort((a, b) => {
+  //         const distanceA = getDistance(
+  //           { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
+  //           { latitude: a.latitude, longitude: a.longitude }
+  //         );
+  //         const distanceB = getDistance(
+  //           { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude },
+  //           { latitude: b.latitude, longitude: b.longitude }
+  //         );
+  //         return distanceA - distanceB;
+  //       });
+  //       setSortedRestaurants(sorted);
+  //     }
+  // }, [sortedRestaurants, currentLocation]);
 
   return (
     <>
