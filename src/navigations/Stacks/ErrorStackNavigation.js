@@ -14,6 +14,7 @@ function ErrorStackNavigation() {
                     backgroundColor: '#fff'
                 }
             }}>
+
             <Stack.Screen 
                 name='Error'
                 component={ErrorScreen}

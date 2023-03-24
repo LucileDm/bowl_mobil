@@ -84,5 +84,7 @@ export function errorHandler(errType, errorCatched, navigation, subjectName) {
 				keyboardOffset: 10,
 			  })
 			break;
+		default:
+			return false;
 	}
 }

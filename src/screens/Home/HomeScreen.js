@@ -39,7 +39,7 @@ function Home() {
       setSaltedBowls(gottenBowls);
 
     }).catch((err) => {
-      errorHandler('TOAST', err, navigate, 'Bowls salés')
+      errorHandler('TOAST', err, 'Bowls salés')
     });
 
     // get sweet bowls
