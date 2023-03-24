@@ -10,7 +10,7 @@ const headerTitle = { headerTitle: () => <TextLogo /> };
 
 function RestaurantStackNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="RestaurantList"
         component={RestaurantListScreen}
