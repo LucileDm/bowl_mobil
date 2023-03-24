@@ -18,3 +18,11 @@ export const getUserProfile = async (token) => {
         res => res.data
     );
 }
+
+export const editUserProfile = (values, token) => {
+    return axiosInstance.patch('/users/me', values, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    })
+}

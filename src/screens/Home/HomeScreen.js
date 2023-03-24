@@ -49,7 +49,8 @@ function Home() {
       // get ingredients of the bowls
       gottenBowls.forEach((bowl) => {
         bowl.ingredients = ["Liste", "de tous", "les ingrédients", "ici", "mauris", "blandit", "aliquet"]; 
-        // getIngredients(bowl)
+        /*getIngredients(bowl);
+        bowl.ingredients = ingredients;*/
       }) 
 
       setSweetBowls(gottenBowls);
@@ -59,19 +60,13 @@ function Home() {
   }, [])
 
   const getIngredients = (bowl) => {
-    /*
-      const ingredientsID = bowl.ingredients;
-      getIngredients(ingredientsID).then((res) => {
-        
-        setIngredients(gottenBowls);
-        bowl.ingredients = ingredients;
-        
+    
+      ingredientsID = bowl.ingredients;
+      getOneIngredient(ingredientsID).then((res) => {
+        ingredients.push(res.data);
       }).catch((err) => {
-        
         console.log('CATCH : GET ING' + err.toJSON());
-        bowl.ingredients = [];
       })
-    */
   }
 
   const subTitleSalted = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)

@@ -17,7 +17,7 @@ const ReservBanner = () => {
 
   return (
     <ImageBackground 
-      source={{uri: "https://bowllywood.onrender.com/images/reservBnrMobil.jpg"}}
+      source={{uri: "https://bowllywood-8llo.onrender.com/images/reservBnrMobil.jpg"}}
       resizeMode="cover">
         
       <Box 

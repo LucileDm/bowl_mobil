@@ -10,15 +10,16 @@ import {
   Spinner,
 } from "native-base";
 import { getUserProfile } from "../../services/users";
+import CustomButton from "../../components/CustomButton";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 function AccountScreen() {
-
   const [userInfo, setUserInfo] = useState(null);
+  const navigation = useNavigation();
   const { user, setUser } = useContext(AuthContext);
   useEffect(() => {
-    getUserProfile(user.token)
+    getUserProfile(user.data.token)
       .then((res) => {
         setUserInfo(res.data);
       })
@@ -28,44 +29,34 @@ function AccountScreen() {
   }, []);
 
   const navToEditForm = (_id) => {
-    navigation.navigate('EditScreen', {userID: userInfo._id})
-}
+    navigation.navigate("Modifier mon compte", { userID: userInfo._id });
+  };
 
-  return (
-    !userInfo? <Spinner /> : (
+  return !userInfo ? (
+    <VStack alignItems="center" justifyContent="center">
+      <HStack justifyContent="center" alignItems="center">
+        <Spinner />
+      </HStack>
+    </VStack>
+  ) : (
     <>
       <StatusBar bg={"#FFFFFF"} barStyle={"light-content"} />
-      <Box justifyContent={"center"} safeAreaTop bg={"#FFFFFF"} />
-      <HStack
-        bg={"#FFFFFF"}
-        px={"1"}
-        py={"3"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        w={"100%"}
-        maxW={"100%"}
-      >
-        <HStack alignItems={"center"}>
-          <Text color={"black"} fontSize={"20"} fontWeight={"bold"}>
-            Gestion du compte
-          </Text>
-        </HStack>
-      </HStack>
       <VStack alignItems={"center"}>
-      <Text fontSize={"2xl"}>{userInfo.firstName}</Text>
+        <Text fontSize={"2xl"}>{userInfo.firstName}</Text>
       </VStack>
       <Center flex={1}>
         <VStack alignItems={"center"}>
           <HStack marginBottom={"5"}>
-            <Button onPress={() => navToEditForm(userInfo._id)}>Modifier mon compte</Button>
+            <CustomButton onPress={() => navToEditForm(userInfo._id)}>
+              Modifier mon compte
+            </CustomButton>
           </HStack>
           <HStack>
-            <Button onPress={() => setUser(null)}>Déconnexion</Button>
+            <CustomButton onPress={() => setUser(null)}>Déconnexion</CustomButton>
           </HStack>
         </VStack>
       </Center>
     </>
-    )
   );
 }
 

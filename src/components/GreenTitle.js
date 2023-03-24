@@ -12,7 +12,7 @@ const GreenTitle = (props) => {
     
   // get custom fonts
   const [fonts] = useFonts({
-      'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
+      // 'mauikea': require('../../assets/fonts/mauikea/mauikea.ttf'),
       'ibm': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
   })
 

@@ -9,14 +9,14 @@ const headerTitle = { headerTitle: () => <TextLogo /> };
 function ReviewStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Ajouter un avis"
+      {/* <Stack.Screen
+        name="ReviewAdd"
         //component={AddBooking}
         options={headerTitle}
-      />
+      /> */}
 
       <Stack.Screen
-        name="Liste des avis"
+        name="ReviewList"
         component={ReviewScreen}
         options={headerTitle}
       />

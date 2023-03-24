@@ -4,8 +4,7 @@ import { useContext, useEffect } from 'react';
 import { AuthContext } from './../contexts/AuthContext';
 
 export const axiosInstance = axios.create({
-    // baseURL: 'https://bowllywood-8llo.onrender.com'
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://bowllywood-8llo.onrender.com/'
 });
 
 const AxiosProvider = ({ children }) => {

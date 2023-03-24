@@ -41,7 +41,7 @@ const DailyMenu = () => {
                     >
 
                     <Image 
-                        source={{uri: 'https://bowllywood.onrender.com/images/bowlicon.png'}}
+                        source={{uri: 'https://bowllywood-8llo.onrender.com/images/bowlicon.png'}}
                         size="md"
                         alt="Bowlliwood icon"/>
 
