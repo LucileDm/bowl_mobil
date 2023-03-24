@@ -52,7 +52,9 @@ function AccountScreen() {
             </CustomButton>
           </HStack>
           <HStack>
-            <CustomButton onPress={() => setUser(null)}>Déconnexion</CustomButton>
+            <CustomButton onPress={() => setUser(null)}>
+              Déconnexion
+            </CustomButton>
           </HStack>
         </VStack>
       </Center>

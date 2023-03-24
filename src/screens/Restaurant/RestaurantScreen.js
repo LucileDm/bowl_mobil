@@ -170,7 +170,7 @@ function RestaurantScreen() {
       </Box>
       <Box my={4} ml={4}>
         <Heading size="sm">{detailRestaurant.phone}</Heading>
-        <Text>{detailRestaurant.email} email</Text>
+        <Text>{detailRestaurant.email}</Text>
       </Box>
       <Box my={4} ml={4}>
         <Heading size="sm">Horaires</Heading>
