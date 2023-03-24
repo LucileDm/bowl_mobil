@@ -10,6 +10,7 @@ import {
   Spinner,
 } from "native-base";
 import { getUserProfile } from "../../services/users";
+import CustomButton from "../../components/CustomButton";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 
@@ -32,7 +33,11 @@ function AccountScreen() {
   };
 
   return !userInfo ? (
-    <Spinner />
+    <VStack alignItems="center" justifyContent="center">
+      <HStack justifyContent="center" alignItems="center">
+        <Spinner />
+      </HStack>
+    </VStack>
   ) : (
     <>
       <StatusBar bg={"#FFFFFF"} barStyle={"light-content"} />
@@ -42,12 +47,14 @@ function AccountScreen() {
       <Center flex={1}>
         <VStack alignItems={"center"}>
           <HStack marginBottom={"5"}>
-            <Button onPress={() => navToEditForm(userInfo._id)}>
+            <CustomButton onPress={() => navToEditForm(userInfo._id)}>
               Modifier mon compte
-            </Button>
+            </CustomButton>
           </HStack>
           <HStack>
-            <Button onPress={() => setUser(null)}>Déconnexion</Button>
+            <CustomButton onPress={() => setUser(null)}>
+              Déconnexion
+            </CustomButton>
           </HStack>
         </VStack>
       </Center>

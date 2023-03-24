@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getOneMeal } from '../../services/bowls.js';
-// import { getIngredients } from '../../services/ingredients.js';
+import { getOneIngredient } from '../../services/ingredients.js';
 import { useFonts, isLoaded } from 'expo-font';
 
 import { NativeBaseProvider, Text, Box } from 'native-base';
@@ -10,40 +10,37 @@ import BowlsList from '../../components/BowlsList.js';
 function Bowl({ route }) {
   const {bowlId} = route.params;  
 
-  const [bowl, setBowl] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  
+  const [bowl, setBowl] = useState([]),
+        ingredients = [],
+        ingredientsID = '';
+
   useEffect( ()=>{  
     getOneMeal(bowlId).then((res) => {
       
-      setBowl(res.data);
-
       // get every ingredients of the bowl
-      // bowl.forEach((bowl) => {
-        // const ingredientsID = bowl.ingredients;
-        // getIngredients(ingredientsID).then((res) => {
-          
-        //   setIngredients(res.data);
-        //   bowl.ingredients = ingredients;
-          
-        // }).catch((err) => {
-          
-        //   console.log('CATCH : GET ING' + err.toJSON());
-        //   bowl.ingredients = [];
-        // })
-      // })
+      res.data.forEach((bowl) => {
 
-      // bowl.ingredients = ingredients;
-      bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
+        ingredientsID = bowl.ingredients;
+        getOneIngredient(ingredientsID).then((res) => {
+          ingredients.push(res.data);
+        }).catch((err) => {
+          console.log('CATCH : GET ING' + err);
+        })
+      })
+
+      res.data.ingredients = ingredients;  
+      // bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
+
+      setBowl(res.data);
       
     }).catch((err) => {
       console.log('CATCH : GET ONE BOWL', err);
     });
-  }, [bowlId] )
+  }, [bowlId, ingredients, ingredientsID] )
 
   return (
       <Box flex={1} >
-        <Text  >Page détail de {bowl.name}</Text>
+        <Text>Page détail de {bowl.name}</Text>
       </Box>
   );
 }

@@ -8,6 +8,7 @@ import RestaurantListScreen from '../../screens/Restaurant/RestaurantListScreen.
 import RestaurantScreen from '../../screens/Restaurant/RestaurantScreen';
 import TextLogo from '../../components/TextLogo.js';
 
+import ErrorStack from './ErrorStackNavigation';
 const Stack = createNativeStackNavigator();
 const headerTitle = { headerTitle: () => <TextLogo />};
 
@@ -31,6 +32,7 @@ function HomeStackNavigation() {
             <Stack.Screen name='Reservation' component={BookingScreen} />
             <Stack.Screen name='Review' component={ReviewScreen} />
             <Stack.Screen name='Bowl' component={BowlScreen}/>
+            <Stack.Screen options={{headerShown: false}} name='Erreur' component={ErrorStack}/>
         </Stack.Navigator>
     );
 }

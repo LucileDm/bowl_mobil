@@ -9,7 +9,7 @@ const LinkScreen = () => {
     <ScrollView>
       <Image
         source={{
-          uri: "https://bowllywood.onrender.com/images/menuBgdecoupe.png",
+          uri: "https://bowllywood-8llo.onrender.com/images/menuBgdecoupe.png",
         }}
         size="2xl"
         resizeMode="cover"

@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { ImageBackground, Dimensions } from 'react-native'
+import { StyleSheet, ImageBackground, Dimensions } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { VStack, Box, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
@@ -18,12 +17,12 @@ const ReservBanner = () => {
 
   return (
     <ImageBackground 
-      source={{uri: "https://bowllywood.onrender.com/images/reservBnrMobil.jpg"}}
+      source={{uri: "https://bowllywood-8llo.onrender.com/images/reservBnrMobil.jpg"}}
       resizeMode="cover">
         
       <Box 
         style={styles.container}
-        position="relative"        >
+        position="relative">
 
         <LinearGradient
           colors={['transparent', 'rgba(242,242,242,1)']}
@@ -50,7 +49,7 @@ const ReservBanner = () => {
           <Box alignSelf="flex-end" mt={5}>
             <CustomButton 
               bsType="secondary"
-              onPress={()=> () => navigation.navigate('Reservation')}
+              onPress={()=>navigation.navigate('Reservation')}
             >Réserver mes places !</CustomButton>
           </Box>
 
