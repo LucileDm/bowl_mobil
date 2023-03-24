@@ -1,24 +1,22 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import RestaurantScreen from "../../screens/Restaurant/RestaurantScreen.js";
-import ReviewStack from "./ReviewStackNavigation.js";
-import TextLogo from "../../components/TextLogo.js";
+import EditScreen from "../../screens/Account/EditAccountScreen";
+import AccountScreen from "../../screens/Account/AccountScreen";
+import TextLogo from "../../components/TextLogo";
 
 const Stack = createNativeStackNavigator();
-const headerTitle = { headerTitle: () => <TextLogo /> };
+const headerTitle = { headerTitle: () => <TextLogo /> }
 
 function ProfileStackNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Avis"
-        component={ReviewStack}
-        options={headerTitle}
+      name="Gestion du compte"
+      component={AccountScreen}
+      options={headerTitle}
       />
-
       <Stack.Screen
-        name="Nos enseignes"
-        component={RestaurantScreen}
+        name="Modifier mon compte"
+        component={EditScreen}
         options={headerTitle}
       />
     </Stack.Navigator>

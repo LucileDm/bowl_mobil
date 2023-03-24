@@ -1,17 +1,5 @@
 import { axiosInstance } from "../providers/axiosProvider";
 
-export const createMeal = (values) => {
-    return axiosInstance.post('/menus/create', values);
-}
-
-export const updateMeal = (id, values) => {
-    return axiosInstance.post(`/menus/update/${id}`, values);
-}
-
-export const deleteMeal = (id) => {
-    return axiosInstance.delete(`/menus/delete/${id}`);
-}
-
 export const getOneMeal = (id) => {
     return axiosInstance.get(`/menus/${id}`);
 }
@@ -22,8 +10,4 @@ export const getSweetBowls = () => {
 
 export const getSaltedBowls = () => {
     return axiosInstance.get('/menus/');
-}
-
-export const getAllBowls = () => {
-    return axiosInstance.get('/menus/adminlist');
 }
