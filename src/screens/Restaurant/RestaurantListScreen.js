@@ -1,9 +1,19 @@
 import { React, useEffect, useState } from "react";
-import { FlatList, Heading, HStack, VStack } from "native-base";
+import {
+  Box,
+  Divider,
+  FlatList,
+  Heading,
+  HStack,
+  Icon,
+  Input,
+  VStack,
+} from "native-base";
 
 import { getAllRestaurants } from "./../../services/restaurants";
 
 import ItemListRestaurant from "../../components/ItemListRestaurant";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const RestaurantListScreen = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -20,7 +30,9 @@ const RestaurantListScreen = () => {
 
   return (
     <>
-      <Heading>Liste de vos restaurants</Heading>
+      <HStack justifyContent="center" my={2}>
+        <Heading>Liste de vos restaurants</Heading>
+      </HStack>
       <HStack justifyContent="space-evenly">
         <VStack>
           <Heading>20</Heading>
@@ -31,7 +43,6 @@ const RestaurantListScreen = () => {
           <Heading>villes</Heading>
         </VStack>
       </HStack>
-
       <FlatList
         data={restaurants}
         key={(item, index) => index}
