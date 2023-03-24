@@ -9,6 +9,8 @@ import { AuthContext } from "./src/contexts/AuthContext";
 import { useEffect, useState } from "react";
 import CommonNavigation from "./src/navigations/Common/CommonNavigation";
 import LoginStackNavigation from "./src/navigations/Stacks/LoginStackNavigation.js";
+import Toast from 'react-native-toast-message';
+import toastConfig from './src/utils/toastConfig.js';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -43,10 +45,15 @@ function App() {
             <NavigationContainer>
               {!user?.data.token ? <LoginStackNavigation /> : <CommonNavigation />}
             </NavigationContainer>
+          	<Toast config={toastConfig} />
         </AxiosProvider>
       </AuthContext.Provider>
     </NativeBaseProvider>
   );
 }
+
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default App;
