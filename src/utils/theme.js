@@ -15,6 +15,9 @@ const Theme = extendTheme({
             star       : '#EABF63', // rating stars color
         }
     },
+    fontConfig: {
+        mauikea: require('../../assets/fonts/mauikea/mauikea.ttf')
+    }
     /*fonts: {
         mauikea: Test(), // marche pas
         ibm: 'IBM Plex Sans' // idem

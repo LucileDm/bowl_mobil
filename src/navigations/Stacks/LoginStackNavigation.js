@@ -5,7 +5,7 @@ import RegisterScreen from '../../screens/Register/RegisterScreen';
 import TextLogo from '../../components/TextLogo.js';
 
 const Stack = createNativeStackNavigator();
-const headerTitle =  { headerTitle: () => <TextLogo /> } ;
+const headerTitle =  { headerTitle: () => <TextLogo />} ;
 
 function LoginStackNavigation() {
     return(

@@ -13,12 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 const BowlListItem = ({bowl}) => {
 
     const navigation = useNavigation();
-    
-    // get custom fonts
-    const [fonts] = useFonts({
-        'mauikea': require('../../assets/fonts/mauikea/mauikea.otf'),
-        'ibm': require('../../assets/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf')
-    })
 
     /**
      * Return the ingredients of the current bowl as a formatted text. 
@@ -50,7 +44,7 @@ const BowlListItem = ({bowl}) => {
             <HStack>
 
                 <Image
-                source={{ uri: `https://bowllywood.onrender.com/images/menu/${bowl.image}` }}
+                source={{ uri: `https://bowllywood-8llo.onrender.com/images/menu/${bowl.image}` }}
                 resizeMode="cover"
                 size="xl"
                 alt={`Image du bowl ${bowl.name}`}/>
