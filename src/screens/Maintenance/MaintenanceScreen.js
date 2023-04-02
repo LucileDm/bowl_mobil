@@ -48,7 +48,7 @@ function MaintenanceScreen() {
 				<Text fontSize="3xl" bold color={colors.primary.dark_grey} >Page en maintenance</Text>
 				<Text fontSize="md" textAlign="justify" >Cette page a mangé quelque chose et a fait une indigestion... Notre équipe s'efforce de l'osculter, et lui donne un bol de riz avec une pincée de créativité. Elle devra patienter un peu pour vous être à votre service !</Text>
 
-				<Link href="/Home" alignItems="center" >
+				<Link href="/Home" alignItems="center" replace>
 					<Ionicons name="home-sharp" size={25} color="#3D3D3D" />
 					<Text fontSize="xl" ml={2} borderBottomWidth={1} >Retouner à la page d'accueil</Text> 
 				</Link>

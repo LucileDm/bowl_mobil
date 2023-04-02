@@ -9,8 +9,9 @@ import { Ionicons } from "@expo/vector-icons";
 // import { useNavigation } from '@react-navigation/native';
 
 function ErrorScreen({route, errCode='', errText}) {
-	const imgSource = {uri: "https://bowllywood-8llo.onrender.com/images/sweetBg.png"},
-		  {code, message} = route?.params;
+	const imgSource = {uri: "https://bowllywood-8llo.onrender.com/images/sweetBg.png"};
+	const code = route?.params?.code, 
+		  message = route?.params?.message;
 	// const navigate = useNavigation();
 
 	const {colors} = useTheme()
