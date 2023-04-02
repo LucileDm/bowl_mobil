@@ -3,8 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BookingScreen from '../../screens/Booking/BookingScreen.js';
 import AddBooking from "../../screens/Booking/AddBooking";
 import ListBookings from "../../screens/Booking/ListBookings";
+import MaintenanceScreen from "../../screens/Maintenance/MaintenanceScreen";
 import TextLogo from "../../components/TextLogo.js";
-import RouteProtector from './components/RouteProtector';
+import ErrorStack from './ErrorStackNavigation';
+// import routeProtector from '../../utils/routeProtector.js';
 
 const headerTitle = { headerTitle: () => <TextLogo /> };
 
@@ -13,44 +15,28 @@ function BookingStackNavigation() {
     <Stack.Navigator>
       <Stack.Screen
         name='Reservations'
-        component={
-          <RouteProtector permittedRoles={['ROLE_USER']}>
-            {BookingScreen}
-          </RouteProtector>
-        }
         options={headerTitle}
-        />
+        component={BookingScreen} />
       
        <Stack.Screen
         name="Add"
-        component={
-          <RouteProtector permittedRoles={['ROLE_USER', 'ROLE_WAITER', 'ROLE_CEO']}>
-            {AddBooking}
-          </RouteProtector>
-        }
+        component={AddBooking}
         options={headerTitle}
       />
 
       <Stack.Screen
         name="Edit"
-        component={
-          <RouteProtector permittedRoles={['ROLE_USER', 'ROLE_WAITER', 'ROLE_CEO']}>
-            {AddBooking}
-          </RouteProtector>
-        }
+        component={MaintenanceScreen}
         options={headerTitle}
       />
 
       <Stack.Screen
         name="Cancel"
-        component={
-          <RouteProtector permittedRoles={['ROLE_USER', 'ROLE_WAITER', 'ROLE_CEO']}>
-            {AddBooking}
-          </RouteProtector>
-        }
+        component={MaintenanceScreen}
         options={headerTitle}
       />
       
+      <Stack.Screen options={{headerShown: false}} name='Erreur' component={ErrorStack}/>
     </Stack.Navigator>
   );
 }
