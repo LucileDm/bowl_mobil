@@ -2,7 +2,6 @@
   exemple des routes sur les pages de tests
   Route API pour get les ingrédients
   Upload d'image
-  renommer Bowl (ou pas)
   dossier de projet
 */
 import { useState, useEffect } from 'react';
@@ -39,7 +38,7 @@ function Home() {
       setSaltedBowls(gottenBowls);
 
     }).catch((err) => {
-      errorHandler('TOAST', err, 'Bowls salés')
+      // errorHandler('TOAST', err, 'Bowls salés')
     });
 
     // get sweet bowls
@@ -55,7 +54,7 @@ function Home() {
 
       setSweetBowls(gottenBowls);
     }).catch((err) => {
-      errorHandler('TOAST', err, 'Bowls sucrés')
+      // errorHandler('TOAST', err, 'Bowls sucrés')
     });
   }, [])
 

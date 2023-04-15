@@ -5,10 +5,14 @@ import { Text,
 		 Link, 
 		 useTheme } from 'native-base';
 import { Ionicons } from "@expo/vector-icons";
+// import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+// import { useNavigation } from '@react-navigation/native';
 
 function ErrorScreen({route, errCode='', errText}) {
-	const imgSource = {uri: "https://bowllywood-8llo.onrender.com/images/sweetBg.png"},
-		  {code, message} = route?.params;
+	const imgSource = {uri: "https://bowllywood-8llo.onrender.com/images/sweetBg.png"};
+	const code = route?.params?.code, 
+		  message = route?.params?.message;
+	// const navigate = useNavigation();
 
 	const {colors} = useTheme()
 	const styles = StyleSheet.create({
@@ -47,7 +51,11 @@ function ErrorScreen({route, errCode='', errText}) {
 				<Text fontSize="4xl" bold color={colors.primary.dark_grey} >Erreur {errCode}</Text>
 				<Text fontSize="lg" textAlign="center" >Pas de bowl ! {errText}</Text>
 
-				<Link href="/" alignItems="center" >
+				{/* <Pressable onClick={()=>navigate.replace('Home')}>
+					<Ionicons name="home-sharp" size={25} color="#3D3D3D" />
+					<Text fontSize="2xl" ml={2} borderBottomWidth={1} >Retouner à la page d'accueil</Text> 
+				</Pressable> */}
+				<Link href="/Home" alignItems="center" replace>
 					<Ionicons name="home-sharp" size={25} color="#3D3D3D" />
 					<Text fontSize="2xl" ml={2} borderBottomWidth={1} >Retouner à la page d'accueil</Text> 
 				</Link>
