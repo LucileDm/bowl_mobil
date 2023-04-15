@@ -3,8 +3,8 @@ import {Alert} from 'react-native'
 
 export function errorHandler(errType, errorCatched, navigation, subjectName) {
 	let errTitle, errMessage;
-	let errCode = errorCatched?.response?.status ?? errorCatched.code,
-		catchedMsg = errorCatched?.response?.data?.message ?? undefined;
+	let errCode = errorCatched?.response?.status ?? errorCatched?.code ?? '',
+		catchedMsg = errorCatched?.response?.data?.message ?? errorCatched?.message ?? undefined;
 
 	if (typeof navigation === 'string' && !subjectName) 
 	{
