@@ -169,12 +169,12 @@ function BookingScreen() {
         <MaterialIcons name="refresh" size={30} color="black" onPress={()=>console.log('bip')} />
       </HStack>
       {(isLoaded) 
-      ? 
-      <FlatList 
-          data={reservations}
-          renderItem={ ({item}) => <BookingListItem reservation={item} setReservationForm={setReservationForm} /> }
-          px={2}
-      />      
+      ? (!reservations?.length > 0) 
+        ? <FlatList
+            data={reservations}
+            renderItem={ ({item}) => <BookingListItem reservation={item} setReservationForm={setReservationForm} /> }
+            px={2} />
+        : <Text px={5} fontSize="lg" style={{ textAlign : 'center'}}>Vous n'avez pas fait de réservations.</Text>
       : <Spinner />}
     </VStack>
   )
