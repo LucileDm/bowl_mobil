@@ -19,7 +19,7 @@ const BookingListItem = ({reservation, setReservationForm }) => {
         userRole = userInfos?.roleID ?? '';
 
     const cancelReservationBtn = () => {
-        if (reservation?.status === 'KEPT')
+        if (reservation?.status !== 'KEPT')
         {
             let token = currentToken;
             cancelReservation(reservation?._id, token).then((res) => {
@@ -105,7 +105,7 @@ const BookingListItem = ({reservation, setReservationForm }) => {
                 <Text fontSize="lg" style={{color: statusColor}} >{status}</Text>
               </>
             : <HStack flexDirection="row" alignItems="center"  justifyContent="space-evenly">
-                <Feather name="edit" size={24} color="black" onPress={setReservationForm} />
+                <Feather name="edit" size={24} color="black" onPress={()=>setReservationForm(reservation?._id)} />
                 <Button py={2} bgColor="#3c3c3c" onPress={cancelReservationBtn}>Annuler</Button>
               </HStack>
             }

@@ -9,13 +9,15 @@ import jwt_decode from "jwt-decode";
 import dayjs from 'dayjs';
 // front
 import BookingListItem from '../../components/BookingListItem';
+import BookingForm from '../../components/BookingForm';
 import DropDownItem from 'react-native-drop-down-item';
 import { theme } from '../../utils/theme.js';
-import { HStack, VStack, FlatList, Text, Spinner } from 'native-base';
+import { HStack, View, VStack, FlatList, Text, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
 function BookingScreen() {
    const [reservations, setReservations] = useState([]),
+        [reservationValues, setReservationValues] = useState(null),
         [cleaning, setCleaning] = useState(false),
         [rotate, setRotate] = useState(false),
         [fullDate, setFullDate] = useState(''),
@@ -142,18 +144,29 @@ function BookingScreen() {
     return `${dateObj.getHours()}h${ (minutes !== 0) ? minutes : ''}`;
   }
 
-  const setReservationForm = () => {
-    console.log(user)
+  const setReservationForm = (reservationID='') => {
+    if (reservationID) {
+      let reservationTable = reservations;
+      let reservationFiltered = reservationTable.filter((item)=> item._id === reservationID)[0];
+      setReservationValues(reservationFiltered)
+    }
   }
 
   return (
     <VStack>
+      <DropDownItem
+       contentVisible={false}
+       header={<View><Text>titre</Text></View>}>
+       <Text>test</Text>
+      </DropDownItem>
+
+      <BookingForm reservationValues={reservationValues} />
       <HStack
         justifyContent="flex-end"
         py={4}
         px={6}
       >
-      <MaterialIcons name="refresh" size={30} color="black" onPress={()=>console.log('bip')} />
+        <MaterialIcons name="refresh" size={30} color="black" onPress={()=>console.log('bip')} />
       </HStack>
       {(isLoaded) 
       ? 
