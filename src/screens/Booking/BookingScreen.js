@@ -10,19 +10,20 @@ import dayjs from 'dayjs';
 // front
 import BookingListItem from '../../components/BookingListItem';
 import BookingForm from '../../components/BookingForm';
-import DropDownItem from 'react-native-drop-down-item';
 import { theme } from '../../utils/theme.js';
-import { HStack, View, VStack, FlatList, Text, Spinner } from 'native-base';
+import { Modal, HStack, View, VStack, FlatList, Text, Spinner } from 'native-base';
+import { Feather } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 
 function BookingScreen() {
    const [reservations, setReservations] = useState([]),
         [reservationValues, setReservationValues] = useState(null),
         [cleaning, setCleaning] = useState(false),
-        [rotate, setRotate] = useState(false),
+        [pressed, setPressed] = useState(false),
         [fullDate, setFullDate] = useState(''),
         [refreshData, setRefreshData] = useState(false),
         [isLoaded, setIsLoaded] = useState(false),
+        [showModal, setShowModal] = useState(false),
         [isConsumer, setIsConsumer] = useState(false);
 
   // get user token
@@ -71,23 +72,31 @@ function BookingScreen() {
           if (cleaning) return;
 
           dataContent(res)
-          res.data.forEach((reservation)=>{
-              getRestaurantDetail(reservation.restaurantID).then((res)=>{
-                reservation.city = res.data.city;
-              }).catch((err)=>{
-                reservation.city = 'Ville introuvable';
-              }).finally(()=>{
-                setReservations(res.data)
-              })
-          })
+
+          let reservationArr = [];
+          let fetchCityName = async () => {
+            for (const reservation of res.data) {
+               try
+               {
+                  let restaurant = await getRestaurantDetail(reservation.restaurantID);
+                  reservation.city = restaurant?.data?.city;
+                  reservationArr.push(reservation)
+               }
+               catch(err)
+               {
+                  city = 'Ville introuvable';
+               }
+            }
+            setReservations(reservationArr)
+            setPressed(false)
+            setIsLoaded(true)
+         }
+
+        fetchCityName()
 
        }).catch((err)=>{
           setReservations([])
-          errorHandler('TOAST', err)
-          console.log(err)
-          // if (err?.response?.status !== 404) errorHandler('TOAST', err)
-       }).finally(()=>{
-          setIsLoaded(true)
+          if (err?.response?.status !== 404) errorHandler('TOAST', err)
        })
     }
     /*else
@@ -150,23 +159,41 @@ function BookingScreen() {
       let reservationFiltered = reservationTable.filter((item)=> item._id === reservationID)[0];
       setReservationValues(reservationFiltered)
     }
+    setShowModal(true)
   }
-
   return (
     <VStack>
-      <DropDownItem
-       contentVisible={false}
-       header={<View><Text>titre</Text></View>}>
-       <Text>test</Text>
-      </DropDownItem>
 
-      <BookingForm reservationValues={reservationValues} />
+      <Modal 
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}>
+
+        <Modal.Content maxWidth="800px">
+          <Modal.CloseButton />
+          <Modal.Body>
+            <BookingForm 
+              reservationValues={reservationValues} 
+              setRefreshData={setRefreshData} 
+              setShowModal={setShowModal} 
+              token={currentToken} />
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+
+      <VStack
+        justifyContent='center'
+        alignItems='center'
+        mb={3} 
+        py={6} >
+        <Feather name="plus" size={50} color="black" color="#3c3c3c" onPress={()=>setShowModal(true)} />
+        <Text style={{ textAlign : 'center'}} >Ajouter une réservation</Text>
+      </VStack>
+
       <HStack
         justifyContent="flex-end"
         py={4}
-        px={6}
-      >
-        <MaterialIcons name="refresh" size={30} color="black" onPress={()=>console.log('bip')} />
+        px={6}>
+        <MaterialIcons name="refresh" size={30} color={(!pressed) ? '#3c3c3c' : '#aaa'}  onPress={() => {setPressed(true); setRefreshData(!refreshData) }} />
       </HStack>
       {(isLoaded) 
       ? (reservations?.length > 0) 
