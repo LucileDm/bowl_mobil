@@ -37,8 +37,8 @@ export const LoginScreen = ({ navigation }) => {
   return (
     <Formik
       initialValues={{
-        email: "jean@paule.fr",
-        password: "test123!",
+        email: '', //"jean@paule.fr",
+        password: '', //"test123!",
       }}
       onSubmit={(values) => {
         login(values)

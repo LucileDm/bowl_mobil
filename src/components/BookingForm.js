@@ -10,9 +10,10 @@ import { AuthContext } from "../contexts/AuthContext";
 import moment from 'moment';
 import dayjs from 'dayjs';
 // front
-import { View, Button, Flex, HStack, VStack, Text, Input } from 'native-base';
+import { View, FormControl, Button, Flex, HStack, VStack, Text, Input } from 'native-base';
 import { errorHandler } from '../utils/errorHandler';
 import jwt_decode from "jwt-decode";
+import CustomButton from "./CustomButton";
 
 // regex for format : 2023-03-05T18:40
 const regex = new RegExp(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[T]([0-9]{2})[:]([0-9]{2})/gm);
@@ -329,7 +330,7 @@ const BookingForm = ({reservationValues=null}) => {
             }).catch((err)=>{
                 setOverBookedHalf([])
 
-                console.error('GET SEATS : ', err)
+                // console.error('GET SEATS : ', err)
                 if (err?.response?.status !== 404) {
                     delete err?.response?.message;
                     err.message="Nous ne pouvons pas vérifier la disponibilité du restaurant pour la journée sélectionnée. Veuillez recommencer plus tard.";
@@ -345,68 +346,88 @@ const BookingForm = ({reservationValues=null}) => {
         return () => { 
             cancel = true;
         }
-    }, [values.resDate, values.resTime, values.seatNr, setFieldValue, restauCapacity, schedule, reservation, editMode])
+    }, [])
+    // }, [values.resDate, values.resTime, values.seatNr, setFieldValue, restauCapacity, schedule, reservation, editMode])
 
     return ( 
     <VStack
         py={2}
-        px={6}
+        px={1}
     >
 
-        <Input
-            type="text"
-            placeholder="Nom de famille"
-            variant="underlined"
-            onChangeText={(val)=>console.log(val)}
-            value={values.reservName}
-        />
-        <Text>{errors.reservName}</Text>
+        <FormControl isInvalid={errors.reservName ? true : false}>
+            {/*<FormControl.Label>Nom de famille</FormControl.Label>*/}
+            <Input
+                type="text"
+                placeholder="Nom de famille"
+                variant="underlined"
+                onChangeText={handleChange('reservName')}
+                value={values.reservName}
+            />
+            <FormControl.ErrorMessage>{errors.reservName}</FormControl.ErrorMessage>
+        </FormControl>
 
-        <Input
-            type="text"
-            placeholder="Numéro de téléphone"
-            variant="underlined"
-            onChangeText={(val)=>console.log(val)}
-            value={values.reservPhone}
-        />
-        <Text>{errors.reservPhone}</Text>
+        <FormControl isInvalid={errors.reservPhone ? true : false}>
+            {/*<FormControl.Label>Numéro de téléphone</FormControl.Label>*/}
+            <Input
+                type="text"
+                placeholder="Numéro de téléphone"
+                variant="underlined"
+                onChangeText={handleChange('reservPhone')}
+                value={values.reservPhone}
+            />
+            <FormControl.ErrorMessage>{errors.reservPhone}</FormControl.ErrorMessage>
+        </FormControl>
 
-        <Input
-            variant="underlined"
-            type="date"
-            placeholder="Date de la réservation"
-            onChangeText={(val)=>console.log(val)}
-            min={dayjs().format('YYYY-MM-DD')}
-            value={values.resDate}
-        />
-        <Text>{errors.resDate}</Text>
+        <FormControl isInvalid={errors.resDate ? true : false}>
+            {/*<FormControl.Label>Date de la réservation</FormControl.Label>*/}
+            <Input
+                variant="underlined"
+                type="date"
+                placeholder="Date de la réservation"
+                onChangeText={handleChange('resDate')}
+                min={dayjs().format('YYYY-MM-DD')}
+                value={values.resDate}
+            />
+            <FormControl.ErrorMessage>{errors.resDate}</FormControl.ErrorMessage>
+        </FormControl>
 
-        <Input
-            variant="underlined"
-            type="time"
-            placeholder="Heure de la réservation"
-            onChangeText={(val)=>console.log(val)}
-            value={values.resTime}
-        />
-        <Text>{errors.resTime}</Text>
+        <FormControl isInvalid={errors.resTime ? true : false}>
+            {/*<FormControl.Label>Heure de la réservation</FormControl.Label>*/}
+            <Input
+                variant="underlined"
+                type="time"
+                placeholder="Heure de la réservation"
+                onChangeText={handleChange('resTime')}
+                value={values.resTime}
+            />
+            <FormControl.ErrorMessage>{errors.resTime}</FormControl.ErrorMessage>
+        </FormControl>
 
-        <Input
-            variant="underlined"
-            type="number"
-            placeholder="Nombre de personnes"
-            onChange={(value)=>{
-                let targetVal = value.target.value;
-                if (targetVal < 1) {
-                    targetVal = 0;
-                }
-                else if (targetVal > 15) {
-                    targetVal = 16;
-                }
-                setFieldValue('seatNr', targetVal)
-            }}
-            value={values.seatNr}
-        />
-        <Text>{errors.seatNr}</Text>
+        <FormControl isInvalid={errors.seatNr ? true : false}>
+            {/*<FormControl.Label>Nombre de personnes</FormControl.Label>*/}
+            <Input
+                variant="underlined"
+                type="number"
+                placeholder="Nombre de personnes"
+                onChange={(value)=>{
+                    let targetVal = value.target.value;
+                    if (targetVal < 1) {
+                        targetVal = 0;
+                    }
+                    else if (targetVal > 15) {
+                        targetVal = 16;
+                    }
+                    setFieldValue('seatNr', targetVal)
+                }}
+                value={values.seatNr}
+            />
+            <FormControl.ErrorMessage>{errors.seatNr}</FormControl.ErrorMessage>
+        </FormControl>
+
+        <HStack mt={5} justifyContent="flex-end">
+            <CustomButton type="submit" onPress={handleSubmit}>Réserver</CustomButton>
+        </HStack>
 
     </VStack>
     )
