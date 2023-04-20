@@ -1,13 +1,7 @@
-/*
-  exemple des routes sur les pages de tests
-  Route API pour get les ingrédients
-  Upload d'image
-  dossier de projet
-*/
 import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, Text, VStack } from 'native-base';
+import { ScrollView, Text, VStack, View } from 'native-base';
 import {errorHandler} from '../../utils/errorHandler.js';
 
 import BowlsList from '../../components/BowlsList.js';
@@ -69,20 +63,23 @@ function Home() {
   }
 
   const subTitleSalted = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)
+/*
+ */
   return (
-    <ScrollView>
+    <View style={{ flex: 1 }}>
+<ScrollView>
       <VStack
         space={16}
         backgroundColor="#fff"
         pt={16}
-        pb={24}>
+        pb={24}
+        maxH="100%">
 
         <SelectedRestau />
         <ReservBanner />
         <ReviewSlide />
 
         {/* lien vers Toute la liste depuis titre ou btn */}
-        {/* chargement apparent */}
         <BowlsList bowls={saltedBowls} title="Nos pokés salés" subTitle={subTitleSalted}/>
         <BowlsList bowls={sweetBowls} title="Nos pokés dessert" subTitle="Phrase d’accroche pour dessert"/>
 
@@ -90,8 +87,9 @@ function Home() {
         <DailyMenu />
       
       </VStack>
-    </ScrollView>
-  );
+</ScrollView>
+    </View>
+  )
 }
 
 export default Home;

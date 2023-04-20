@@ -56,13 +56,13 @@ const BowlListItem = ({bowl}) => {
                 pl="6"
                 pr="2">
 
-                <HStack justifyContent="space-between" >
-                    <Text style={{fontFamily: "mauikea"}} fontSize="xl" >{bowl.name}</Text>
-                    <Text fontSize="xl" bold >{bowl.price} €</Text>
-                </HStack>
-                
-                <IngList ingArr={bowl.ingredients} />
-                <Text fontSize="xs"  >{bowl.description}...</Text>
+                    <HStack justifyContent="space-between" >
+                        <Text style={{fontFamily: "mauikea"}} fontSize="xl" >{bowl.name}</Text>
+                        <Text fontSize="xl" bold >{bowl.price} €</Text>
+                    </HStack>
+                    
+                    <IngList ingArr={bowl.ingredients} />
+                    <Text fontSize="xs"  >{bowl.description}...</Text>
                 
                 </VStack>
 
