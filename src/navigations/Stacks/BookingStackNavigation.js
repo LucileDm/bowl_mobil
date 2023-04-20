@@ -1,29 +1,21 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-//J'importe mes écrans
-import AddBooking from "../../screens/Booking/AddBooking";
-import ListBookings from "../../screens/Booking/ListBookings";
-import TextLogo from "../../components/TextLogo.js";
-
-//Je déclare ma stack
 const Stack = createNativeStackNavigator();
-//Je set mon headerTitle
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import BookingScreen from '../../screens/Booking/BookingScreen.js';
+import TextLogo from "../../components/TextLogo.js";
+import ErrorStack from './ErrorStackNavigation';
+// import routeProtector from '../../utils/routeProtector.js';
+
 const headerTitle = { headerTitle: () => <TextLogo /> };
 
 function BookingStackNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Ajouter une réservation"
-        component={AddBooking}
+        name='Reservations'
         options={headerTitle}
-      />
-
-      <Stack.Screen
-        name="Liste des réservations"
-        component={ListBookings}
-        options={headerTitle}
-      />
+        component={BookingScreen} />
+      
+      <Stack.Screen options={{headerShown: false}} name='Erreur' component={ErrorStack}/>
     </Stack.Navigator>
   );
 }
