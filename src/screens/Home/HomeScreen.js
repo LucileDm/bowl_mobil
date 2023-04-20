@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
+import { getOneStock } from '../../services/stocks.js';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView, Text, VStack, View } from 'native-base';
-import {errorHandler} from '../../utils/errorHandler.js';
+import { ScrollView, Text, VStack, View, Spinner } from 'native-base';
+import { errorHandler } from '../../utils/errorHandler.js';
 
 import BowlsList from '../../components/BowlsList.js';
 import ReservBanner from '../../components/ReservBanner.js';
@@ -12,62 +13,45 @@ import SelectedRestau from '../../components/SelectedRestau.js';
 
 function Home() {
   
-  const [saltedBowls, setSaltedBowls] = useState([]),
+  const [cleaning, setCleaning] = useState(false),
+        [saltedBowls, setSaltedBowls] = useState([]),
         [sweetBowls, setSweetBowls] = useState([]),
-        [ingredients, setIngredients] = useState();
+        [saltedLoaded, setSaltedLoaded] = useState(false),
+        [sweetLoaded, setSweetLoaded] = useState(false);
 
 	const navigate = useNavigation();
 
   useEffect( () => {
+    setCleaning(false)
+
     // get salted bowls
     getSaltedBowls().then((res) => {
-      
-      const gottenBowls = res.data.slice(0, 4);
-        // get ingredients of the bowl
-        gottenBowls.forEach((bowl) => {
-        bowl.ingredients = ['Carotte', 'Riz', 'Tofu', 'Oignon'];
-        // getIngredients(bowl)
-      });
-
-      setSaltedBowls(gottenBowls);
-
+      if (cleaning) return;
+      setSaltedBowls(res.data)
+      setSaltedLoaded(true)
     }).catch((err) => {
-      // errorHandler('TOAST', err, 'Bowls salés')
-    });
+      setSaltedLoaded(true)
+    })
 
     // get sweet bowls
     getSweetBowls().then((res) => {
-      
-      const gottenBowls = res.data.slice(0, 4);
-      // get ingredients of the bowls
-      gottenBowls.forEach((bowl) => {
-        bowl.ingredients = ["Liste", "de tous", "les ingrédients", "ici", "mauris", "blandit", "aliquet"]; 
-        /*getIngredients(bowl);
-        bowl.ingredients = ingredients;*/
-      }) 
-
-      setSweetBowls(gottenBowls);
+      if (cleaning) return;
+      setSweetBowls(res.data)
+      setSweetLoaded(true)
     }).catch((err) => {
-      // errorHandler('TOAST', err, 'Bowls sucrés')
-    });
+      setSweetLoaded(true)
+    })
+
+    return ()=>{
+      setCleaning(true)
+    }
   }, [])
 
-  const getIngredients = (bowl) => {
-    
-      ingredientsID = bowl.ingredients;
-      getOneIngredient(ingredientsID).then((res) => {
-        ingredients.push(res.data);
-      }).catch((err) => {
-        console.log('CATCH : GET ING' + err.toJSON());
-      })
-  }
-
   const subTitleSalted = ( <Text> Pour un peu de<Text italic> ow ! </Text>dans votre vie </Text>)
-/*
- */
+
   return (
-    <View style={{ flex: 1 }}>
-<ScrollView>
+  <View style={{ flex: 1 }}>
+    <ScrollView>
       <VStack
         space={16}
         backgroundColor="#fff"
@@ -80,15 +64,23 @@ function Home() {
         <ReviewSlide />
 
         {/* lien vers Toute la liste depuis titre ou btn */}
-        <BowlsList bowls={saltedBowls} title="Nos pokés salés" subTitle={subTitleSalted}/>
-        <BowlsList bowls={sweetBowls} title="Nos pokés dessert" subTitle="Phrase d’accroche pour dessert"/>
+        {
+          (saltedLoaded)
+          ? <BowlsList bowls={saltedBowls} title="Nos pokés salés" subTitle={subTitleSalted}/>
+          : <Spinner />
+        }
+        {
+          (sweetLoaded)
+          ? <BowlsList bowls={sweetBowls} title="Nos pokés dessert" subTitle="Phrase d’accroche pour dessert"/>
+          : <Spinner />
+        }
 
         {/* infos menu du jour en dur */}
         <DailyMenu />
       
       </VStack>
-</ScrollView>
-    </View>
+    </ScrollView>
+  </View>
   )
 }
 

@@ -25,7 +25,6 @@ const BookingListItem = ({reservation, setReservationForm }) => {
             cancelReservation(reservation?._id, token).then((res) => {
                 formatStatus(res.data.status);
             }).catch((err) => {
-                console.log(err)
                 errorHandler('TOAST', err)
             })
         }
@@ -67,7 +66,6 @@ const BookingListItem = ({reservation, setReservationForm }) => {
 
     }, [reservation])
 
-    // setReservationForm
     return ( 
     <HStack
         pt={5}
@@ -86,7 +84,7 @@ const BookingListItem = ({reservation, setReservationForm }) => {
         pl="6"
         pr="2">
 
-            <Text fontSize="xs">{reservation?.seatsNr} personnes</Text>
+            <Text fontSize="xs">{reservation?.seatNr} personnes</Text>
             <Text fontSize="lg">{reservation?.city}</Text>
         </VStack>
 

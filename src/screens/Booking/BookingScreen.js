@@ -19,7 +19,7 @@ function BookingScreen() {
    const [reservations, setReservations] = useState([]),
         [reservationValues, setReservationValues] = useState(null),
         [cleaning, setCleaning] = useState(false),
-        [rotate, setRotate] = useState(false),
+        [pressed, setPressed] = useState(false),
         [fullDate, setFullDate] = useState(''),
         [refreshData, setRefreshData] = useState(false),
         [isLoaded, setIsLoaded] = useState(false),
@@ -72,23 +72,31 @@ function BookingScreen() {
           if (cleaning) return;
 
           dataContent(res)
-          res.data.forEach((reservation)=>{
-              getRestaurantDetail(reservation.restaurantID).then((res)=>{
-                reservation.city = res.data.city;
-              }).catch((err)=>{
-                reservation.city = 'Ville introuvable';
-              }).finally(()=>{
-                setReservations(res.data)
-              })
-          })
+
+          let reservationArr = [];
+          let fetchCityName = async () => {
+            for (const reservation of res.data) {
+               try
+               {
+                  let restaurant = await getRestaurantDetail(reservation.restaurantID);
+                  reservation.city = restaurant?.data?.city;
+                  reservationArr.push(reservation)
+               }
+               catch(err)
+               {
+                  city = 'Ville introuvable';
+               }
+            }
+            setReservations(reservationArr)
+            setPressed(false)
+            setIsLoaded(true)
+         }
+
+        fetchCityName()
 
        }).catch((err)=>{
           setReservations([])
-          errorHandler('TOAST', err)
-          console.log(err)
-          // if (err?.response?.status !== 404) errorHandler('TOAST', err)
-       }).finally(()=>{
-          setIsLoaded(true)
+          if (err?.response?.status !== 404) errorHandler('TOAST', err)
        })
     }
     /*else
@@ -153,15 +161,21 @@ function BookingScreen() {
     }
     setShowModal(true)
   }
-
   return (
     <VStack>
 
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Content maxWidth="600px">
+      <Modal 
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}>
+
+        <Modal.Content maxWidth="800px">
           <Modal.CloseButton />
           <Modal.Body>
-            <BookingForm reservationValues={reservationValues} />
+            <BookingForm 
+              reservationValues={reservationValues} 
+              setRefreshData={setRefreshData} 
+              setShowModal={setShowModal} 
+              token={currentToken} />
           </Modal.Body>
         </Modal.Content>
       </Modal>
@@ -179,7 +193,7 @@ function BookingScreen() {
         justifyContent="flex-end"
         py={4}
         px={6}>
-        <MaterialIcons name="refresh" size={30} color="#3c3c3c" onPress={()=>console.log('bip')} />
+        <MaterialIcons name="refresh" size={30} color={(!pressed) ? '#3c3c3c' : '#aaa'}  onPress={() => {setPressed(true); setRefreshData(!refreshData) }} />
       </HStack>
       {(isLoaded) 
       ? (reservations?.length > 0) 

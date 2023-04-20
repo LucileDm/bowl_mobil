@@ -23,7 +23,7 @@ const BowlsList = ({bowls, title, subTitle}) => {
                 ? <EmptyList />
                 : bowls.map((bowl)=>(
                     <BowlListItem key={bowl._id} bowl={bowl} />
-                ))            
+                ))       
             }
         </View>
     )

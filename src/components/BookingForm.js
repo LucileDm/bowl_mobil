@@ -14,6 +14,7 @@ import { View, FormControl, Button, Flex, HStack, VStack, Text, Input } from 'na
 import { errorHandler } from '../utils/errorHandler';
 import jwt_decode from "jwt-decode";
 import CustomButton from "./CustomButton";
+import DatePicker from 'react-native-modern-datepicker';
 
 // regex for format : 2023-03-05T18:40
 const regex = new RegExp(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[T]([0-9]{2})[:]([0-9]{2})/gm);
@@ -28,18 +29,18 @@ const validationSchema = yup.object({
         .nullable(true),
 
     resDate: yup
-        .string()
-        .required('Ce champ est obligatoire'),
+        .string(),
+        // .required('Ce champ est obligatoire'),
 
     resTime: yup
-        .string()
-        .required('Ce champ est obligatoire'),
+        .string(),
+        // .required('Ce champ est obligatoire'),
 
     seatNr: yup
-        .number()
-        .moreThan(0, 'Renseignez au moins une place.')
-        .lessThan(16, 'Veuillez appeler le restauraut pour réserver plus de 15 places.')
-        .required('Ce champ est obligatoire'),
+        .number(),
+        // .moreThan(0, 'Renseignez au moins une place.')
+        // .lessThan(16, 'Veuillez appeler le restauraut pour réserver plus de 15 places.')
+        // .required('Ce champ est obligatoire'),
 
     status: yup
         .string()
@@ -48,7 +49,7 @@ const validationSchema = yup.object({
         .default('KEPT')
 })
 
-const BookingForm = ({reservationValues=null}) => {
+const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, token}) => {
     const [ reservation, setReservation ] = useState({}),
           [ cleaning, setCleaning ] = useState(false),
           [ isLoaded, setIsLoaded ] = useState(false),
@@ -63,8 +64,8 @@ const BookingForm = ({reservationValues=null}) => {
           [ overBookedHalf, setOverBookedHalf ] = useState([]),
           [ dayOverBooked, setDayOverBooked ] = useState(false),
           [ resDate, setResDate ] = useState(''),
-          [ resTime, setResTime ] = useState('')
-          ;
+          [ resTime, setResTime ] = useState(''),
+          [ time, setTime ] = useState({ hour: moment().hour(), minute: moment().minute() });;
 
     // get user token
     const { user } = useContext(AuthContext);
@@ -82,29 +83,34 @@ const BookingForm = ({reservationValues=null}) => {
 
     const onSubmit = (values) => {
 
+        debugger
         // format date & time
         values.reservDate = `${values.resDate}T${values.resTime}:00.000Z`
         delete values.resDate;
         delete values.resTime;
 
-        if (!isConsumer) {
+        /*if (!isConsumer) {
             delete values.consumerID;
-        }
+        }*/
 
         if (editMode) {
-            editReservation(reservationID, values).then((res) => {
-                navigate(`/reservations/${res.data._id}`, { replace: true })
+            editReservation(reservationID, values, token).then((res) => {
+                setRefreshData(true)
             }).catch((err) => {
-                // setReturnedError(err.response.data)
+                errorHandler('TOAST', err)
+            }).finally(()=>{
+                setShowModal(false)
             })
         } else {
-            createReservation(values).then((res) => {
-                navigate(`/reservations/${res.data._id}`, { replace: true })
+            createReservation(values, token).then((res) => {
+                setRefreshData(true)
             }).catch((err) => {
-                // setReturnedError(err.response.data)
+                errorHandler('TOAST', err)
+            }).finally(()=>{
+                setShowModal(false)
             })
         }
-    };
+    }
 
     const setTimeSchedule = (selectedDate, time) => {
         const splited = time.split(':', 2), // HH:mm(:ss)
@@ -174,7 +180,6 @@ const BookingForm = ({reservationValues=null}) => {
             if (cleaning) return;
             setRestaurantID(res.data.favouriteRestaurant_id);
         }).catch((err)=>{
-            console.log('PROFILE', err)
             errorHandler('TOAST', err)
         })
 
@@ -350,13 +355,9 @@ const BookingForm = ({reservationValues=null}) => {
     // }, [values.resDate, values.resTime, values.seatNr, setFieldValue, restauCapacity, schedule, reservation, editMode])
 
     return ( 
-    <VStack
-        py={2}
-        px={1}
-    >
-
+    <VStack py={2} px={1} space={7} >
         <FormControl isInvalid={errors.reservName ? true : false}>
-            {/*<FormControl.Label>Nom de famille</FormControl.Label>*/}
+            <FormControl.Label style={{ marginBottom: 5 }} >Nom de famille</FormControl.Label>
             <Input
                 type="text"
                 placeholder="Nom de famille"
@@ -368,7 +369,7 @@ const BookingForm = ({reservationValues=null}) => {
         </FormControl>
 
         <FormControl isInvalid={errors.reservPhone ? true : false}>
-            {/*<FormControl.Label>Numéro de téléphone</FormControl.Label>*/}
+            <FormControl.Label style={{ marginBottom: 5 }}>Numéro de téléphone</FormControl.Label>
             <Input
                 type="text"
                 placeholder="Numéro de téléphone"
@@ -379,39 +380,16 @@ const BookingForm = ({reservationValues=null}) => {
             <FormControl.ErrorMessage>{errors.reservPhone}</FormControl.ErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.resDate ? true : false}>
-            {/*<FormControl.Label>Date de la réservation</FormControl.Label>*/}
-            <Input
-                variant="underlined"
-                type="date"
-                placeholder="Date de la réservation"
-                onChangeText={handleChange('resDate')}
-                min={dayjs().format('YYYY-MM-DD')}
-                value={values.resDate}
-            />
-            <FormControl.ErrorMessage>{errors.resDate}</FormControl.ErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={errors.resTime ? true : false}>
-            {/*<FormControl.Label>Heure de la réservation</FormControl.Label>*/}
-            <Input
-                variant="underlined"
-                type="time"
-                placeholder="Heure de la réservation"
-                onChangeText={handleChange('resTime')}
-                value={values.resTime}
-            />
-            <FormControl.ErrorMessage>{errors.resTime}</FormControl.ErrorMessage>
-        </FormControl>
-
         <FormControl isInvalid={errors.seatNr ? true : false}>
-            {/*<FormControl.Label>Nombre de personnes</FormControl.Label>*/}
+            <FormControl.Label style={{ marginBottom: 5 }}>Nombre de personnes</FormControl.Label>
             <Input
                 variant="underlined"
-                type="number"
+                type="text"
+                keyboardType="numeric"
                 placeholder="Nombre de personnes"
-                onChange={(value)=>{
-                    let targetVal = value.target.value;
+                defaultValue={values.seatNr}
+                onChangeText={(value)=>{
+                    let targetVal = value;
                     if (targetVal < 1) {
                         targetVal = 0;
                     }
@@ -420,13 +398,47 @@ const BookingForm = ({reservationValues=null}) => {
                     }
                     setFieldValue('seatNr', targetVal)
                 }}
+                // onChangeText={handleChange('seatNr')}
                 value={values.seatNr}
             />
             <FormControl.ErrorMessage>{errors.seatNr}</FormControl.ErrorMessage>
         </FormControl>
 
-        <HStack mt={5} justifyContent="flex-end">
-            <CustomButton type="submit" onPress={handleSubmit}>Réserver</CustomButton>
+        <FormControl isInvalid={errors.resTime ? true : false}>
+            <FormControl.Label style={{ marginBottom: 5, paddingBottom: 5 }}>Heure de la réservation</FormControl.Label>
+            <DatePicker
+                options={{
+                    textHeaderColor: "#91D5A3",
+                    mainColor: "#91D5A3",
+                }}
+                style={{width: '100%', marginTop: 20, padding: 0}}
+                mode="time"
+                selected={values.resTime}
+                defaultValue={values.resTime}
+                minuteInterval={30}
+                onTimeChange={(time) => {console.log(time); handleChange('resTime')} }
+            />
+            <FormControl.ErrorMessage>{errors.resTime}</FormControl.ErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={errors.resDate ? true : false}>
+            <FormControl.Label style={{ marginBottom: 5 }}>Date de la réservation</FormControl.Label>
+            <DatePicker
+                options={{
+                    textHeaderColor: "#91D5A3",
+                    mainColor: "#91D5A3",
+                }}
+                style={{width: '100%', marginTop: 20, padding: 0}}
+                mode="datepicker"
+                selected={values.resDate}
+                minimumDate={dayjs().format('YYYY-MM-DD')}
+                onDateChange={(date) => {console.log(date); handleChange('resDate'); } }
+            />
+            <FormControl.ErrorMessage>{errors.resDate}</FormControl.ErrorMessage>
+        </FormControl>
+
+        <HStack /*mt={5}*/ justifyContent="flex-end">
+            <CustomButton type="submit" onPress={()=>{console.log('submit'); handleSubmit(values)}}>Réserver</CustomButton>
         </HStack>
 
     </VStack>
