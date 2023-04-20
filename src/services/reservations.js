@@ -21,6 +21,7 @@ export const getUserReservations = (token) => {
         }
     })
 }
+
 export const editReservation = (id, values, token) => {
     return axiosInstance.patch(`/reservations/update/${id}`, values, {
         headers: {
