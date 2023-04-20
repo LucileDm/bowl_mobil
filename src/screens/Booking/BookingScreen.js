@@ -169,7 +169,7 @@ function BookingScreen() {
         <MaterialIcons name="refresh" size={30} color="black" onPress={()=>console.log('bip')} />
       </HStack>
       {(isLoaded) 
-      ? (!reservations?.length > 0) 
+      ? (reservations?.length > 0) 
         ? <FlatList
             data={reservations}
             renderItem={ ({item}) => <BookingListItem reservation={item} setReservationForm={setReservationForm} /> }
