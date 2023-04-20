@@ -1,23 +1,32 @@
-import { useState, useEffect } from 'react';
+import { cancelReservation } from '../services/reservations';
+import { useState, useEffect, useContext } from 'react';
 import { Button, Flex, HStack, VStack, Text } from 'native-base';
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from '@expo/vector-icons'; 
+import { AuthContext } from "../contexts/AuthContext";
+import { errorHandler } from '../utils/errorHandler';
+import jwt_decode from "jwt-decode";
 
 const BookingListItem = ({reservation, setReservationForm }) => {
     const [ status, setStatus ] = useState(''),
           [ cleaning, setCleaning ] = useState(false),
           [ statusColor, setStatusColor ] = useState('');
-    // récup setReservationForm
 
+    // get user token
+    const { user } = useContext(AuthContext);
+    const currentToken = user?.data?.token,
+        userInfos = jwt_decode(currentToken),
+        userRole = userInfos?.roleID ?? '';
 
-    const cancelReservationBtn = (id) => {
-        if (isEditable)
+    const cancelReservationBtn = () => {
+        if (reservation?.status === 'KEPT')
         {
-            cancelReservation(id).then((res) => {
+            let token = currentToken;
+            cancelReservation(reservation?._id, token).then((res) => {
                 formatStatus(res.data.status);
-                setIsEditable(false)
             }).catch((err) => {
                 console.log(err)
+                errorHandler('TOAST', err)
             })
         }
     }
@@ -90,14 +99,14 @@ const BookingListItem = ({reservation, setReservationForm }) => {
         pl="6"
         pr="2">
 
-            {(reservation?.status == 'KEPT')
+            {(reservation?.status !== 'KEPT')
             ? <>
                 <Text fontSize="xs">{reservation?.resDate} à {reservation?.resTime}</Text>
                 <Text fontSize="lg" style={{color: statusColor}} >{status}</Text>
               </>
             : <HStack flexDirection="row" alignItems="center"  justifyContent="space-evenly">
                 <Feather name="edit" size={24} color="black" onPress={setReservationForm} />
-                <Button py={2} bgColor="#3c3c3c" onPress={()=>console.log('annuler')}>Annuler</Button>
+                <Button py={2} bgColor="#3c3c3c" onPress={cancelReservationBtn}>Annuler</Button>
               </HStack>
             }
         </VStack>

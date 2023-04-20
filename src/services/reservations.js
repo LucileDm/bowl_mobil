@@ -15,14 +15,18 @@ export const getUserReservations = (token) => {
         headers: {
            Authorization: `Bearer ${token}`,
         }
-    });
+    })
 }
 export const editReservation = (id, values) => {
     return axiosInstance.patch(`/reservations/update/${id}`, values);
 }
 
-export const cancelReservation = (id) => {
-    return axiosInstance.patch(`/reservations/cancel/${id}`);
+export const cancelReservation = (id, token) => {
+    return axiosInstance.patch(`/reservations/cancel/${id}`, {}, {
+        headers: {
+           Authorization: `Bearer ${token}`,
+        }
+    })
 }
 
 export const getReservationByDay = (day, status) => {

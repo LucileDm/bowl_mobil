@@ -45,7 +45,7 @@ function BookingScreen() {
           let itemTime = reservDate.getTime(),
               nowTime = new Date().getTime();
 
-          if (itemTime <= nowTime)
+          if (item.status !== 'CLD' && itemTime <= nowTime)
           {
             item.status = 'CLS';
           }
