@@ -2,8 +2,9 @@ import React from 'react'
 import GreenTitle from '../components/GreenTitle.js';
 
 import { VStack,
-        FlatList, 
-        Text }
+        SectionList, 
+        Text,
+        View }
   from 'native-base';
 
 import BowlListItem from './BowlListItem.js';
@@ -14,27 +15,17 @@ const BowlsList = ({bowls, title, subTitle}) => {
         return <Text paddingX={30}>Tous les bowls se sont enfuient de nos cuisines... Veuillez nous excusez le temps que nous partons à leur recherche.</Text>
     }
 
-    const RenderList = ({list}) => {
-        if (list.length <= 0)
-        {
-            return <EmptyList />
-        }
-        else 
-        {
-            return (
-            <FlatList 
-                data={list}
-                renderItem={ ({item}) => <BowlListItem bowl={item} /> }
-                listEmptyComponent={EmptyList}
-            />)
-        }
-    }
-  
     return (
-        <VStack space={8}>
+        <View style={{ flex: 1 }}>
             <GreenTitle title={title} subTitle={subTitle}/>
-            <RenderList list={bowls}/>
-        </VStack>
+            {
+            (bowls?.length <= 0)
+                ? <EmptyList />
+                : bowls.map((bowl)=>(
+                    <BowlListItem key={bowl._id} bowl={bowl} />
+                ))            
+            }
+        </View>
     )
 }
 
