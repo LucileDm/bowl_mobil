@@ -10,9 +10,9 @@ import dayjs from 'dayjs';
 // front
 import BookingListItem from '../../components/BookingListItem';
 import BookingForm from '../../components/BookingForm';
-import DropDownItem from 'react-native-drop-down-item';
 import { theme } from '../../utils/theme.js';
-import { HStack, View, VStack, FlatList, Text, Spinner } from 'native-base';
+import { Modal, HStack, View, VStack, FlatList, Text, Spinner } from 'native-base';
+import { Feather } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 
 function BookingScreen() {
@@ -23,6 +23,7 @@ function BookingScreen() {
         [fullDate, setFullDate] = useState(''),
         [refreshData, setRefreshData] = useState(false),
         [isLoaded, setIsLoaded] = useState(false),
+        [showModal, setShowModal] = useState(false),
         [isConsumer, setIsConsumer] = useState(false);
 
   // get user token
@@ -150,23 +151,35 @@ function BookingScreen() {
       let reservationFiltered = reservationTable.filter((item)=> item._id === reservationID)[0];
       setReservationValues(reservationFiltered)
     }
+    setShowModal(true)
   }
 
   return (
     <VStack>
-      <DropDownItem
-       contentVisible={false}
-       header={<View><Text>titre</Text></View>}>
-       <Text>test</Text>
-      </DropDownItem>
 
-      <BookingForm reservationValues={reservationValues} />
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Modal.Content maxWidth="600px">
+          <Modal.CloseButton />
+          <Modal.Body>
+            <BookingForm reservationValues={reservationValues} />
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+
+      <VStack
+        justifyContent='center'
+        alignItems='center'
+        mb={3} 
+        py={6} >
+        <Feather name="plus" size={50} color="black" color="#3c3c3c" onPress={()=>setShowModal(true)} />
+        <Text style={{ textAlign : 'center'}} >Ajouter une réservation</Text>
+      </VStack>
+
       <HStack
         justifyContent="flex-end"
         py={4}
-        px={6}
-      >
-        <MaterialIcons name="refresh" size={30} color="black" onPress={()=>console.log('bip')} />
+        px={6}>
+        <MaterialIcons name="refresh" size={30} color="#3c3c3c" onPress={()=>console.log('bip')} />
       </HStack>
       {(isLoaded) 
       ? (reservations?.length > 0) 
