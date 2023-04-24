@@ -1,7 +1,10 @@
-import {HStack, VStack, Pressable, Text, Image } from 'native-base';
+import { useState, useEffect } from 'react';
+import { HStack, VStack, Pressable, Text, Image } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
 const BowlListItem = ({bowl}) => {
+    const [imgError, setImgError] = useState(false),
+          [defaultImage, setDefaultImage] = useState('https://i.imgur.com/jxxojTq.png');
 
     const navigation = useNavigation();
 
@@ -9,23 +12,36 @@ const BowlListItem = ({bowl}) => {
         navigation.navigate('Bowl', {bowl: bowl})
     }
 
+    useEffect(()=>{}, [])
+
+    const DefaultImageComponent = () => {
+        return (
+          <Image 
+            source={{uri : defaultImage }}
+            alt='Bowllywood default image'
+            referrerPolicy="no-referrer"
+            resizeMode="cover"
+            size="xl" />)
+      }
+
     return ( 
         <Pressable
             onPress={ () => navToBowl(bowl._id) }
-            mb="12">
+            mb="12"
+            pr={2}>
 
             <HStack>
 
-                <Image
-                source={
-                    (bowl?.image) 
-                    ? { uri: `https://bowllywood-8llo.onrender.com/images/menu/${bowl?.image}` }
-                    : './assets/bowlicon_grey.png'
-                }
-                resizeMode="cover"
-                size="xl"
-                alt={bowl?.name}/>
-
+                {(!imgError)
+                ? <Image
+                    source={{uri : bowl?.image}}
+                    alt={bowl?.name}
+                    onError={() => {setImgError(true)}}
+                    referrerPolicy="no-referrer"
+                    resizeMode="cover"
+                    size="xl"/>
+                : <DefaultImageComponent />}
+                
                 <VStack 
                     justifyContent="center"
                     space={2}
