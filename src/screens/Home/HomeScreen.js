@@ -3,7 +3,6 @@ import { getSaltedBowls, getSweetBowls } from '../../services/bowls.js';
 import { getOneStock } from '../../services/stocks.js';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, Text, VStack, View, Spinner } from 'native-base';
-import { errorHandler } from '../../utils/errorHandler.js';
 
 import BowlsList from '../../components/BowlsList.js';
 import ReservBanner from '../../components/ReservBanner.js';

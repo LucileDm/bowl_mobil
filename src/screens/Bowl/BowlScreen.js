@@ -7,14 +7,16 @@ import { errorHandler } from '../../utils/errorHandler';
 function Bowl({ route }) {
   const {bowl} = route.params;
 
-  const [cleaning, setCleaning] = useState(false),
+  const [imgError, setImgError] = useState(false),
         [isLoaded, setIsLoaded] = useState(false),
+        [defaultImage, setDefaultImage] = useState('https://i.imgur.com/jxxojTq.png'),
         [allergenes, setAllergenes] = useState([]);
 
   useEffect(()=>{
-    if (cleaning) return;
-      
+    let cleaning = false;
+
       let fetchIngredients = async () => {
+        if (cleaning) return;
         let ingredientsName = [];
         for (const ingredientID of bowl.ingredients) {
            try
@@ -24,6 +26,7 @@ function Bowl({ route }) {
            }
            catch(err)
            {
+              console.log(err)
               // nothing to inform
            }
         }
@@ -32,26 +35,43 @@ function Bowl({ route }) {
       }
 
       fetchIngredients();
-
     return ()=>{
-      setCleaning(true)
+      cleaning = true
     }
-  }, [bowl])
+  }, [])
+
+  const DefaultImageComponent = () => {
+    return (
+      <Image 
+        source={{uri : defaultImage }}
+        alt='Bowllywood default image'
+        referrerPolicy="no-referrer"
+        style={{ width: '100%', height: 350 }}
+        resizeMode="cover"
+        size="xl" />)
+  }
 
   return (
   <ScrollView>
     <VStack space={5} pb={9}>
-
-      <Image
-        source={
-        (bowl?.image) 
-          ? { uri: `https://bowllywood-8llo.onrender.com/images/menu/${bowl?.image}` }
-          : './assets/bowlicon_grey.png'
-        }
-        resizeMode="cover"
-        style={{ width: '100%', height: 350  }}
-        alt={`Image du bowl ${bowl?.name} introuvable`} />
-
+      {(!imgError)
+       ? <Image
+          source={{uri : bowl?.image}}
+          alt={bowl?.name}
+          onError={(event) => {
+             let err = {
+                code: '',
+                message: "L'image du bowl n'a pas pu être récupérée."
+             }
+             errorHandler('TOAST', err)
+             setImgError(true)
+          }}
+          referrerPolicy="no-referrer"
+          style={{ width: '100%', height: 350 }}
+          resizeMode="cover"
+          />
+       : <DefaultImageComponent /> }
+     
       <VStack space={5}>
 
         <HStack justifyContent="space-evenly" alignItems="flex-end">
