@@ -84,7 +84,7 @@ function BookingScreen() {
                }
                catch(err)
                {
-                  city = 'Ville introuvable';
+                  reservation.city = 'Ville introuvable';
                }
             }
             setReservations(reservationArr)
