@@ -96,34 +96,10 @@ function BookingScreen() {
 
        }).catch((err)=>{
           setReservations([])
+          setIsLoaded(true)
           if (err?.response?.status !== 404) errorHandler('TOAST', err)
        })
     }
-    /*else
-    {
-       getAllReservations(filterDate).then((res)=>{
-          if (cleaning) return;
-          dataContent(res)
-          setReservations(res.data)
-       }).catch((err)=>{
-          setReservations([])
-          switch (err?.response?.status)
-          {
-          case 404:
-             break
-          case 403:
-             delete err?.response?.data?.message ;
-             delete err?.message ;
-             errorHandler('TOAST', err)
-             break
-          default:
-             errorHandler('TOAST', err)
-          }
-
-       }).finally(()=>{
-          setIsLoaded(true)
-       })
-    }*/
 
     return () => { 
         setCleaning(true);
