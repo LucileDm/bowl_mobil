@@ -175,7 +175,7 @@ function BookingScreen() {
       ? (reservations?.length > 0) 
         ? <FlatList
             data={reservations}
-            renderItem={ ({item}) => <BookingListItem reservation={item} setReservationForm={setReservationForm} /> }
+            renderItem={ ({item}) => <BookingListItem reservation={item} setReservationForm={setReservationForm} setRefreshData={setRefreshData} refreshData={refreshData} /> }
             px={2} />
         : <Text px={5} fontSize="lg" style={{ textAlign : 'center'}}>Vous n'avez pas fait de réservations.</Text>
       : <Spinner />}
