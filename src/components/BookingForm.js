@@ -83,7 +83,6 @@ const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, toke
 
     const onSubmit = (values) => {
 
-        debugger
         // format date & time
         values.reservDate = `${values.resDate}T${values.resTime}:00.000Z`
         delete values.resDate;
