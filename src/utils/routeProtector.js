@@ -35,7 +35,6 @@ const routeProtector = ({permittedRoles, children}) => {
     }, [user, navigate, permittedRoles])
 
     const RenderPage = ({children, permittedRoles}) => {
-        debugger
         if (isAllowed) {
             return (children) ? children : <Outlet />
         } else {

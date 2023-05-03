@@ -17,7 +17,8 @@ function MaintenanceStackNavigation() {
             <Stack.Screen 
                 name='Maintenance'
                 component={MaintenanceScreen}
-                options={headerTitle}/>
+                // options={headerTitle}
+                />
 
             <Stack.Screen 
                 name='Home'

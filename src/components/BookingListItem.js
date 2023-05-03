@@ -1,16 +1,17 @@
 import { cancelReservation } from '../services/reservations';
 import { useState, useEffect, useContext } from 'react';
-import { Button, Flex, HStack, VStack, Text } from 'native-base';
+import { Button, Flex, HStack, VStack, Text, Spinner } from 'native-base';
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from '@expo/vector-icons'; 
 import { AuthContext } from "../contexts/AuthContext";
 import { errorHandler } from '../utils/errorHandler';
 import jwt_decode from "jwt-decode";
 
-const BookingListItem = ({reservation, setReservationForm }) => {
+const BookingListItem = ({reservation, setReservationForm, setRefreshData, refreshData }) => {
     const [ status, setStatus ] = useState(''),
           [ cleaning, setCleaning ] = useState(false),
-          [ statusColor, setStatusColor ] = useState('');
+          [ statusColor, setStatusColor ] = useState(''),
+          [ canceling, setCanceling ] = useState(false);
 
     // get user token
     const { user } = useContext(AuthContext);
@@ -19,13 +20,17 @@ const BookingListItem = ({reservation, setReservationForm }) => {
         userRole = userInfos?.roleID ?? '';
 
     const cancelReservationBtn = () => {
-        if (reservation?.status !== 'KEPT')
+        if (reservation?.status === 'KEPT')
         {
             let token = currentToken;
+            setCanceling(true)
             cancelReservation(reservation?._id, token).then((res) => {
                 formatStatus(res.data.status);
+                setRefreshData(!refreshData)
             }).catch((err) => {
                 errorHandler('TOAST', err)
+            }).finally(()=>{
+                setCanceling(false)
             })
         }
     }
@@ -104,7 +109,12 @@ const BookingListItem = ({reservation, setReservationForm }) => {
               </>
             : <HStack flexDirection="row" alignItems="center"  justifyContent="space-evenly">
                 <Feather name="edit" size={24} color="black" onPress={()=>setReservationForm(reservation?._id)} />
-                <Button py={2} bgColor="#3c3c3c" onPress={cancelReservationBtn}>Annuler</Button>
+                <Button py={2} bgColor="#3c3c3c" onPress={cancelReservationBtn}>
+                    <HStack space={2} className="position-relative d-flex align-items-center justify-content-evenly ">
+                        <Text color="white">Annuler</Text>
+                        {(canceling) ? <Spinner /> : '' }
+                    </HStack>
+                </Button>
               </HStack>
             }
         </VStack>
