@@ -44,7 +44,7 @@ const routeProtector = ({permittedRoles, children}) => {
                 'Erreur',
 				{
                     screen: 'Error',
-					params: { code: 401, message: "Vous n'êtes pas autorisé à accéder à cette page." }
+					params: { code: 'Forbidden', message: "Vous n'êtes pas autorisé à accéder à cette page." }
 				}
             )
         }

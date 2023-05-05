@@ -48,6 +48,12 @@ export function errorHandler(errType, errorCatched, navigation, subjectName) {
 		errMessage = catchedMsg
 	} else {
 		errMessage = get_default_message(errCode, subjectName)
+
+		if (errCode === 401 || errCode === 403) {
+			errCode = 'Forbidden'
+		} else {
+			errCode = ''
+		}
 	}
 	errTitle =`Erreur ${errCode}`
 
