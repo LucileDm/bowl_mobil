@@ -68,7 +68,7 @@ const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, toke
           [ time, setTime ] = useState({ hour: moment().hour(), minute: moment().minute() });;
 
     // get user token
-    const { user } = useContext(AuthContext);
+    const user = useContext(AuthContext)?.user;
     const currentToken = user?.data?.token,
         userInfos = jwt_decode(currentToken),
         userRole = userInfos?.roleID ?? '',
