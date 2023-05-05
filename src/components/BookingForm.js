@@ -68,7 +68,7 @@ const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, toke
           [ time, setTime ] = useState({ hour: moment().hour(), minute: moment().minute() });;
 
     // get user token
-    const { user } = useContext(AuthContext);
+    const user = useContext(AuthContext)?.user;
     const currentToken = user?.data?.token,
         userInfos = jwt_decode(currentToken),
         userRole = userInfos?.roleID ?? '',
@@ -84,6 +84,7 @@ const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, toke
     const onSubmit = (values) => {
 
         // format date & time
+        console.log(values)
         values.reservDate = `${values.resDate}T${values.resTime}:00.000Z`
         delete values.resDate;
         delete values.resTime;
@@ -97,6 +98,7 @@ const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, toke
                 setRefreshData(true)
             }).catch((err) => {
                 errorHandler('TOAST', err)
+                console.log(err)
             }).finally(()=>{
                 setShowModal(false)
             })
@@ -105,6 +107,7 @@ const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, toke
                 setRefreshData(true)
             }).catch((err) => {
                 errorHandler('TOAST', err)
+                console.log(err)
             }).finally(()=>{
                 setShowModal(false)
             })
@@ -415,7 +418,7 @@ const BookingForm = ({reservationValues=null, setRefreshData, setShowModal, toke
                 selected={values.resTime}
                 defaultValue={values.resTime}
                 minuteInterval={30}
-                onTimeChange={(time) => {console.log(time); handleChange('resTime')} }
+                onTimeChange={(time) => {console.log(time); setFieldValue('resTime', time)}}
             />
             <FormControl.ErrorMessage>{errors.resTime}</FormControl.ErrorMessage>
         </FormControl>
