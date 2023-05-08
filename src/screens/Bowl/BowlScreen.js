@@ -76,6 +76,7 @@ function Bowl({ route }) {
 
         <HStack justifyContent="space-evenly" alignItems="flex-end">
           <Text fontSize="4xl" fontFamily="mauikea" fontWeight="bold">{bowl?.name}</Text>
+          <Text fontSize="2xl" fontWeight="bold">{bowl?.price}</Text>
 
           <VStack alignItems="center">
             <Text fontSize="2xl">{bowl?.ingredients.length ?? '0'}</Text>
