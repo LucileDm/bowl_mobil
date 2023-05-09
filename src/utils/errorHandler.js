@@ -48,14 +48,14 @@ export function errorHandler(errType, errorCatched, navigation, subjectName) {
 		errMessage = catchedMsg
 	} else {
 		errMessage = get_default_message(errCode, subjectName)
+	}
 
-		if (errCode === 401 || errCode === 403) {
-			errTitle = 'Accès refusé'
-		} else if (errCode === 404) {
-			errTitle = 'Non trouvé'
-		} else {
-			errTitle = 'Erreur'
-		}
+	if (errCode === 401 || errCode === 403) {
+		errTitle = 'Accès refusé'
+	} else if (errCode === 404) {
+		errTitle = 'Non trouvé'
+	} else {
+		errTitle = 'Erreur'
 	}
 	// errTitle = (errCode !== '') ? errCode : 'Une erreur est survenue';
 
