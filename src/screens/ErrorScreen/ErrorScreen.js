@@ -48,7 +48,7 @@ function ErrorScreen({route, errCode='', errText}) {
 				style={{height: '80%'}}
 				px={5} >
 
-				<Text fontSize="4xl" bold color={colors.primary.dark_grey} >{errCode}</Text>
+				<Text fontSize="4xl" bold color={colors.primary.dark_grey} >{errCode}</Text> 
 				<Text fontSize="lg" textAlign="center" >Pas de bowl ! {errText}</Text>
 
 				{/* <Pressable onClick={()=>navigate.replace('Home')}>
